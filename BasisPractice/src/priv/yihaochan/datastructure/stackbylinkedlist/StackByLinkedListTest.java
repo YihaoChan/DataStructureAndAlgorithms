@@ -8,10 +8,11 @@ public class StackByLinkedListTest {
         StackByLinkedList<Integer> stackByLinkedList = new StackByLinkedList<>();
 
         /* 元素入栈 */
-        stackByLinkedList.push(10);
-        stackByLinkedList.push(20);
-        stackByLinkedList.push(30);
-        stackByLinkedList.push(40);
+        stackByLinkedList
+                .push(10)
+                .push(20)
+                .push(30)
+                .push(40);
 
         System.out.println("初始时的栈：");
         stackByLinkedList.show();
@@ -26,12 +27,10 @@ public class StackByLinkedListTest {
         stackByLinkedList.show();
 
         /* 元素出栈 */
-        StackByLinkedList.Node popNodeFirst = stackByLinkedList.pop();
-        System.out.println("第一次弹栈的元素为：" + popNodeFirst.getItem());
+        System.out.println("第一次弹栈的元素为：" + stackByLinkedList.pop().getItem());
         System.out.println("第一次弹栈后的栈：");
         stackByLinkedList.show();
-        StackByLinkedList.Node popNodeSecond = stackByLinkedList.pop();
-        System.out.println("第二次弹栈的元素为：" + popNodeSecond.getItem());
+        System.out.println("第二次弹栈的元素为：" + stackByLinkedList.pop().getItem());
         System.out.println("第二次弹栈后的栈：");
         stackByLinkedList.show();
 

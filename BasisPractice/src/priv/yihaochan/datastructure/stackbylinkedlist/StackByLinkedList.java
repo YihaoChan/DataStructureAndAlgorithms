@@ -1,44 +1,44 @@
 package priv.yihaochan.datastructure.stackbylinkedlist;
 
 /**
+ * @Description: 结点类
+ */
+class Node<T> {
+    // 数据域
+    private T item;
+
+    // 指针域
+    private Node next;
+
+    /**
+     * @Description: 构造方法
+     */
+    public Node(T item, Node next) {
+        this.item = item;
+        this.next = next;
+    }
+
+    public T getItem() {
+        return this.item;
+    }
+
+    public void setItem(T item) {
+        this.item = item;
+    }
+
+    public Node getNext() {
+        return this.next;
+    }
+
+    public void setNext(Node next) {
+        this.next = next;
+    }
+}
+
+/**
  * @Description: 用链表实现栈
  */
 public class StackByLinkedList<T> {
-    /**
-     * @Description: 结点类
-     */
-    class Node<T> {
-        // 数据域
-        private T item;
-
-        // 指针域
-        private Node next;
-
-        /**
-         * @Description: 构造方法
-         */
-        public Node(T item, Node next) {
-            this.item = item;
-            this.next = next;
-        }
-
-        public T getItem() {
-            return this.item;
-        }
-
-        public void setItem(T item) {
-            this.item = item;
-        }
-
-        public Node getNext() {
-            return this.next;
-        }
-
-        public void setNext(Node next) {
-            this.next = next;
-        }
-    }
-
     // 栈顶结点
     private Node top;
 
@@ -79,7 +79,7 @@ public class StackByLinkedList<T> {
     /**
      * @Description: 把t元素压入栈
      */
-    public void push(T t) {
+    public StackByLinkedList push(T t) {
         // 新结点的next指向原栈顶元素
         Node newNode = new Node(t, top);
 
@@ -87,20 +87,22 @@ public class StackByLinkedList<T> {
         top = newNode;
 
         len++;
+
+        return this;
     }
 
     /**
      * @Description: 弹出栈顶元素并返回
      */
     public Node pop() {
-        if (top.next == null) {
+        if (top.getNext() == null) {
             return null;
         }
 
         Node popNode = top;
 
         // 让原来栈的第二个元素变为栈顶元素
-        top = top.next;
+        top = top.getNext();
 
         len--;
 
@@ -113,15 +115,15 @@ public class StackByLinkedList<T> {
     public void update(int i, T value) {
         if (i < 0) {
             throw new RuntimeException("索引不得为负数！");
-        } else if (top.next == null) {
+        } else if (top.getNext() == null) {
             return;
         }
 
         Node node = top;
 
         // node.next.next为空，表示node.next为头结点，(null, null)
-        while (node.next.next != null && i > 0) {
-            node = node.next;
+        while (node.getNext().getNext() != null && i > 0) {
+            node = node.getNext();
 
             i--;
 
@@ -150,9 +152,9 @@ public class StackByLinkedList<T> {
     public void show() {
         Node node = top;
 
-        while (node.next != null) {
-            System.out.println(node.item);
-            node = node.next;
+        while (node.getNext() != null) {
+            System.out.println(node.getItem());
+            node = node.getNext();
         }
     }
 }

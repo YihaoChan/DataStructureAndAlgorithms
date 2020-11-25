@@ -10,10 +10,9 @@ package priv.yihaochan.datastructure.stackbylinkedlist;
 public class PostfixToResultTest {
     public static void main(String[] args) {
         // 给定后缀表达式
-        String[] postfixNotation = new String[]{"1", "2", "3", "+", "4", "*", "+", "5", "-"};
+        String[] postfixNotation = {"1", "2", "3", "+", "4", "*", "+", "5", "-"};
 
-        int result = postfixToResult(postfixNotation);
-        System.out.println(result);
+        System.out.println("求值结果为：" + postfixToResult(postfixNotation));
     }
 
     /**
@@ -23,14 +22,14 @@ public class PostfixToResultTest {
         // 创建存放操作数的栈
         StackByLinkedList<Integer> operands = new StackByLinkedList<>();
 
+        // 初始时，弹出的两个操作数都为null
+        Node operandUpper; // 在栈中占上方的元素
+        Node operandLower; // 在栈中占下方的元素
+
+        // 表达式计算结果
+        int result;
+
         for (String item : postfixNotation) {
-            // 初始时，弹出的两个操作数都为null
-            StackByLinkedList.Node operandUpper; // 在栈中占上方的元素
-            StackByLinkedList.Node operandLower; // 在栈中占下方的元素
-
-            // 表达式计算结果
-            int result;
-
             // 弹出元素后做运算，顺序需要注意：后弹出的在前，先弹出的在后
             switch (item) {
                 case "+":

@@ -24,9 +24,7 @@ public class InfixToPostfixTest {
         String infixExpreesionRemoveSpace = infixExpreesion.replace(" ", "");
 
         // 输出后缀表达式列表
-        List<String> postfixExpression;
-
-        postfixExpression = infixToPostfix(infixExpreesionRemoveSpace);
+        List<String> postfixExpression = infixToPostfix(infixExpreesionRemoveSpace);
 
         for (String item : postfixExpression) {
             System.out.print(item + "\t");
@@ -48,10 +46,13 @@ public class InfixToPostfixTest {
         // 字符串 -> 字符数组
         char[] nifixCharArray = infix.toCharArray();
 
+        // 用于将遍历的字符转为String的变量，便于匹配
+        String item;
+
         // 遍历字符数组
         for (char temp : nifixCharArray) {
             // 转为String，便于匹配
-            String item = temp + "";
+            item = temp + "";
 
             if (item.matches("[0-9]+")) {
                 // 如果是数字，直接放入输出表达式数组里
@@ -63,10 +64,8 @@ public class InfixToPostfixTest {
                 // 如果是右括号，把操作符栈里的元素弹出并加入到表达式数组，直到遇到左括号
                 while (!operators.peek().getItem().equals("(")) {
                     // 弹出的元素，并转为字符串类型
-                    String popItem = operators.pop().getItem() + "";
-
                     // 加入到输出表达式数组
-                    postfix.add(popItem);
+                    postfix.add(operators.pop().getItem() + "");
                 }
 
                 // 弹出左括号上方所有操作符后，把左括号也弹出，但是不加入输出表达式数组
@@ -78,10 +77,8 @@ public class InfixToPostfixTest {
                 while (!operators.isEmpty() &&
                         getPriority(item) <= getPriority(operators.peek().getItem() + "")) {
                     // 弹出的元素，并转为字符串类型
-                    String popItem = operators.pop().getItem() + "";
-
                     // 加入到输出表达式数组
-                    postfix.add(popItem);
+                    postfix.add(operators.pop().getItem() + "");
                 }
 
                 // 直到栈外优先级大于栈内优先级时，把当前操作符压入到栈中
@@ -91,10 +88,8 @@ public class InfixToPostfixTest {
 
         while (!operators.isEmpty()) { // 最后将栈内元素全部弹出并输出到表达式列表中
             // 弹出的元素，并转为字符串类型
-            String popItem = operators.pop().getItem() + "";
-
             // 加入到输出表达式数组
-            postfix.add(popItem);
+            postfix.add(operators.pop().getItem() + "");
         }
 
         return postfix;

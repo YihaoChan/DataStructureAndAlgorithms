@@ -18,7 +18,7 @@ public class BracketMatchTest {
         while (flag) {
             Scanner sc = new Scanner(System.in);
 
-            System.out.println("输入要检查括号的字符串：(按q退出)");
+            System.out.println("输入要检查括号的字符串：(输入q退出)");
 
             String str = sc.next();
 
@@ -58,10 +58,8 @@ public class BracketMatchTest {
 
             // 如果遍历到右括号，就弹栈
             if (item == ')') {
-                StackByLinkedList.Node node = leftBracketStack.pop();
-
                 // 如果弹出来的元素为null，则直接返回false
-                if (node == null) {
+                if (leftBracketStack.pop() == null) {
                     return false;
                 }
             }
