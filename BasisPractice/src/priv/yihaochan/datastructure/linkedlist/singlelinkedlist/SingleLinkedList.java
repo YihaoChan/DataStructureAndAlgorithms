@@ -1,55 +1,57 @@
 package priv.yihaochan.datastructure.linkedlist.singlelinkedlist;
 
 /**
+ * @Description: 结点类
+ * 在测试时需要创建Node类型的对象，则该结点类需要被外部类使用，所以类的权限修饰符不能是private
+ * 同时，该结点类不只是会被链表类使用，在外部的测试类也会借助该类实现结点之间的连接等操作，
+ * 因此，不能将它作为链表类的内部类
+ */
+class Node<T> {
+    // 数据域(data)
+    private T item;
+
+    // 指针域(next)，指向下一个结点，next指向的下一个结点，也是一个Node
+    private Node next;
+
+    /**
+     * @Description: 结点构造方法
+     */
+    public Node(T item, Node next) {
+        this.item = item;
+        this.next = next;
+    }
+
+    public T getItem() {
+        return this.item;
+    }
+
+    public void setItem(T item) {
+        this.item = item;
+    }
+
+    public Node getNext() {
+        return this.next;
+    }
+
+    /**
+     * @Description: 设置尾结点的下一个结点
+     * 举例：
+     * Person p = new Person("XXX", 18);
+     * 若没有把age进行private：p.age = 20;
+     * 若把age进行private：p.setAge(20);
+     * 同理：
+     * 若没有把next进行private：listOne.getHead().next = listTwo.getHead()
+     * 若把next进行private：listOne.getHead().setNext(listTwo.getHead())
+     */
+    public void setNext(Node next) {
+        this.next = next;
+    }
+}
+
+/**
  * @Description: 实现单链表各种常见操作
  */
 public class SingleLinkedList<T> {
-    /**
-     * @Description: 定义一个结点类为内部类
-     * 在测试时需要创建Node类型的对象，则该结点类需要被外部类使用，所以类的权限修饰符不能是private
-     */
-    class Node {
-        // 数据域(data)
-        private T item;
-
-        // 指针域(next)，指向下一个结点，next指向的下一个结点，也是一个Node
-        private Node next;
-
-        /**
-         * @Description: 结点构造方法
-         */
-        public Node(T item, Node next) {
-            this.item = item;
-            this.next = next;
-        }
-
-        public T getItem() {
-            return this.item;
-        }
-
-        public void setItem(T item) {
-            this.item = item;
-        }
-
-        public Node getNext() {
-            return this.next;
-        }
-
-        /**
-         * @Description: 设置尾结点的下一个结点
-         * 举例：
-         * Person p = new Person("XXX", 18);
-         * 若没有把age进行private：p.age = 20;
-         * 若把age进行private：p.setAge(20);
-         * 同理：
-         * 若没有把next进行private：listOne.getHead().next = listTwo.getHead()
-         * 若把next进行private：listOne.getHead().setNext(listTwo.getHead())
-         */
-        public void setNext(Node next) {
-            this.next = next;
-        }
-    }
-
     // 头结点，不存放数据，用于指向之后的结点
     private final Node head;
 
@@ -66,7 +68,7 @@ public class SingleLinkedList<T> {
      * @Description: 清空链表
      */
     public void clear() {
-        head.next = null;
+        head.setNext(null);
     }
 
     /**
@@ -77,8 +79,8 @@ public class SingleLinkedList<T> {
 
         Node node = head;
 
-        while (node.next != null) {
-            node = node.next;
+        while (node.getNext() != null) {
+            node = node.getNext();
             len++;
         }
 
@@ -89,19 +91,19 @@ public class SingleLinkedList<T> {
      * @Description: 在链表尾处向链表插入元素
      * @param: t 需要插入链表末端的元素的数据域
      */
-    public void insert(T t) {
+    public SingleLinkedList insert(T t) {
         // 找到当前最后一个结点
         Node node = head;
 
-        while (node.next != null) {
-            node = node.next;
+        while (node.getNext() != null) {
+            node = node.getNext();
         }
 
         // 根据新元素创建新结点，并作为最后一个结点，next指向null
-        Node newNode = new Node(t, null);
-
         // 让新结点成为最后一个结点插入到链表最后
-        node.next = newNode;
+        node.setNext(new Node(t, null));
+
+        return this;
     }
 
     /**
@@ -109,7 +111,7 @@ public class SingleLinkedList<T> {
      * @param: i 需要插入的元素在链表中的位置，区间为[0, list.length]
      * @param: t 需要插入元素的数据域
      */
-    public void insert(int i, T t) {
+    public SingleLinkedList insert(int i, T t) {
         /* 单链表只有一个指针域，即只有next没有prev，因此要先找到i位置处的前一个元素才能实现插入 */
 
         if (i < 0 || i > length()) {
@@ -119,8 +121,8 @@ public class SingleLinkedList<T> {
         // 找到原来链表中i-1位置的结点
         Node pre = head;
 
-        while (pre.next != null && i >= 0) {
-            pre = pre.next;
+        while (pre.getNext() != null && i >= 0) {
+            pre = pre.getNext();
             i--;
 
             if (i == 0) {
@@ -129,41 +131,42 @@ public class SingleLinkedList<T> {
         }
 
         // 原来链表中i位置的结点
-        Node curr = pre.next;
+        Node curr = pre.getNext();
 
-        Node newNode = new Node(t, curr);
-        pre.next = newNode;
+        pre.setNext(new Node(t, curr));
+
+        return this;
     }
 
     /**
      * @Description: 删除链表最后一个元素，并返回被删除的元素
      */
-    public Node remove() {
-        if (head.next == null) {
+    public T remove() {
+        if (head.getNext() == null) {
             return null;
         }
 
         // 找到链表中的倒数第二个结点
         Node pre = head;
 
-        while (pre.next != null && pre.next.next != null) {
-            pre = pre.next;
+        while (pre.getNext() != null && pre.getNext().getNext() != null) {
+            pre = pre.getNext();
         }
 
         // 原来的链表中的倒数第一个结点，取出并返回
-        Node removeNode = pre.next;
+        Node removeNode = pre.getNext();
 
         // 原来的链表中的倒数第二个结点指向空
-        pre.next = null;
+        pre.setNext(null);
 
-        return removeNode;
+        return (T) removeNode.getItem();
     }
 
     /**
      * @Description: 删除指定位置i处的元素，并返回被删除的元素
      * @param: i 需要删除元素的位置，区间为[0, list.length]
      */
-    public Node remove(int i) {
+    public T remove(int i) {
         /* 单链表只有一个指针域，即只有next没有prev，因此要先找到i位置处的前一个结点才能实现删除 */
 
         if (i < 0) {
@@ -172,28 +175,28 @@ public class SingleLinkedList<T> {
 
         Node pre = head;
 
-        while (pre.next != null && pre.next.next != null) {
+        while (pre.getNext() != null && pre.getNext().getNext() != null) {
             i--;
 
             // 如果找到删除位置的前一个结点，就将该结点指向删除位置的后一个结点
             if (i < 0) {
-                Node curr = pre.next;
+                Node curr = pre.getNext();
 
-                pre.next = curr.next;
+                pre.setNext(curr.getNext());
 
-                return curr;
+                return (T) curr.getItem();
             }
 
-            pre = pre.next;
+            pre = pre.getNext();
         }
 
         if (i > 0) throw new RuntimeException("索引应该属于[0, list.length]区间，越界！");
 
         // 当链表只有一个结点时，将该结点返回，并将head指向空
-        Node curr = pre.next;
-        pre.next = null;
+        Node curr = pre.getNext();
+        pre.setNext(null);
 
-        return curr;
+        return (T) curr.getItem();
     }
 
     /**
@@ -208,8 +211,8 @@ public class SingleLinkedList<T> {
 
         Node curr = head;
 
-        while (curr.next != null && i >= 0) {
-            curr = curr.next;
+        while (curr.getNext() != null && i >= 0) {
+            curr = curr.getNext();
             i--;
 
             if (i < 0) {
@@ -235,16 +238,16 @@ public class SingleLinkedList<T> {
      * 在同样的时间下，快指针走的路程为慢指针的两倍，那么当快指针走到链表的最后一个结点时，慢指针刚好处于中间结点位置处
      */
     public Node getMiddleNode() {
-        if (head.next == null) {
+        if (head.getNext() == null) {
             return null;
         }
 
-        Node slowPointer = head.next;
-        Node fastPointer = head.next;
+        Node slowPointer = head.getNext();
+        Node fastPointer = head.getNext();
 
-        while (fastPointer.next != null && fastPointer.next.next != null) {
-            slowPointer = slowPointer.next;
-            fastPointer = fastPointer.next.next;
+        while (fastPointer.getNext() != null && fastPointer.getNext().getNext() != null) {
+            slowPointer = slowPointer.getNext();
+            fastPointer = fastPointer.getNext().getNext();
         }
 
         // 链表结点个数为奇数时,返回的是中间结点；链表结点个数为偶数时，返回的是中间两个结点中的前一个
@@ -255,22 +258,22 @@ public class SingleLinkedList<T> {
      * @Description: 返回链表最后一个结点
      */
     public Node getLastNode() {
-        if (head.next == null) {
+        if (head.getNext() == null) {
             return null;
         }
 
-        Node node = head.next;
+        Node node = head.getNext();
 
-        while (node.next != null) {
-            node = node.next;
+        while (node.getNext() != null) {
+            node = node.getNext();
         }
 
         return node;
     }
 
     /**
-     * @Description: 返回指定位置i处的元素
-     * @param: i 需要查找的元素在链表中的索引
+     * @Description: 返回指定位置i处的结点
+     * @param: i 需要查找的结点在链表中的索引
      */
     public Node getSpecifiedNode(int i) {
         if (i < 0) {
@@ -279,8 +282,8 @@ public class SingleLinkedList<T> {
 
         Node node = head;
 
-        while (node.next != null && i >= 0) {
-            node = node.next;
+        while (node.getNext() != null && i >= 0) {
+            node = node.getNext();
             i--;
 
             if (i < 0) {
@@ -309,7 +312,7 @@ public class SingleLinkedList<T> {
 
         // 让快指针先移动k个结点
         while (k > 0) {
-            fastPointer = fastPointer.next;
+            fastPointer = fastPointer.getNext();
             k--;
 
             if (fastPointer == null) {
@@ -319,8 +322,8 @@ public class SingleLinkedList<T> {
 
         // 快慢指针同时步进，直到快指针指向null
         while (fastPointer != null) {
-            slowPointer = slowPointer.next;
-            fastPointer = fastPointer.next;
+            slowPointer = slowPointer.getNext();
+            fastPointer = fastPointer.getNext();
         }
 
         return slowPointer;
@@ -337,11 +340,11 @@ public class SingleLinkedList<T> {
         // 初始时索引指向head头结点，设为-1
         int index = -1;
 
-        while (node.next != null) {
-            node = node.next;
+        while (node.getNext() != null) {
+            node = node.getNext();
             index++;
 
-            if (node.item.equals(t)) {
+            if (node.getItem().equals(t)) {
                 // ==：本质上是比较地址；equals：比较的是两个对象之间的内容
                 return index;
             }
@@ -355,15 +358,15 @@ public class SingleLinkedList<T> {
      * @Description: 遍历查看元素
      */
     public void show() {
-        if (head.next == null) {
+        if (head.getNext() == null) {
             return;
         }
 
         Node node = head;
 
-        while (node.next != null) {
-            node = node.next;
-            System.out.print(node.item + "\t");
+        while (node.getNext() != null) {
+            node = node.getNext();
+            System.out.print(node.getItem() + "\t");
         }
 
         System.out.println();
@@ -383,9 +386,9 @@ public class SingleLinkedList<T> {
             return;
         }
 
-        showReverseRecursion(node.next);
+        showReverseRecursion(node.getNext());
 
-        System.out.print(node.item + "\t");
+        System.out.print(node.getItem() + "\t");
     }
 
     /**
@@ -393,24 +396,24 @@ public class SingleLinkedList<T> {
      * @param: node 需要从哪个地方开始反转的结点
      */
     public void reverseInplace(Node node) {
-        if (node == null || node.next == null) {
+        if (node == null || node.getNext() == null) {
             return;
         }
 
-        Node pre = node.next;
+        Node pre = node.getNext();
 
-        Node curr = pre.next;
+        Node curr = pre.getNext();
 
         while (curr != null) {
             // 跳过当前结点，使上一个结点越过当前结点指向后一个结点
-            pre.next = curr.next;
+            pre.setNext(curr.getNext());
 
             // 把取出来的结点放到第一个结点
-            curr.next = node.next;
-            node.next = curr;
+            curr.setNext(node.getNext());
+            node.setNext(curr);
 
             // 推进，更新下一个结点作为待反转的结点
-            curr = pre.next;
+            curr = pre.getNext();
         }
     }
 
@@ -428,16 +431,16 @@ public class SingleLinkedList<T> {
          * 要传入node.next，所以如果是空表，传入的head的next为null，此时程序退出
          * 如果链表只有一个结点，传入了head，那么node.next为1，传到函数里面，1.next为null，刚好符合不需要反转，程序退出
          */
-        if (node == null || node.next == null) {
+        if (node == null || node.getNext() == null) {
             return node;
         }
 
         // 递归直到最后一个结点
-        Node newList = reverseRecursion(node.next);
+        Node newList = reverseRecursion(node.getNext());
 
         // 反转位置
-        node.next.next = node;
-        node.next = null;
+        node.getNext().setNext(node);
+        node.setNext(null);
 
         return newList;
     }
@@ -453,9 +456,9 @@ public class SingleLinkedList<T> {
         Node fastPointer = head;
 
         // 如果链表中只有一个/两个结点，那么下面的判断条件不成立，链表为无环
-        while (fastPointer.next != null && fastPointer.next.next != null) {
-            slowPointer = slowPointer.next;
-            fastPointer = fastPointer.next.next;
+        while (fastPointer.getNext() != null && fastPointer.getNext().getNext() != null) {
+            slowPointer = slowPointer.getNext();
+            fastPointer = fastPointer.getNext().getNext();
 
             if (slowPointer == fastPointer) {
                 return true;
@@ -480,9 +483,9 @@ public class SingleLinkedList<T> {
         // 当找到快慢指针相遇点时，将慢指针取出，放入temp
         Node temp = null;
 
-        while (fastPointer.next != null && fastPointer.next.next != null) {
-            slowPointer = slowPointer.next;
-            fastPointer = fastPointer.next.next;
+        while (fastPointer.getNext() != null && fastPointer.getNext().getNext() != null) {
+            slowPointer = slowPointer.getNext();
+            fastPointer = fastPointer.getNext().getNext();
 
             if (slowPointer == fastPointer) {
                 temp = slowPointer;
@@ -494,8 +497,8 @@ public class SingleLinkedList<T> {
         Node entryLoopNode = node;
 
         while (entryLoopNode != temp) {
-            temp = temp.next;
-            entryLoopNode = entryLoopNode.next;
+            temp = temp.getNext();
+            entryLoopNode = entryLoopNode.getNext();
         }
 
         return entryLoopNode;
@@ -517,23 +520,20 @@ public class SingleLinkedList<T> {
 
             /* 若两个链表相交，则它们尾结点一定相同(不只是元素相等，而是整个结点都相同) */
 
-            Node headOne = listOne.head;
-            Node headTwo = listTwo.head;
-
             // 临时变量用于步进，否则会影响传入链表的指针移动
-            Node tempOne = headOne;
-            Node tempTwo = headTwo;
+            Node tempOne = listOne.head;
+            Node tempTwo = listTwo.head;
 
-            while (tempOne.next != null) {
-                tempOne = tempOne.next;
+            while (tempOne.getNext() != null) {
+                tempOne = tempOne.getNext();
             }
 
-            while (tempTwo.next != null) {
-                tempTwo = tempTwo.next;
+            while (tempTwo.getNext() != null) {
+                tempTwo = tempTwo.getNext();
             }
 
             return tempOne == tempTwo;
-        } else if ((isListOneLoop && isListTwoLoop) == true) {
+        } else if ((isListOneLoop && isListTwoLoop)) {
             /* 如果两个链表都有环，就采用以下方法判断是否相交 */
 
             /*
@@ -555,8 +555,8 @@ public class SingleLinkedList<T> {
                 // 临时变量用于步进，否则会影响后续判断结点之间是否相同
                 Node temp = entryLoopListOne;
 
-                while (temp.next != null) {
-                    temp = temp.next;
+                while (temp.getNext() != null) {
+                    temp = temp.getNext();
 
                     if (temp == entryLoopListTwo) { // 若和另一个链表的入环点相同，则相交
                         return true;
@@ -592,21 +592,21 @@ public class SingleLinkedList<T> {
             diffLen = lenListOne - lenListTwo;
 
             while (diffLen > 0) {
-                nodeOne = nodeOne.next;
+                nodeOne = nodeOne.getNext();
                 diffLen--;
             }
         } else {
             diffLen = lenListTwo - lenListOne;
 
             while (diffLen > 0) {
-                nodeTwo = nodeTwo.next;
+                nodeTwo = nodeTwo.getNext();
                 diffLen--;
             }
         }
 
         while (nodeOne != nodeTwo) {
-            nodeOne = nodeOne.next;
-            nodeTwo = nodeTwo.next;
+            nodeOne = nodeOne.getNext();
+            nodeTwo = nodeTwo.getNext();
         }
 
         return nodeOne;
@@ -623,12 +623,10 @@ public class SingleLinkedList<T> {
         /* 两链表已相交，均为无环链表 */
 
         // 将两个链表首尾相连，成为一个新链表
-        listOne.getLastNode().next = listTwo.head;
+        listOne.getLastNode().setNext(listTwo.head);
 
         // 在新得到的链表上得到环的入口，即两链表的交点
-        Node intersection = listOne.getLoopEntry(listOne.head);
-
-        return intersection;
+        return listOne.getLoopEntry(listOne.head);
     }
 
     /**
@@ -658,13 +656,13 @@ public class SingleLinkedList<T> {
             Node tempOne = nodeOne;
             Node tempTwo = nodeTwo;
 
-            while (tempOne.next != entryLoopListOne) {
-                tempOne = tempOne.next;
+            while (tempOne.getNext() != entryLoopListOne) {
+                tempOne = tempOne.getNext();
                 lenHeadToEntryOne++;
             }
 
-            while (tempTwo.next != entryLoopListTwo) {
-                tempTwo = tempTwo.next;
+            while (tempTwo.getNext() != entryLoopListTwo) {
+                tempTwo = tempTwo.getNext();
                 lenHeadToEntryTwo++;
             }
 
@@ -674,21 +672,21 @@ public class SingleLinkedList<T> {
                 diffLen = lenHeadToEntryOne - lenHeadToEntryTwo;
 
                 while (diffLen > 0) {
-                    nodeOne = nodeOne.next;
+                    nodeOne = nodeOne.getNext();
                     diffLen--;
                 }
             } else {
                 diffLen = lenHeadToEntryTwo - lenHeadToEntryOne;
 
                 while (diffLen > 0) {
-                    nodeTwo = nodeTwo.next;
+                    nodeTwo = nodeTwo.getNext();
                     diffLen--;
                 }
             }
 
             while (nodeOne != nodeTwo) {
-                nodeOne = nodeOne.next;
-                nodeTwo = nodeTwo.next;
+                nodeOne = nodeOne.getNext();
+                nodeTwo = nodeTwo.getNext();
             }
 
             return nodeOne;
@@ -728,28 +726,28 @@ public class SingleLinkedList<T> {
             Node newNode = new Node((T) (Integer) i, null);
 
             // 将上一个结点指向当前新结点
-            node.next = newNode;
+            node.setNext(newNode);
 
             // 步进
             node = newNode;
 
-            System.out.print(newNode.item + "\t");
+            System.out.print(newNode.getItem() + "\t");
         }
 
         System.out.println();
 
         // 尾结点和第一个结点相连，构成循环链表
-        node.next = head.next;
+        node.setNext(head.getNext());
 
         // 当前结点的上一个结点
         Node prev = head;
         // 当前结点
-        Node curr = head.next;
+        Node curr = head.getNext();
 
         // 两指针先走k步，实现从第k个结点开始遍历
         while (k != 1) {
-            prev = prev.next;
-            curr = curr.next;
+            prev = prev.getNext();
+            curr = curr.getNext();
 
             k--;
         }
@@ -758,25 +756,25 @@ public class SingleLinkedList<T> {
         int count = 1;
 
         /* 留下最后一个结点 */
-        while (prev.next != prev) {
+        while (prev.getNext() != prev) {
             count++;
-            prev = prev.next;
-            curr = curr.next;
+            prev = prev.getNext();
+            curr = curr.getNext();
 
             if (count == m) {
-                System.out.print(curr.item + "->");
+                System.out.print(curr.getItem() + "->");
 
                 // 前一个结点指向当前结点的后一个结点，即删除当前结点
-                prev.next = curr.next;
+                prev.setNext(curr.getNext());
 
                 // 计数器归1
                 count = 1;
 
                 // 更新当前结点
-                curr = curr.next;
+                curr = curr.getNext();
             }
         }
 
-        System.out.println("[remain]" + curr.item);
+        System.out.println("[remain]" + curr.getItem());
     }
 }

@@ -1,67 +1,69 @@
 package priv.yihaochan.datastructure.linkedlist.twowaylinkedlist;
 
 /**
+ * @Description: 结点类
+ * 在测试时需要创建Node类型的对象，则该结点类需要被外部类使用，所以类的权限修饰符不能是private
+ * 同时，该结点类不只是会被链表类使用，在外部的测试类也会借助该类实现结点之间的连接等操作，
+ * 因此，不能将它作为链表类的内部类
+ */
+class Node<T> {
+    // 数据域(data)
+    private T item;
+
+    // 指针域(prev)，指向上一个结点，prev指向的上一个结点，也是一个Node
+    private Node prev;
+
+    // 指针域(next)，指向下一个结点，next指向的下一个结点，也是一个Node
+    private Node next;
+
+    /**
+     * @Description: 结点构造方法
+     */
+    public Node(T item, Node prev, Node next) {
+        this.item = item;
+        this.prev = prev;
+        this.next = next;
+    }
+
+    public T getItem() {
+        return this.item;
+    }
+
+    public void setItem(T item) {
+        this.item = item;
+    }
+
+    public Node getPrev() {
+        return this.prev;
+    }
+
+    public void setPrev(Node prev) {
+        this.prev = prev;
+    }
+
+    public Node getNext() {
+        return this.next;
+    }
+
+    /**
+     * @Description: 设置尾结点的下一个节点
+     * 举例：
+     * Person p = new Person("XXX", 18);
+     * 若没有把age进行private：p.age = 20;
+     * 若把age进行private：p.setAge(20);
+     * 同理：
+     * 若没有把next进行private：listOne.getHead().next = listTwo.getHead()
+     * 若把next进行private：listOne.getHead().setNext(listTwo.getHead())
+     */
+    public void setNext(Node next) {
+        this.next = next;
+    }
+}
+
+/**
  * @Description: 实现双链表各种常见操作
  */
 public class TwoWayLinkedList<T> {
-    /**
-     * @Description: 定义一个结点类为内部类
-     * 在测试时需要创建Node类型的对象，则该结点类需要被外部类使用，所以类的权限修饰符不能是private
-     */
-    class Node {
-        // 数据域(data)
-        private T item;
-
-        // 指针域(prev)，指向上一个结点，prev指向的上一个结点，也是一个Node
-        private Node prev;
-
-        // 指针域(next)，指向下一个结点，next指向的下一个结点，也是一个Node
-        private Node next;
-
-        /**
-         * @Description: 结点构造方法
-         */
-        public Node(T item, Node prev, Node next) {
-            this.item = item;
-            this.prev = prev;
-            this.next = next;
-        }
-
-        public T getItem() {
-            return this.item;
-        }
-
-        public void setItem(T item) {
-            this.item = item;
-        }
-
-        public Node getPrev() {
-            return this.prev;
-        }
-
-        public void setPrev(Node prev) {
-            this.prev = prev;
-        }
-
-        public Node getNext() {
-            return this.next;
-        }
-
-        /**
-         * @Description: 设置尾结点的下一个节点
-         * 举例：
-         * Person p = new Person("XXX", 18);
-         * 若没有把age进行private：p.age = 20;
-         * 若把age进行private：p.setAge(20);
-         * 同理：
-         * 若没有把next进行private：listOne.getHead().next = listTwo.getHead()
-         * 若把next进行private：listOne.getHead().setNext(listTwo.getHead())
-         */
-        public void setNext(Node next) {
-            this.next = next;
-        }
-    }
-
     // 头结点，不存放数据，用于指向之后的结点
     private final Node head;
 
@@ -83,7 +85,7 @@ public class TwoWayLinkedList<T> {
      * @Description: 清空链表
      */
     public void clear() {
-        head.next = null;
+        head.setNext(null);
         tail = null;
     }
 
@@ -95,8 +97,8 @@ public class TwoWayLinkedList<T> {
 
         Node node = head;
 
-        while (node.next != null) {
-            node = node.next;
+        while (node.getNext() != null) {
+            node = node.getNext();
             len++;
         }
 
@@ -107,27 +109,29 @@ public class TwoWayLinkedList<T> {
      * @Description: 在链表尾处向链表插入元素
      * @param: t 需要插入链表末端的元素的数据域
      */
-    public void insert(T t) {
+    public TwoWayLinkedList insert(T t) {
         /* 空链表没有尾结点，要单独处理 */
 
         Node newNode;
 
         // 如果链表为空，则创建新结点，让新结点成为尾结点，并让头结点指向它
-        if (head.next == null) {
+        if (head.getNext() == null) {
             newNode = new Node(t, head, null);
             tail = newNode;
-            head.next = tail;
+            head.setNext(tail);
         } else { // 如果链表不为空
 
             // 根据新元素创建新结点，并作为尾结点，prev指向原来的尾结点，next指向null
             newNode = new Node(t, tail, null);
 
             // 让原来的尾结点的next指向新结点
-            tail.next = newNode;
+            tail.setNext(newNode);
 
             // 再让新结点成为尾结点
             tail = newNode;
         }
+
+        return this;
     }
 
     /**
@@ -135,7 +139,7 @@ public class TwoWayLinkedList<T> {
      * @param: i 需要插入的元素在链表中的位置，区间为[0, list.length]
      * @param: t 需要插入元素的数据域
      */
-    public void insert(int i, T t) {
+    public TwoWayLinkedList insert(int i, T t) {
         /* 双链表有两个指针域，prev可以指向之前的元素，所以找到位置i处结点即可 */
 
         if (i < 0 || i > length()) {
@@ -148,8 +152,8 @@ public class TwoWayLinkedList<T> {
         // 找到原来链表中i-1位置的结点
         Node pre = head;
 
-        while (pre.next != null && i >= 0) {
-            pre = pre.next;
+        while (pre.getNext() != null && i >= 0) {
+            pre = pre.getNext();
             i--;
 
             if (i == 0) {
@@ -158,44 +162,46 @@ public class TwoWayLinkedList<T> {
         }
 
         // 原来链表中i位置的结点
-        Node curr = pre.next;
+        Node curr = pre.getNext();
 
         newNode = new Node(t, pre, curr);
-        pre.next = newNode;
+        pre.setNext(newNode);
 
         /* 原来第i处的结点的prev指向，如果插入位置的后一个位置为null，就没有prev指针，需要单独处理 */
         if (curr != null) {
-            curr.prev = newNode;
+            curr.setPrev(newNode);
         } else {
             // 如果curr是空，表明插入的元素索引到了链表末端，则将它作为尾结点
             tail = newNode;
         }
+
+        return this;
     }
 
     /**
      * @Description: 删除链表最后一个元素，并返回被删除的元素，即删除尾结点
      */
-    public Node remove() {
-        if (head.next == null) {
+    public T remove() {
+        if (head.getNext() == null) {
             return null;
         }
 
         Node removeNode = tail;
 
         // 尾结点的前一个结点的next指向null
-        tail.prev.next = null;
+        tail.getPrev().setNext(null);
 
         // 尾结点的上一个结点作为新的尾结点
-        tail = tail.prev;
+        tail = tail.getPrev();
 
-        return removeNode;
+        return (T) removeNode.getItem();
     }
 
     /**
      * @Description: 删除指定位置i处的元素，并返回被删除的元素
      * @param: i 需要删除元素的位置，区间为[0, list.length]
      */
-    public Node remove(int i) {
+    public T remove(int i) {
         // 双链表有两个指针域，prev可以指向之前的元素，所以找到位置i处结点即可实现独立删除
 
         if (i < 0) {
@@ -205,8 +211,8 @@ public class TwoWayLinkedList<T> {
         Node curr = head;
 
         // 找到对应索引的结点
-        while (curr.next != null) {
-            curr = curr.next;
+        while (curr.getNext() != null) {
+            curr = curr.getNext();
             i--;
 
             if (i < 0) {
@@ -220,19 +226,19 @@ public class TwoWayLinkedList<T> {
         Node removeNode = curr;
 
         // 前一个结点的next指向后一个结点
-        curr.prev.next = curr.next;
+        curr.getPrev().setNext(curr.getNext());
 
         // 如果后一个结点为null，要单独讨论
-        if (curr.next != null) {
+        if (curr.getNext() != null) {
             // 如果被删除的结点不是尾结点，则后一个结点的prev指向前一个结点
-            curr.next.prev = curr.prev;
+            curr.getNext().setPrev(curr.getPrev());
         } else {
             // 如果被删除的结点是尾结点，那么后一个位置为null，没有prev
             // 同时将删除的结点的前一个结点作为尾结点
-            tail = curr.prev;
+            tail = curr.getPrev();
         }
 
-        return removeNode;
+        return (T) removeNode.getItem();
     }
 
     /**
@@ -247,8 +253,8 @@ public class TwoWayLinkedList<T> {
 
         Node curr = head;
 
-        while (curr.next != null) {
-            curr = curr.next;
+        while (curr.getNext() != null) {
+            curr = curr.getNext();
             i--;
 
             if (i < 0) {
@@ -286,8 +292,8 @@ public class TwoWayLinkedList<T> {
 
         Node curr = head;
 
-        while (curr.next != null) {
-            curr = curr.next;
+        while (curr.getNext() != null) {
+            curr = curr.getNext();
             i--;
 
             if (i < 0) {
@@ -311,11 +317,11 @@ public class TwoWayLinkedList<T> {
         // 初始时索引指向head头结点，设为-1
         int index = -1;
 
-        while (node.next != null) {
-            node = node.next;
+        while (node.getNext() != null) {
+            node = node.getNext();
             index++;
 
-            if (node.item.equals(t)) {
+            if (node.getItem().equals(t)) {
                 // ==：本质上是比较地址；equals：比较的是两个对象之间的内容
                 return index;
             }
@@ -329,15 +335,15 @@ public class TwoWayLinkedList<T> {
      * @Description: 遍历查看元素
      */
     public void show() {
-        if (head.next == null) {
+        if (head.getNext() == null) {
             return;
         }
 
         Node node = head;
 
-        while (node.next != null) {
-            node = node.next;
-            System.out.print(node.item + "\t");
+        while (node.getNext() != null) {
+            node = node.getNext();
+            System.out.print(node.getItem() + "\t");
         }
 
         System.out.println();
