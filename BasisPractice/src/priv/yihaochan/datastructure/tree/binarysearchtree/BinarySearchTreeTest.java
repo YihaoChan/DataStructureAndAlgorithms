@@ -12,7 +12,6 @@ public class BinarySearchTreeTest {
                 .put("E", "5")
                 .put("B", "2")
                 .put("A", "1")
-                .put("B", "2")
                 .put("D", "4")
                 .put("F", "6")
                 .put("H", "8")

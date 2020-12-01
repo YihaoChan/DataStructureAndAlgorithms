@@ -111,7 +111,6 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
     }
 
     /**
-     * @MethodName:
      * @Description: 添加元素
      */
     public BinarySearchTree put(Key key, Value value) {
@@ -185,8 +184,11 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
             if (curr.right == null) {
                 // 如果没有右子树，则直接让左子树替换掉待删除结点
                 return curr.left;
+            } else if (curr.left == null) {
+                // 如果没有左子树，则直接让右子树替换掉待删除结点
+                return curr.right;
             } else {
-                // 如果有右子树，则从该右子树开始，一直寻找左子树结点，直到循环到空时返回该结点
+                // 如果有左右子树，则从该右子树开始，一直往左找子结点，直到循环到空时返回该结点
                 // 因为已经找到待删除结点，所以不需要再递归delete，只需要遍历找到最小结点即可
                 Node findMinNode = curr.right;
 
