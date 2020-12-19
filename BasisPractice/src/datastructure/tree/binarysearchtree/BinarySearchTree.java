@@ -6,18 +6,15 @@ import java.util.Queue;
 
 /**
  * @Description: 用链表实现二叉查找树
- * 左子结点一定小于父结点，右子结点一定大于父结点
+ * 左子结点的关键字一定小于父结点的关键字，右子结点的关键字一定大于父结点的关键字
  */
-public class BinarySearchTree<Key extends Comparable<Key>, Value> {
+public class BinarySearchTree<T extends Comparable<T>> {
     /**
      * @Description: 结点类
      */
-    public class Node {
-        // 键
-        private Key key;
-
-        // 值
-        private Value value;
+    class Node {
+        // 数据域
+        private T item;
 
         // 左子结点
         private Node left;
@@ -26,43 +23,14 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
         private Node right;
 
         /* 构造方法 */
-        public Node(Key key, Value value, Node left, Node right) {
-            this.key = key;
-            this.value = value;
-            this.left = left;
-            this.right = right;
+        public Node(T item) {
+            this.item = item;
+            this.left = null;
+            this.right = null;
         }
 
-        public Key getKey() {
-            return key;
-        }
-
-        public void setKey(Key key) {
-            this.key = key;
-        }
-
-        public Value getValue() {
-            return value;
-        }
-
-        public void setValue(Value value) {
-            this.value = value;
-        }
-
-        public Node getLeft() {
-            return left;
-        }
-
-        public void setLeft(Node left) {
-            this.left = left;
-        }
-
-        public Node getRight() {
-            return right;
-        }
-
-        public void setRight(Node right) {
-            this.right = right;
+        public T getItem() {
+            return this.item;
         }
     }
 
@@ -70,41 +38,41 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
     private Node root;
 
     // 元素个数
-    private int num;
+    private int size;
 
+    /* 构造方法 */
+    public BinarySearchTree() {
+        root = null;
+        size = 0;
+    }
 
-    public int size() {
-        return num;
+    public int getSize() {
+        return this.size;
     }
 
 
     /**
      * @Description: 添加元素 - 逻辑
      */
-    private Node put(Node curr, Key key, Value value) {
+    private Node insert(Node curr, T item) {
         /* 递归寻找添加元素的位置 */
 
         // 结束条件：遍历到的结点为空，则将根据新元素创建新结点，然后返回
         if (curr == null) {
-            num++;
+            size++;
 
-            return new Node(key, value, null, null);
+            return new Node(item);
         }
 
-        // 比较当前遍历到的结点的key和传入的key的大小
-        int cmp = key.compareTo(curr.key);
+        // 比较当前遍历到的结点的关键字和传入的关键字的大小
+        int cmp = item.compareTo(curr.item);
 
         if (cmp > 0) {
-            // 传入的key大于遍历到的结点的key，则向右继续找，并且要让当前结点的右子结点作为下一次递归的父结点
-            // 不能返回，是因为这一层的功能是递归寻找下一个结点，目的就是直到找到null为止才返回
-            curr.right = put(curr.right, key, value);
+            // 传入的关键字大于遍历到的结点的关键字，则向右继续找，并且要让当前结点的右子结点作为下一次递归的父结点
+            curr.right = insert(curr.right, item);
         } else if (cmp < 0) {
-            // 传入的key小于遍历到的结点的key，则向左继续找，并且要让当前结点的左子结点作为下一次递归的父结点
-            // 不能返回，是因为这一层的功能是递归寻找下一个结点，目的就是直到找到null为止才返回
-            curr.left = put(curr.left, key, value);
-        } else {
-            // 如果传入的key和遍历到的结点的key相同，则将value进行覆盖
-            curr.value = value;
+            // 传入的关键字小于遍历到的结点的关键字，则向左继续找，并且要让当前结点的左子结点作为下一次递归的父结点
+            curr.left = insert(curr.left, item);
         }
 
         return curr;
@@ -113,73 +81,36 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
     /**
      * @Description: 添加元素
      */
-    public BinarySearchTree put(Key key, Value value) {
+    public BinarySearchTree insert(T item) {
         // 让添加元素后的根结点成为新的根结点
-        root = put(root, key, value);
+        root = insert(root, item);
 
         return this;
     }
 
     /**
-     * @Description: 查看传入key所对应的value - 逻辑
-     */
-    private Value get(Node curr, Key key) {
-        /* 递归寻找查看元素的位置 */
-
-        // 结束条件：遍历到的结点为空，则说明没有对应的key，直接返回null
-        if (curr == null) {
-            return null;
-        }
-
-        // 比较当前遍历到的结点的key和传入的key的大小
-        int cmp = key.compareTo(curr.key);
-
-        if (cmp > 0) {
-            // 传入的key大于遍历到的结点的key，则说明key在右边，则返回右子树的value
-            // 可以返回，是因为这一层的功能是找到下一个结点的value
-            return get(curr.right, key);
-        } else if (cmp < 0) {
-            // 传入的key小于遍历到的结点的key，则说明key在左边，则返回左子树的value
-            // 可以返回，是因为这一层的功能是找到下一个结点的value
-            return get(curr.left, key);
-        } else {
-            // 如果传入的key和遍历到的结点的key相同，则将value返回
-            return curr.value;
-        }
-    }
-
-    /**
-     * @Description: 查看传入key所对应的value
-     */
-    public Value get(Key key) {
-        return get(root, key);
-    }
-
-    /**
      * @Description: 删除元素 - 逻辑
      */
-    private Node delete(Node curr, Key key) {
+    private Node delete(Node curr, T item) {
         /* 递归寻找删除元素的位置 */
 
-        // 结束条件：遍历到的结点为空，则说明没有对应的key，直接返回null
+        // 结束条件：遍历到的结点为空，则说明没有对应的关键字，直接返回null
         if (curr == null) {
             return null;
         }
 
-        // 比较
-        int cmp = key.compareTo(curr.key);
+        // 比较传入的关键字和当前递归到的结点的关键字大小
+        int cmp = item.compareTo(curr.item);
 
         if (cmp > 0) {
-            // 传入的key大于遍历到的结点的key，则向右继续找，并且要让当前结点的右子结点作为下一次递归的父结点
-            // 不能马上return该结点，因为找到该结点后还要进行边之间的操作、连接
-            curr.right = delete(curr.right, key);
+            // 传入的关键字大于遍历到的结点的关键字，则向右继续找，并且要让当前结点的右子结点作为下一次递归的父结点
+            curr.right = delete(curr.right, item);
         } else if (cmp < 0) {
-            // 传入的key大于遍历到的结点的key，则向左继续找，并且要让当前结点的左子结点作为下一次递归的父结点
-            // 不能马上return该结点，因为找到该结点后还要进行边之间的操作、连接
-            curr.left = delete(curr.left, key);
+            // 传入的关键字大于遍历到的结点的关键字，则向左继续找，并且要让当前结点的左子结点作为下一次递归的父结点
+            curr.left = delete(curr.left, item);
         } else {
             // 已经找到待删除结点，下一步进行结点之间的替换
-            num--;
+            size--;
 
             if (curr.right == null) {
                 // 如果没有右子树，则直接让左子树替换掉待删除结点
@@ -187,23 +118,51 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
             } else if (curr.left == null) {
                 // 如果没有左子树，则直接让右子树替换掉待删除结点
                 return curr.right;
-            } else {
-                // 如果有左右子树，则从该右子树开始，一直往左找子结点，直到循环到空时返回该结点
-                // 因为已经找到待删除结点，所以不需要再递归delete，只需要遍历找到最小结点即可
-                Node findMinNode = curr.right;
+            } else { // 有左右子树
+                Node minParentNode = curr.right; // 最小结点的父结点，用于将左子树置空
 
-                // 当findMinNode的左子树结点的左子树结点为空时，说明findMinNode的左子树结点为最小结点
-                while (findMinNode.left.left != null) {
-                    findMinNode = findMinNode.left;
+                Node minNode; // 最小结点
+
+                Node leftChild = curr.left; // 替换后的结点的左子结点为当前结点的左子结点
+
+                Node rightChild; // 替换后的结点的右子结点
+
+                if (minParentNode.left == null) { // 右子树没有左子结点
+                    // 则最小结点即为其父结点的初始值
+                    minNode = minParentNode;
+
+                    // 替换后的结点的右子结点需置空
+                    rightChild = null;
+                } else if (minParentNode.left.left == null) { // 右子树的左子结点没有左孩子
+                    // 最小结点为其父结点初始值的左子结点
+                    minNode = minParentNode.left;
+
+                    // 替换后的结点的右子结点为待删除结点的右子结点
+                    rightChild = curr.right;
+                } else { // 右子树的左子结点有左孩子的左孩子的...
+                    while (minParentNode.left.left != null) {
+                        // 循环找到最小结点的父结点
+                        minParentNode = minParentNode.left;
+                    }
+
+                    // 最小结点为其父结点的左子结点
+                    minNode = minParentNode.left;
+
+                    // 替换后的结点的右子结点为待删除结点的右子结点
+                    rightChild = curr.right;
                 }
 
-                Node minNode = findMinNode.left;
+                // 断开最小结点和其父结点的连接
+                minParentNode.left = null;
 
-                // 倒数第二个结点的左子树结点指向空，断开连接
-                findMinNode.left = null;
-
-                // 这层循环的功能是：在已经找到待删除结点的基础上，找一个能替换该待删除结点的最小结点，所以直接返回它即可
+                // 将最小结点替换待删除结点
                 curr = minNode;
+
+                // 替换后的结点的左子结点为原来待删除结点的左子结点不变
+                curr.left = leftChild;
+
+                // 替换后的结点的右子结点
+                curr.right = rightChild;
             }
         }
 
@@ -213,13 +172,13 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
     /**
      * @Description: 删除元素
      */
-    public void delete(Key key) {
+    public void delete(T item) {
         // 让删除元素后的根结点成为新的根结点
-        root = delete(root, key);
+        root = delete(root, item);
     }
 
     /**
-     * @Description: 查找树中最小的键 - 逻辑
+     * @Description: 查找树中最小的结点 - 逻辑
      */
     private Node findMin(Node curr) {
         // 结束条件：递归遍历当前结点的左子树为空，则返回当前结点
@@ -231,14 +190,14 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
     }
 
     /**
-     * @Description: 查找树中最小的键
+     * @Description: 查找树中最小的结点
      */
     public Node findMin() {
         return findMin(root);
     }
 
     /**
-     * @Description: 查找树中最大的键 - 逻辑
+     * @Description: 查找树中最大的结点 - 逻辑
      */
     private Node findMax(Node curr) {
         // 结束条件：递归遍历当前结点的右子树为空，则返回当前结点
@@ -250,7 +209,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
     }
 
     /**
-     * @Description: 查找树中最大的键
+     * @Description: 查找树中最大的结点
      */
     public Node findMax() {
         return findMax(root);
@@ -267,7 +226,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
             return;
         }
 
-        System.out.println(curr.key + "=" + curr.value);
+        System.out.println(curr.item);
         preOrderTraversal(curr.left);
         preOrderTraversal(curr.right);
     }
@@ -291,7 +250,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
         }
 
         inOrderTraversal(curr.left);
-        System.out.println(curr.key + "=" + curr.value);
+        System.out.println(curr.item);
         inOrderTraversal(curr.right);
     }
 
@@ -315,7 +274,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
 
         postOrderTraversal(curr.left);
         postOrderTraversal(curr.right);
-        System.out.println(curr.key + "=" + curr.value);
+        System.out.println(curr.item);
     }
 
     /**
@@ -342,7 +301,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
         while (!queue.isEmpty()) {
             curr = queue.remove();
 
-            System.out.println(curr.key + "=" + curr.value);
+            System.out.println(curr.item);
 
             if (curr.left != null) {
                 queue.add(curr.left);
@@ -392,7 +351,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value> {
     private void findLeaf(Node curr) {
         // 结束条件：如果都没有左子结点和右子结点，那么它就是叶结点
         if (curr.left == null && curr.right == null) {
-            System.out.println("叶子结点为：" + curr.key);
+            System.out.println("叶子结点为：" + curr.item);
         }
 
         if (curr.left != null) {

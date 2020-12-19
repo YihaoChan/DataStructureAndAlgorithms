@@ -5,37 +5,34 @@ package datastructure.tree.binarysearchtree;
  */
 public class BinarySearchTreeTest {
     public static void main(String[] args) {
-        BinarySearchTree<String, String> binaryTree = new BinarySearchTree<>();
+        BinarySearchTree<Integer> binaryTree = new BinarySearchTree<>();
 
         /* 添加元素 */
         binaryTree
-                .put("E", "5")
-                .put("B", "2")
-                .put("A", "1")
-                .put("D", "4")
-                .put("F", "6")
-                .put("H", "8")
-                .put("C", "3")
-                .put("I", "9");
+                .insert(10)
+                .insert(9)
+                .insert(12)
+                .insert(7)
+                .insert(11)
+                .insert(15)
+                .insert(8)
+                .insert(14)
+                .insert(16);
 
-        System.out.println("添加元素后的树结点个数：" + binaryTree.size());
+        System.out.println("添加元素后的树结点个数：" + binaryTree.getSize());
 
-        /* 修改元素 */
-        binaryTree.put("C", "33");
-        System.out.println("修改元素后的树结点个数：" + binaryTree.size());
-
-        /* 查看元素 */
-        System.out.println("查看的元素是：" + binaryTree.get("G"));
+        System.out.println("层序遍历查看初始二叉树");
+        binaryTree.levelOrderTraversal();
 
         /* 删除元素 */
-        binaryTree.delete("I");
-        System.out.println("删除元素后的树结点个数：" + binaryTree.size());
+        binaryTree.delete(13);
+        System.out.println("删除元素后的树结点个数：" + binaryTree.getSize());
 
         /* 最小结点 */
-        System.out.println("最小结点为：" + binaryTree.findMin().getKey());
+        System.out.println("最小结点为：" + binaryTree.findMin().getItem());
 
         /* 最大结点 */
-        System.out.println("最大结点为：" + binaryTree.findMax().getKey());
+        System.out.println("最大结点为：" + binaryTree.findMax().getItem());
 
         /* 前序遍历 */
         System.out.println("前序遍历");
