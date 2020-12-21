@@ -1,4 +1,4 @@
-package datastructure.stackbylinkedlist;
+package datastructure.stack;
 
 /**
  * @Description: 结点类
@@ -38,7 +38,7 @@ class Node<T> {
 /**
  * @Description: 用链表实现栈
  */
-public class StackByLinkedList<T> {
+public class Stack<T> {
     // 栈顶结点
     private Node top;
 
@@ -48,7 +48,7 @@ public class StackByLinkedList<T> {
     /**
      * @Description: 栈构造方法
      */
-    public StackByLinkedList() {
+    public Stack() {
         // 链表头结点
         top = new Node(null, null);
 
@@ -79,7 +79,7 @@ public class StackByLinkedList<T> {
     /**
      * @Description: 把t元素压入栈
      */
-    public StackByLinkedList push(T t) {
+    public Stack push(T t) {
         // 新结点的next指向原栈顶元素
         Node newNode = new Node(t, top);
 

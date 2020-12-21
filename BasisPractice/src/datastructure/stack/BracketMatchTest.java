@@ -1,4 +1,4 @@
-package datastructure.stackbylinkedlist;
+package datastructure.stack;
 
 import java.util.Scanner;
 
@@ -39,7 +39,7 @@ public class BracketMatchTest {
 
     public static boolean isMatch(String str) {
         // 存放左括号的栈，只有 ( 或 null 两种值
-        StackByLinkedList<Character> leftBracketStack = new StackByLinkedList<>();
+        Stack<Character> leftBracketStack = new Stack<>();
 
         // 字符串转为字符数组
         char[] chars = str.toCharArray();

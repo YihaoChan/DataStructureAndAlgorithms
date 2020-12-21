@@ -1,4 +1,4 @@
-package datastructure.stackbylinkedlist;
+package datastructure.stack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +38,7 @@ public class InfixToPostfixTest {
      */
     public static List<String> infixToPostfix(String infix) {
         // 存放操作符的栈
-        StackByLinkedList<String> operators = new StackByLinkedList<>();
+        Stack<String> operators = new Stack<>();
 
         // 存放输出表达式的list
         List<String> postfix = new ArrayList<>();

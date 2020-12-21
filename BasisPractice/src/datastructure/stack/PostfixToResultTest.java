@@ -1,4 +1,4 @@
-package datastructure.stackbylinkedlist;
+package datastructure.stack;
 
 /**
  * @Description: 根据后缀(逆波兰)表达式求值 - 栈
@@ -20,7 +20,7 @@ public class PostfixToResultTest {
      */
     public static int postfixToResult(String[] postfixNotation) {
         // 创建存放操作数的栈
-        StackByLinkedList<Integer> operands = new StackByLinkedList<>();
+        Stack<Integer> operands = new Stack<>();
 
         // 初始时，弹出的两个操作数都为null
         Node operandUpper; // 在栈中占上方的元素

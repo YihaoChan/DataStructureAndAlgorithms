@@ -1,9 +1,9 @@
-package datastructure.queuebyarray.ordinary;
+package datastructure.queue.ordinary;
 
 /**
  * @Description: 定义队列基本元素和方法：根据大小创建，判断队列空/满，出队/入队，查看队列、队头元素
  */
-public class ArrayQueueOrdinary {
+public class QueueOrdinary {
     // 用数组表示队列
     private int[] arr;
     // 队列长度
@@ -14,7 +14,7 @@ public class ArrayQueueOrdinary {
     private int rear;
 
     /* 构造方法，传递数组大小，通过该值创建队列 */
-    public ArrayQueueOrdinary(int arrSize) {
+    public QueueOrdinary(int arrSize) {
         maxSize = arrSize;
         arr = new int[maxSize];
 

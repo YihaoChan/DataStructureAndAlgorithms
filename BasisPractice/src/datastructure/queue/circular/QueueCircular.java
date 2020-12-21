@@ -1,9 +1,9 @@
-package datastructure.queuebyarray.circular;
+package datastructure.queue.circular;
 
 /**
  * @Description: 定义队列基本元素和方法：根据大小创建，判断队列空/满，出队/入队，查看队列、队头元素，获得有效数据个数
  */
-public class ArrayQueueCircular {
+public class QueueCircular {
     // 用数组表示队列
     private int[] arr;
     // 队列长度
@@ -14,7 +14,7 @@ public class ArrayQueueCircular {
     private int rear;
 
     /* 构造方法，传递数组大小，通过该值创建队列 */
-    public ArrayQueueCircular(int arrSize) {
+    public QueueCircular(int arrSize) {
         maxSize = arrSize;
         arr = new int[maxSize];
 

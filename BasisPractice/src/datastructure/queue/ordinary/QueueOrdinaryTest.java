@@ -1,18 +1,18 @@
-package datastructure.queuebyarray.ordinary;
+package datastructure.queue.ordinary;
 
 import java.util.Scanner;
 
 /**
  * @Description: 用数组实现普通队列 - 测试类
  */
-public class ArrayQueueOrdinaryTest {
+public class QueueOrdinaryTest {
     public static void main(String[] args) {
-        ArrayQueueOrdinary arrayQueue = new ArrayQueueOrdinary(3);
+        QueueOrdinary queue = new QueueOrdinary(3);
 
         // 程序是否继续运行的标志
         boolean flag = true;
 
-        while (flag == true) {
+        while (flag) {
             System.out.println("请根据以下选项进行输入：");
 
             System.out.println("s(show): 显示队列");
@@ -27,26 +27,26 @@ public class ArrayQueueOrdinaryTest {
             switch (key) {
                 case 's':
                     try {
-                        arrayQueue.showQueue();
+                        queue.showQueue();
                     } catch (RuntimeException e) {
                         System.out.println(e.getMessage());
                     }
 
                     break;
                 case 'e':
-                    if (arrayQueue.isFull()) {
+                    if (queue.isFull()) {
                         System.out.println("队列元素已满，无法入队！");
                         break;
                     }
                     System.out.print("请输入要入队的元素: ");
                     int elementEnqueue = sc.nextInt();
-                    arrayQueue.enqueue(elementEnqueue);
+                    queue.enqueue(elementEnqueue);
                     System.out.println("入队成功！");
 
                     break;
                 case 'd':
                     try {
-                        int elementDequeue = arrayQueue.dequeue();
+                        int elementDequeue = queue.dequeue();
                         System.out.println("出队的元素为：" + elementDequeue);
                     } catch (RuntimeException e) {
                         System.out.println(e.getMessage());
@@ -55,7 +55,7 @@ public class ArrayQueueOrdinaryTest {
                     break;
                 case 'p':
                     try {
-                        int headElement = arrayQueue.peekQueue();
+                        int headElement = queue.peekQueue();
                         System.out.println("队列头元素为：" + headElement);
                     } catch (RuntimeException e) {
                         System.out.println(e.getMessage());
