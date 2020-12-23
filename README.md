@@ -1,1 +1,1 @@
-# DataStructureAndAlgorithmsWithJava
+# DataStructureAndAlgorithms
