@@ -138,7 +138,7 @@ public class AVLTree<T extends Comparable<T>> {
     /**
      * @Description: 根据传入的结点和平衡因子进行情况分析及旋转
      */
-    public Node rotate(int balanceFactor, Node node) {
+    private Node rotate(int balanceFactor, Node node) {
         // LL情况，需要右旋
         if (balanceFactor > 1 && getBalanceFactor(node.left) >= 0) {
             return rightRotate(node);
@@ -168,7 +168,7 @@ public class AVLTree<T extends Comparable<T>> {
      * @Description: 向以node为根的二叉搜索树中插入元素
      * @return: 插入新结点并调整为平衡二叉树后二叉搜索树的根结点
      */
-    public Node insert(Node node, T item) {
+    private Node insert(Node node, T item) {
         // 结束条件：当递归到空结点时，在此处创建新结点
         if (node == null) {
             size++;
