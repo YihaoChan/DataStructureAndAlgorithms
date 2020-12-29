@@ -114,9 +114,9 @@ public class SplayTree<T extends Comparable<T>> {
 
             /* 伸展到最后一步，即触碰到了根结点时的情况，需要进行单旋转 */
             if (node.parent.parent == null) {
-                if (node.parent.right == node) { // 如果根结点的右孩子为当前结点，即R型，则左旋
+                if (node.parent.right == node) { // 如果根结点的右孩子为当前结点，即R型，需要左旋
                     return leftRotate(node.parent);
-                } else if (node.parent.left == node) { // 如果根结点的左孩子为当前结点，即L型，则右旋
+                } else if (node.parent.left == node) { // 如果根结点的左孩子为当前结点，即L型，需要右旋
                     return rightRotate(node.parent);
                 }
             }
@@ -136,66 +136,38 @@ public class SplayTree<T extends Comparable<T>> {
                 }
             }
 
-            /* 分四种情况：LL、RR、RL、LR */
-            if (node.parent.parent.left == node.parent && node.parent.left == node) { // LL
-                Node tempRoot = rightRotate(node.parent.parent); // 先对原来的祖父结点和原来的父结点进行右旋
+            /* 分四种情况：LL型、RR型、RL型、LR型 */
+            Node tempRoot; // 第一次旋转后得到的临时的根
+
+            if (node.parent.parent.left == node.parent && node.parent.left == node) { // LL型，需要双右旋
+                tempRoot = rightRotate(node.parent.parent); // 先对原来的祖父结点和原来的父结点进行右旋
 
                 node = rightRotate(tempRoot); // 再对原来的父结点和原来的子结点进行右旋
-
-                if (node.parent == null) { // 刚好旋转成为根结点，直接跳出
-                    break;
-                } else { // 修改原来的曾祖父结点和旋转后的新结点的左/右孩子指针
-                    if (rightFlag) {
-                        node.parent.right = node;
-                    } else {
-                        node.parent.left = node;
-                    }
-                }
-            } else if (node.parent.parent.right == node.parent && node.parent.right == node) { // RR
-                Node tempRoot = leftRotate(node.parent.parent); // 先对原来的祖父结点和原来的父结点进行左旋
+            } else if (node.parent.parent.right == node.parent && node.parent.right == node) { // RR型，需要双左旋
+                tempRoot = leftRotate(node.parent.parent); // 先对原来的祖父结点和原来的父结点进行左旋
 
                 node = leftRotate(tempRoot); // 再对原来的父结点和原来的子结点进行左旋
-
-                if (node.parent == null) { // 刚好旋转成为根结点，直接跳出
-                    break;
-                } else { // 修改原来的曾祖父结点和旋转后的新结点的左/右孩子指针
-                    if (rightFlag) {
-                        node.parent.right = node;
-                    } else {
-                        node.parent.left = node;
-                    }
-                }
-            } else if (node.parent.parent.right == node.parent && node.parent.left == node) { // RL
-                Node tempRoot = rightRotate(node.parent); // 先对原来的父结点和原来的子结点进行右旋
+            } else if (node.parent.parent.right == node.parent && node.parent.left == node) { // RL型，需要先右旋后左旋
+                tempRoot = rightRotate(node.parent); // 先对原来的父结点和原来的子结点进行右旋
 
                 tempRoot.parent.right = tempRoot; // 修改原来的祖父结点的right指针
 
                 node = leftRotate(tempRoot.parent); // 再对原来的子结点和原来的祖父结点进行左旋
-
-                if (node.parent == null) { // 刚好旋转成为根结点，直接跳出
-                    break;
-                } else { // 修改原来的曾祖父结点和旋转后的新结点的左/右孩子指针
-                    if (rightFlag) {
-                        node.parent.right = node;
-                    } else {
-                        node.parent.left = node;
-                    }
-                }
-            } else if (node.parent.parent.left == node.parent && node.parent.right == node) { // LR
-                Node tempRoot = leftRotate(node.parent); // 先对原来的父结点和原来的子结点进行左旋
+            } else if (node.parent.parent.left == node.parent && node.parent.right == node) { // LR型，需要先左旋后右旋
+                tempRoot = leftRotate(node.parent); // 先对原来的父结点和原来的子结点进行左旋
 
                 tempRoot.parent.left = tempRoot; // 修改原来的祖父结点的left指针
 
                 node = rightRotate(tempRoot.parent); // 再对原来的子结点和原来的祖父结点进行右旋
+            }
 
-                if (node.parent == null) { // 刚好旋转成为根结点，直接跳出
-                    break;
-                } else { // 修改原来的曾祖父结点和旋转后的新结点的左/右孩子指针
-                    if (rightFlag) {
-                        node.parent.right = node;
-                    } else {
-                        node.parent.left = node;
-                    }
+            if (node.parent == null) { // 刚好旋转成为根结点，直接跳出
+                break;
+            } else { // 修改原来的曾祖父结点和旋转后的新结点的左/右孩子指针
+                if (rightFlag) {
+                    node.parent.right = node;
+                } else {
+                    node.parent.left = node;
                 }
             }
         }
