@@ -14,7 +14,7 @@ public class HashTable {
     private int size;
 
     // 删除元素标记
-    private final int DELETED = -777;
+    private static final int DELETED = Integer.MIN_VALUE;
 
     // 装载因子的忍耐值，即如果装载因子大于该数，就要使用再哈希法
     private final double PATIENCE = 0.7;

@@ -23,7 +23,7 @@ public class HashTableTest {
         System.out.println("原哈希表");
         hashTable.printHashTable();
 
-        System.out.println("待查找元素在哈希表中的下标：" + hashTable.find( + 790));
+        System.out.println("待查找元素在哈希表中的下标：" + hashTable.find(+790));
         System.out.println();
 
         System.out.println("删除79后的哈希表");

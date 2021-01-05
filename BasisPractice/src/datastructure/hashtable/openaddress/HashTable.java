@@ -14,7 +14,7 @@ public class HashTable {
     private int size;
 
     // 删除元素标记
-    private final int DELETED = -777;
+    private static final int DELETED = Integer.MIN_VALUE;
 
     /**
      * @Description: 返回哈希表中存放元素个数
