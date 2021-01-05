@@ -1,13 +1,13 @@
-package datastructure.queue.circular;
+package datastructure.queue.ordinaryqueue;
 
 import java.util.Scanner;
 
 /**
- * @Description: 用数组实现循环队列 - 测试类
+ * @Description: 用数组实现普通队列 - 测试类
  */
-public class QueueCircularTest {
+public class OrdinaryQueueTest {
     public static void main(String[] args) {
-        QueueCircular queue = new QueueCircular(4);
+        OrdinaryQueue ordinaryQueue = new OrdinaryQueue(3);
 
         // 程序是否继续运行的标志
         boolean flag = true;
@@ -27,26 +27,26 @@ public class QueueCircularTest {
             switch (key) {
                 case 's':
                     try {
-                        queue.showQueue();
+                        ordinaryQueue.showQueue();
                     } catch (RuntimeException e) {
                         System.out.println(e.getMessage());
                     }
 
                     break;
                 case 'e':
-                    if (queue.isFull()) {
+                    if (ordinaryQueue.isFull()) {
                         System.out.println("队列元素已满，无法入队！");
                         break;
                     }
                     System.out.print("请输入要入队的元素: ");
                     int elementEnqueue = sc.nextInt();
-                    queue.enqueue(elementEnqueue);
+                    ordinaryQueue.enqueue(elementEnqueue);
                     System.out.println("入队成功！");
 
                     break;
                 case 'd':
                     try {
-                        int elementDequeue = queue.dequeue();
+                        int elementDequeue = ordinaryQueue.dequeue();
                         System.out.println("出队的元素为：" + elementDequeue);
                     } catch (RuntimeException e) {
                         System.out.println(e.getMessage());
@@ -55,7 +55,7 @@ public class QueueCircularTest {
                     break;
                 case 'p':
                     try {
-                        int headElement = queue.peekQueue();
+                        int headElement = ordinaryQueue.peekQueue();
                         System.out.println("队列头元素为：" + headElement);
                     } catch (RuntimeException e) {
                         System.out.println(e.getMessage());
