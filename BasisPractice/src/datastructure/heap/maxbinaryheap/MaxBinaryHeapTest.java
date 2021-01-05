@@ -8,13 +8,13 @@ public class MaxBinaryHeapTest {
         MaxBinaryHeap<String> maxHeap = new MaxBinaryHeap<>(20);
 
         /* 插入元素 */
-        maxHeap.insert("A")
-                .insert("B")
-                .insert("C")
-                .insert("D")
-                .insert("E")
-                .insert("F")
-                .insert("G");
+        maxHeap.insert("A");
+        maxHeap.insert("B");
+        maxHeap.insert("C");
+        maxHeap.insert("D");
+        maxHeap.insert("E");
+        maxHeap.insert("F");
+        maxHeap.insert("G");
 
         /* 删除顶端最大元素并查看 */
         while (maxHeap.size() != 0) {

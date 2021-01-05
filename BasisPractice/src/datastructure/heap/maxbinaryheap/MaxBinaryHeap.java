@@ -24,7 +24,7 @@ public class MaxBinaryHeap<T extends Comparable<T>> {
     /**
      * @Description: 向堆中插入一个元素
      */
-    public MaxBinaryHeap insert(T t) {
+    public void insert(T t) {
         // 数组中存放的最后一个元素的索引+1，用于存放新元素
         n++;
 
@@ -33,8 +33,6 @@ public class MaxBinaryHeap<T extends Comparable<T>> {
 
         // 根据新添加的元素索引，使新添加的元素通过上滤找到插入的合适位置
         percolateUp(n);
-
-        return this;
     }
 
     /**
@@ -90,6 +88,11 @@ public class MaxBinaryHeap<T extends Comparable<T>> {
 
         // 让被移动的元素的子结点中的较大者移动到原来的父结点处
         while (k <= n || k + 1 <= n) {
+            if (2 * k > n || 2 * k + 1 > n) {
+                // 子结点下标超过堆的长度，说明已经下滤到最底层，跳出
+                break;
+            }
+
             if (heap[2 * k] == null && heap[2 * k + 1] == null) {
                 // 如果两个子结点都为空，说明已经下滤到最底层，则将数组末端元素移动到该位置进行填充
                 // 跳出while单独处理
