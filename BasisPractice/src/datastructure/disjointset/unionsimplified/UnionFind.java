@@ -5,7 +5,7 @@ package datastructure.disjointset.unionsimplified;
  */
 public class UnionFind {
     // 数组每个下标代表一个元素，数组中存放的内容为每个元素的父结点
-    private int[] s;
+    private int[] parent;
 
     // 并查集中元素个数
     private int size;
@@ -16,10 +16,10 @@ public class UnionFind {
     public UnionFind(int size) {
         this.size = size;
 
-        s = new int[this.size];
+        parent = new int[this.size];
 
         for (int i = 0; i <= this.size - 1; i++) {
-            s[i] = -1; // 初始时每个元素都各自为一个集合，初始化为-1
+            parent[i] = -1; // 初始时每个元素都各自为一个集合，初始化为-1
         }
     }
 
@@ -27,10 +27,10 @@ public class UnionFind {
      * @Description: 查看元素所在集合，直接查询到根结点
      */
     public int find(int x) {
-        if (s[x] == -1) {
+        if (parent[x] == -1) {
             return x;
         } else {
-            return find(s[x]);
+            return find(parent[x]);
         }
     }
 
@@ -54,14 +54,14 @@ public class UnionFind {
         }
 
         // 让第一个集合的父结点变成第二个集合的根结点
-        s[firstRoot] = secondRoot;
+        parent[firstRoot] = secondRoot;
     }
 
     /**
      * @Description: 遍历查看
      */
     public void printSet() {
-        for (int item : s) {
+        for (int item : parent) {
             System.out.print(item + "\t");
         }
 
