@@ -80,9 +80,6 @@ public class MaxBinaryHeap<T extends Comparable<T>> {
      * 将最大元素删除，并让其他元素不断比较，进行空结点的填充
      */
     private void percolateDown(int k) {
-        // 删掉结点后，原来的被删除结点的子结点中较大者替换被删除结点的位置
-        T largerChild;
-
         // 原来的被删除结点的子结点中较大者的索引
         int largerChildIndex;
 
@@ -94,23 +91,20 @@ public class MaxBinaryHeap<T extends Comparable<T>> {
             }
 
             if (heap[2 * k] == null && heap[2 * k + 1] == null) {
-                // 如果两个子结点都为空，说明已经下滤到最底层，则将数组末端元素移动到该位置进行填充
                 // 跳出while单独处理
                 break;
             }
 
             if (heap[2 * k] != null && heap[2 * k + 1] != null) {
                 // 左右子结点都不为空
-                largerChild = heap[2 * k].compareTo(heap[2 * k + 1]) > 0 ? heap[2 * k] : heap[2 * k + 1];
                 largerChildIndex = heap[2 * k].compareTo(heap[2 * k + 1]) > 0 ? 2 * k : 2 * k + 1;
             } else {
                 // 有任意一个为空，则找到非空结点
-                largerChild = heap[2 * k] != null ? heap[2 * k] : heap[2 * k + 1];
                 largerChildIndex = heap[2 * k] != null ? 2 * k : 2 * k + 1;
             }
 
             // 移动较大子结点进行被移动结点的填充
-            heap[k] = largerChild;
+            heap[k] = heap[largerChildIndex];
 
             // 删除移动的结点
             heap[largerChildIndex] = null;
