@@ -1,7 +1,7 @@
 package datastructure.heap.maxbinaryheap;
 
 /**
- * @Description: 用数组实现二叉堆中的大顶堆(最大堆)
+ * @Description: 最大堆(大顶堆)
  */
 public class MaxBinaryHeap<T extends Comparable<T>> {
     // 存储堆中元素的数组
@@ -12,7 +12,7 @@ public class MaxBinaryHeap<T extends Comparable<T>> {
 
     /* 构造方法 */
     public MaxBinaryHeap(int capacity) {
-        this.heap = (T[]) new Comparable[++capacity];
+        this.heap = (T[]) new Comparable[++capacity]; // 0号位置为哨兵，所以要多申请一个空间
         this.n = 0;
     }
 
@@ -60,7 +60,7 @@ public class MaxBinaryHeap<T extends Comparable<T>> {
     }
 
     /**
-     * @Description: 从堆中删除最大元素，即堆顶部元素，并返回该元素
+     * @Description: 从堆中删除最大元素，即堆顶元素，并返回该元素
      */
     public T deleteMax() {
         // 0号元素为哨兵，最大堆的1号元素为删除的最大元素

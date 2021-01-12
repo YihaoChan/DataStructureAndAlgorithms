@@ -1,11 +1,11 @@
 package datastructure.heap.maxbinaryheap;
 
 /**
- * @Description: 用数组实现二叉堆中的大顶堆(最大堆)插入、删除 - 测试类
+ * @Description: 最大堆(大顶堆) - 测试类
  */
 public class MaxBinaryHeapTest {
     public static void main(String[] args) {
-        MaxBinaryHeap<String> maxHeap = new MaxBinaryHeap<>(20);
+        MaxBinaryHeap<String> maxHeap = new MaxBinaryHeap<>(7);
 
         /* 插入元素 */
         maxHeap.insert("A");
