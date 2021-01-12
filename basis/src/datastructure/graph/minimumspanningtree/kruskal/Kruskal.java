@@ -24,14 +24,13 @@ public class Kruskal {
     }
 
     /**
-     * @Description: 查看元素所在集合，直接查询到根结点，并使用路径压缩
+     * @Description: 查看元素所在集合，直接查询到根结点
      */
     private int find(int x) {
         if (parent[x] == -1) {
             return x;
         } else {
-            parent[x] = find(parent[x]); // 将当前结点的父结点设置为它的父结点的父结点
-            return parent[x]; // 返回父结点
+            return find(parent[x]);
         }
     }
 

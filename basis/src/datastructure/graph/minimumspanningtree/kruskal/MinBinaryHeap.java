@@ -45,6 +45,7 @@ public class MinBinaryHeap {
     /* 构造方法 */
     public MinBinaryHeap(int capacity) {
         this.heap = new Edge[++capacity]; // 0号元素为哨兵
+        this.heap[0] = new Edge(-1, -1, Integer.MIN_VALUE); // 哨兵无起点、终点，权值负无穷
         this.size = 0;
     }
 
@@ -80,22 +81,24 @@ public class MinBinaryHeap {
      * 在数组的末端插入元素，并使该元素通过上浮正确插入到堆中，以保持堆的秩序
      */
     private void percolateUp(int k) {
-        // 如果添加的新结点的元素大于其父结点的元素，则交换位置，直至父结点元素小于等于子结点为止
-        // 由于0号元素为哨兵，所以索引k不能碰到0。由于k会进行k / 2操作，因此k本身需要大于1
-        Edge temp;
+        /*
+         * 如果添加的新结点的元素小于其父结点的元素，则交换位置，直至父结点元素小于等于子结点为止.
+         * 1. 设置哨兵为负无穷的好处在于：如果没有哨兵，则每一次都要判断当前调整的元素是否为堆顶元素，
+         *    即每一次都要判断下标是否为0。如果调整的元素是堆顶元素，调整后直接结束。
+         *    但是这样子每一次除了要判断结点的大小关系外，还要进行下标的判断，很浪费时间。
+         * 2. 所以设置哨兵后，直到发现当前结点大于父结点时，有两种情况：
+         *    2.1 还没调整到堆顶结点时就已经调整完毕；
+         *    2.2 遇到了负无穷，即调整到了堆顶。
+         *    设置哨兵后，就不需要每一次再多去判断下标是否碰到0，只需要比较结点的大小即可，节省时间。
+         */
+        while (heap[k].weight < heap[k / 2].weight) {
+            // 交换新元素和父结点元素
+            Edge temp = heap[k / 2];
+            heap[k / 2] = heap[k];
+            heap[k] = temp;
 
-        while (k > 1) {
-            if (heap[k].weight < heap[k / 2].weight) {
-                // 交换新元素和父结点元素
-                temp = heap[k / 2];
-                heap[k / 2] = heap[k];
-                heap[k] = temp;
-
-                // k步进，让添加的元素上浮，继续进行判断
-                k = k / 2;
-            } else {
-                break;
-            }
+            // k步进，让添加的元素上浮，继续进行判断
+            k = k / 2;
         }
     }
 
@@ -120,9 +123,6 @@ public class MinBinaryHeap {
      * 将最小元素删除，并让其他元素不断比较，进行空结点的填充
      */
     private void percolateDown(int k) {
-        // 删掉结点后，原来的被删除结点的子结点中较小者替换被删除结点的位置
-        Edge smallerChild;
-
         // 原来的被删除结点的子结点中较小者的索引
         int smallerChildIndex;
 
@@ -141,16 +141,14 @@ public class MinBinaryHeap {
 
             if (heap[2 * k] != null && heap[2 * k + 1] != null) {
                 // 左右子结点都不为空
-                smallerChild = heap[2 * k].weight < heap[2 * k + 1].weight ? heap[2 * k] : heap[2 * k + 1];
                 smallerChildIndex = heap[2 * k].weight < heap[2 * k + 1].weight ? 2 * k : 2 * k + 1;
             } else {
                 // 有任意一个为空，则找到非空结点
-                smallerChild = heap[2 * k] != null ? heap[2 * k] : heap[2 * k + 1];
                 smallerChildIndex = heap[2 * k] != null ? 2 * k : 2 * k + 1;
             }
 
             // 移动较小子结点进行被移动结点的填充
-            heap[k] = smallerChild;
+            heap[k] = heap[smallerChildIndex];
 
             // 删除移动的结点
             heap[smallerChildIndex] = null;
