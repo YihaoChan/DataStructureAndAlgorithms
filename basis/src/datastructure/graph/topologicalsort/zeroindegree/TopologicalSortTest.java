@@ -1,7 +1,7 @@
-package datastructure.graph.topologicalsort;
+package datastructure.graph.topologicalsort.zeroindegree;
 
 /**
- * @Description: 拓扑排序 - 测试类
+ * @Description: 零入度算法实现无权有向图拓扑排序 - 测试类
  */
 public class TopologicalSortTest {
     private static void testEgOne() {

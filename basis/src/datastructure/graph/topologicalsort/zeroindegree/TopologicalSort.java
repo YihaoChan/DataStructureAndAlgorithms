@@ -1,11 +1,11 @@
-package datastructure.graph.topologicalsort;
+package datastructure.graph.topologicalsort.zeroindegree;
 
 
 import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * @Description: 无权有向图进行拓扑排序 - 邻接表
+ * @Description: 零入度算法实现无权有向图拓扑排序
  */
 public class TopologicalSort {
     /**
@@ -148,7 +148,7 @@ public class TopologicalSort {
     }
 
     /**
-     * @Description: 拓扑排序
+     * @Description: 拓扑排序 - 零入度
      */
     public void topologicalSort() {
         // 存放入度为0的顶点
