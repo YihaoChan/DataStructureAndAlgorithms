@@ -1,10 +1,11 @@
 package datastructure.hashtable.openaddress;
 
 /**
- * @Description: 测试类 - 样例来源：清华《数据结构》 P257
+ * @Description: 散列表 - 测试类
  */
 public class HashTableTest {
     public static void main(String[] args) {
+        // 《清华数据结构》 P257
         HashTable hashTable = new HashTable(5);
 
         System.out.println(hashTable.getHashTableLength());

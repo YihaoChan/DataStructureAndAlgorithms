@@ -1,7 +1,7 @@
 package datastructure.symboltable.noorder;
 
 /**
- * @Description: 用链表实现无序符号表 - 测试类
+ * @Description: 无序符号表 - 测试类
  */
 public class SymbolTableWithNoOrderTest {
     public static void main(String[] args) {

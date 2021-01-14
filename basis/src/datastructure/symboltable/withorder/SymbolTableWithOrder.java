@@ -1,13 +1,13 @@
 package datastructure.symboltable.withorder;
 
 /**
- * @Description: 用链表实现有序符号表
+ * @Description: 有序符号表
  */
 public class SymbolTableWithOrder<Key extends Comparable<Key>, Value> {
     /**
      * @Description: 结点类
      */
-    public class Node {
+    class Node {
         // 键
         private Key key;
 
@@ -28,24 +28,8 @@ public class SymbolTableWithOrder<Key extends Comparable<Key>, Value> {
             return key;
         }
 
-        public void setKey(Key key) {
-            this.key = key;
-        }
-
         public Value getValue() {
             return value;
-        }
-
-        public void setValue(Value value) {
-            this.value = value;
-        }
-
-        public Node getNext() {
-            return next;
-        }
-
-        public void setNext(Node next) {
-            this.next = next;
         }
     }
 
@@ -82,16 +66,13 @@ public class SymbolTableWithOrder<Key extends Comparable<Key>, Value> {
         Node prev = head;
         Node curr = head.next;
 
-        Node newNode;
-
         while (curr != null && key.compareTo(curr.key) > 0) {
             prev = prev.next;
             curr = curr.next;
         }
 
         if (curr == null || key.compareTo(curr.key) < 0) {
-            newNode = new Node(key, value, curr);
-            prev.next = newNode;
+            prev.next = new Node(key, value, curr);
             num++;
         } else if (key.compareTo(curr.key) == 0) {
             curr.value = value;

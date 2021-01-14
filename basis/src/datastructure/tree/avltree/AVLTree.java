@@ -40,7 +40,7 @@ public class AVLTree<T extends Comparable<T>> {
     private int size;
 
     /**
-     * @Description: AVL树的构造方法
+     * @Description: AVL树构造方法
      */
     public AVLTree() {
         root = null;
@@ -201,10 +201,8 @@ public class AVLTree<T extends Comparable<T>> {
     /**
      * @Description: 插入结点
      */
-    public AVLTree insert(T item) {
+    public void insert(T item) {
         root = insert(root, item);
-
-        return this;
     }
 
     /**

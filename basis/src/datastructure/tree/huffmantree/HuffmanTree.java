@@ -3,64 +3,57 @@ package datastructure.tree.huffmantree;
 import java.util.*;
 
 /**
- * @Description: 结点类
- */
-class Node<T> {
-    // 数据域
-    private T data;
-
-    // 每个数据所占的权值
-    private double weight;
-
-    // 左子结点
-    private Node left;
-
-    // 右子结点
-    private Node right;
-
-    /* 构造方法 */
-    public Node(T data, double weight) {
-        this.data = data;
-        this.weight = weight;
-    }
-
-    public double getWeight() {
-        return weight;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setWeight(double weight) {
-        this.weight = weight;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
-
-    public Node getLeft() {
-        return left;
-    }
-
-    public Node getRight() {
-        return right;
-    }
-
-    public void setLeft(Node left) {
-        this.left = left;
-    }
-
-    public void setRight(Node right) {
-        this.right = right;
-    }
-}
-
-/**
- * @Description: 哈夫曼树
+ * @Description: 哈夫曼树、哈夫曼编码
  */
 public class HuffmanTree {
+
+    /**
+     * @Description: 结点类
+     */
+    class Node<T> {
+        // 数据域
+        private T data;
+
+        // 每个数据所占的权值
+        private double weight;
+
+        // 左子结点
+        private Node left;
+
+        // 右子结点
+        private Node right;
+
+        /* 构造方法 */
+        public Node(T data, double weight) {
+            this.data = data;
+            this.weight = weight;
+        }
+
+        public double getWeight() {
+            return weight;
+        }
+
+        public T getData() {
+            return data;
+        }
+
+        public Node getLeft() {
+            return left;
+        }
+
+        public Node getRight() {
+            return right;
+        }
+
+        public void setLeft(Node left) {
+            this.left = left;
+        }
+
+        public void setRight(Node right) {
+            this.right = right;
+        }
+    }
+
     /**
      * @Description: 构造哈夫曼树
      * @param: nodes 根据每个权值构建一棵只有一棵结点的二叉树，并存放在列表中，再根据权值大小对将列表中的结点进行排序
@@ -72,16 +65,16 @@ public class HuffmanTree {
             quickSort(nodes);
 
             // 取出权值最小的两个结点，作为新的二叉树的左右结点(较大的在左)
-            Node left = nodes.get(nodes.size() - 2);
-            Node right = nodes.get(nodes.size() - 1);
+            Node leftChild = nodes.get(nodes.size() - 2);
+            Node rightChild = nodes.get(nodes.size() - 1);
 
             // 新的二叉树的根结点
-            Node parent = new Node(null, left.getWeight() + right.getWeight());
-            parent.setLeft(left);
-            parent.setRight(right);
+            Node parent = new Node(null, leftChild.weight + rightChild.weight);
+            parent.left = leftChild;
+            parent.right = rightChild;
 
             // 在原来数组中删除取出的两个树
-            int temp = nodes.size() - 1; // 原来的最小权值索引。不能直接remove，不然会根据删除后的列表再删一次！
+            int temp = nodes.size() - 1; // 保存原来的最小权值索引，否则remove后最小权值索引会发生变化！
             nodes.remove(temp);
             nodes.remove(temp - 1);
 
@@ -96,9 +89,7 @@ public class HuffmanTree {
      * @Description: 将列表中i和j索引处的元素进行交换
      */
     private void swap(List<Node> nodes, int i, int j) {
-        Node temp;
-
-        temp = nodes.get(j);
+        Node temp = nodes.get(j);
         nodes.set(j, nodes.get(i));
         nodes.set(i, temp);
     }
@@ -119,11 +110,11 @@ public class HuffmanTree {
 
             while (true) {
                 // 找到大于分界值的元素的索引，或者i已经到了end处
-                while (i < end && nodes.get(++i).getWeight() >= base.getWeight())
+                while (i < end && nodes.get(++i).weight >= base.weight)
                     ; // 空语句，只执行循环体
 
                 // 找到小于分界值的元素的索引，或者j已经到了start处
-                while (j > start && nodes.get(--j).getWeight() <= base.getWeight())
+                while (j > start && nodes.get(--j).weight <= base.weight)
                     ; // 空语句，只执行循环体
 
                 if (i < j) {
@@ -155,9 +146,9 @@ public class HuffmanTree {
             return;
         }
 
-        System.out.print(curr.getData() + "\t");
-        preOrderTraversal(curr.getLeft());
-        preOrderTraversal(curr.getRight());
+        System.out.print(curr.data + "\t");
+        preOrderTraversal(curr.left);
+        preOrderTraversal(curr.right);
     }
 
     /**
@@ -175,9 +166,9 @@ public class HuffmanTree {
             return;
         }
 
-        inOrderTraversal(curr.getLeft());
-        System.out.print(curr.getData() + "\t");
-        inOrderTraversal(curr.getRight());
+        inOrderTraversal(curr.left);
+        System.out.print(curr.data + "\t");
+        inOrderTraversal(curr.right);
     }
 
     /**
@@ -195,9 +186,9 @@ public class HuffmanTree {
             return;
         }
 
-        postOrderTraversal(curr.getLeft());
-        postOrderTraversal(curr.getRight());
-        System.out.print(curr.getData() + "\t");
+        postOrderTraversal(curr.left);
+        postOrderTraversal(curr.right);
+        System.out.print(curr.data + "\t");
     }
 
     /**
@@ -225,14 +216,14 @@ public class HuffmanTree {
         while (!queue.isEmpty()) {
             curr = queue.remove();
 
-            System.out.print(curr.getData() + "\t");
+            System.out.print(curr.data + "\t");
 
-            if (curr.getLeft() != null) {
-                queue.add(curr.getLeft());
+            if (curr.left != null) {
+                queue.add(curr.left);
             }
 
-            if (curr.getRight() != null) {
-                queue.add(curr.getRight());
+            if (curr.right != null) {
+                queue.add(curr.right);
             }
         }
     }
@@ -295,18 +286,19 @@ public class HuffmanTree {
         // 向左搜寻完毕之后，需要记住上一个状态，即还未遍历左兄弟结点的状态，然后根据上一个状态开始向右寻找叶子结点并编码
         String last = code;
 
-        if (curr.getLeft() == null && curr.getRight() == null) {
-            return (Map) charToCode.put(curr.getData(), code); // 如果遍历到叶子结点，就将叶子结点的数据和权值存入表中
+        if (curr.left == null && curr.right == null) {
+            charToCode.put(curr.data, code); // 如果遍历到叶子结点，就将叶子结点的数据和权值存入表中
+            return charToCode;
         }
 
-        if (curr.getLeft() != null) {
+        if (curr.left != null) {
             code = last + "0"; // 如果向左，就加0
-            getLeafCode(curr.getLeft(), code, charToCode);
+            getLeafCode(curr.left, code, charToCode);
         }
 
-        if (curr.getRight() != null) {
+        if (curr.right != null) {
             code = last + "1"; // 如果向右，就加1
-            getLeafCode(curr.getRight(), code, charToCode);
+            getLeafCode(curr.right, code, charToCode);
         }
 
         return charToCode;

@@ -41,15 +41,13 @@
 
 <img src="images/ArrayQueueOrdinary.png" alt="ArrayQueueOrdinary"/>
 
-PS.以数组长度(maxSize)为5，最大索引为4，举例演示说明。
+PS. 以数组长度(maxSize)为5，最大索引为4，举例演示说明。
 
 1. 初始状态：
 
    front和rear都指向-1位置，队列为空。
 
    <img src="images/ArrayQueueOrdinaryInit.png" alt="ArrayQueueOrdinaryInit"/>
-   
-   
    
 2. 元素入队，队列未满：
    
@@ -63,15 +61,13 @@ PS.以数组长度(maxSize)为5，最大索引为4，举例演示说明。
 
 <img src="images/ArrayQueueOrdinaryEnqueueFull.png" alt="ArrayQueueOrdinaryEnqueueFull"/>
 
-​         rear已指向maxSize - 1，队列已满，如果rear再增加就会产生数组越界问题。
+​        rear已指向maxSize - 1，队列已满，如果rear再增加就会产生数组越界问题。
 
 4. 元素出队，队列仍然满： 
 
    rear不变，弹出队头元素，front自增。rear == maxSize - 1，队列仍然为满；队列长度为rear - front，等于4。
 
 <img src="images/ArrayQueueOrdinaryDequeue.png" alt="ArrayQueueOrdinaryDequeue"/>
-
-
 
 - 注意事项：
 
@@ -205,15 +201,11 @@ BTW，习惯于这种画图方式，而没有参考网上的环状模型。
    
    <img src="images/ArrayQueueCircularInit.png" alt="ArrayQueueCircularInit" />
    
-   
-   
 2. [rear > front]元素入队，未有元素出队，队列未满：
 
    front仍然指向0，rear自增至指向3。(rear  + 1) % maxSize ≠ front，队列未满；队列长度为(rear - front + maxSize) % maxSize，等于3。
 
    <img src="images/ArrayQueueCircularEnqueueNotFull.png" alt="ArrayQueueCircularEnqueueNotFull"/>
-
-   
 
 3. [rear > front]元素入队，未有元素出队，队列已满：
 
@@ -221,15 +213,11 @@ BTW，习惯于这种画图方式，而没有参考网上的环状模型。
 
    <img src="images/ArrayQueueCircularEnqueueFull.png" alt="ArrayQueueCircularEnqueueFull"/>
 
-   
-
 4. [rear > front]元素出队，队列未满：
 
    弹出队头元素，front自增指向1，rear仍然指向4。由于循环队列只会留出一个空间，而此时空出位置有2个，因此此时队列未满。(rear  + 1) % maxSize ≠ front ，队列未满；队列长度为(rear - front + maxSize) % maxSize，等于3。
 
-   <img src="images/ArrayQueueCircularDequeue-1604656620703.png" alt="ArrayQueueCircularDequeue"/>
-
-   
+   <img src="images/ArrayQueueCircularDequeue.png" alt="ArrayQueueCircularDequeue"/>
 
 6. [rear ＜ front]元素入队，寻找空余位置：
 
@@ -237,17 +225,11 @@ BTW，习惯于这种画图方式，而没有参考网上的环状模型。
 
    <img src="images/ArrayQueueCircularEnqueueAnotherEndOne.png" alt="ArrayQueueCircularEnqueueAnotherEndOne"/>
 
-   
-
    此时如果有元素入队，队列索引最顶端已不能添加元素，则会循环从队列索引底部重新寻找空余位置进行元素添加。
-
-   
 
    之后：
 
    <img src="images/ArrayQueueCircularEnqueueAnotherEndTwo.png" alt="ArrayQueueCircularEnqueueAnotherEndTwo"/>
-
-   
 
 #### 2.2.5 部分程序思路讲解
 
@@ -332,8 +314,6 @@ BTW，习惯于这种画图方式，而没有参考网上的环状模型。
 | 队列长度(有效数据个数) |                         rear - front                         |            **(rear - front + maxSize) % maxSize**            |
 |        遍历查看        | 1. 判断队列是否空；<br>2. for (int i = front + 1; i <= rear; i++)<br>3. 索引为i | 1. 判断队列是否空；<br>2. for (int i = front; i < front + size(); i++)<br>3. int size() { return (rear - front + maxSize) % maxSize; }<br>4. 索引为i % maxSize |
 |      查看队头元素      |       1. 判断队列是否空；<br>2. return arr[front + 1];       |         1. 判断队列是否空；<br>2. return arr[front];         |
-
-  
 
 # 参考资料
 

@@ -23,8 +23,8 @@ public class PostfixToResultTest {
         Stack<Integer> operands = new Stack<>();
 
         // 初始时，弹出的两个操作数都为null
-        Node operandUpper; // 在栈中占上方的元素
-        Node operandLower; // 在栈中占下方的元素
+        Stack.Node operandUpper; // 在栈中占上方的元素
+        Stack.Node operandLower; // 在栈中占下方的元素
 
         // 表达式计算结果
         int result;

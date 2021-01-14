@@ -1,44 +1,37 @@
 package datastructure.stack;
 
-/**
- * @Description: 结点类
- */
-class Node<T> {
-    // 数据域
-    private T item;
-
-    // 指针域
-    private Node next;
-
-    /**
-     * @Description: 构造方法
-     */
-    public Node(T item, Node next) {
-        this.item = item;
-        this.next = next;
-    }
-
-    public T getItem() {
-        return this.item;
-    }
-
-    public void setItem(T item) {
-        this.item = item;
-    }
-
-    public Node getNext() {
-        return this.next;
-    }
-
-    public void setNext(Node next) {
-        this.next = next;
-    }
-}
 
 /**
- * @Description: 用链表实现栈
+ * @Description: 栈
  */
 public class Stack<T> {
+    /**
+     * @Description: 结点类
+     */
+    class Node<T> {
+        // 数据域
+        private T item;
+
+        // 指针域
+        private Node next;
+
+        /**
+         * @Description: 构造方法
+         */
+        public Node(T item, Node next) {
+            this.item = item;
+            this.next = next;
+        }
+
+        public T getItem() {
+            return this.item;
+        }
+
+        public Node getNext() {
+            return this.next;
+        }
+    }
+
     // 栈顶结点
     private Node top;
 
@@ -79,7 +72,7 @@ public class Stack<T> {
     /**
      * @Description: 把t元素压入栈
      */
-    public Stack push(T t) {
+    public void push(T t) {
         // 新结点的next指向原栈顶元素
         Node newNode = new Node(t, top);
 
@@ -87,22 +80,20 @@ public class Stack<T> {
         top = newNode;
 
         len++;
-
-        return this;
     }
 
     /**
      * @Description: 弹出栈顶元素并返回
      */
     public Node pop() {
-        if (top.getNext() == null) {
+        if (top.next == null) {
             return null;
         }
 
         Node popNode = top;
 
         // 让原来栈的第二个元素变为栈顶元素
-        top = top.getNext();
+        top = top.next;
 
         len--;
 
@@ -121,22 +112,18 @@ public class Stack<T> {
 
         Node node = top;
 
-        // node.next.next为空，表示node.next为头结点，(null, null)
-        while (node.getNext().getNext() != null && i > 0) {
-            node = node.getNext();
+        // node.next.next为空，表示node.next为头结点
+        while (node.next.next != null && i > 0) {
+            node = node.next;
 
             i--;
-
-            if (i == 0) {
-                break;
-            }
         }
 
         if (i > 0) {
             throw new RuntimeException("索引应该属于[0, list.length - 1]区间，越界！");
         }
 
-        node.setItem(value);
+        node.item = value;
     }
 
     /**
@@ -152,9 +139,9 @@ public class Stack<T> {
     public void show() {
         Node node = top;
 
-        while (node.getNext() != null) {
-            System.out.println(node.getItem());
-            node = node.getNext();
+        while (node.next != null) {
+            System.out.println(node.item);
+            node = node.next;
         }
     }
 }

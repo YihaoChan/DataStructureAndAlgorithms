@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * @Description: 用链表实现二叉查找树
+ * @Description: 二叉查找树
  * 左子结点的关键字一定小于父结点的关键字，右子结点的关键字一定大于父结点的关键字
  */
 public class BinarySearchTree<T extends Comparable<T>> {
@@ -81,11 +81,9 @@ public class BinarySearchTree<T extends Comparable<T>> {
     /**
      * @Description: 添加元素
      */
-    public BinarySearchTree insert(T item) {
+    public void insert(T item) {
         // 让添加元素后的根结点成为新的根结点
         root = insert(root, item);
-
-        return this;
     }
 
     /**

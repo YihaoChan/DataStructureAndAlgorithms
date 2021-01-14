@@ -7,16 +7,15 @@ public class AVLTreeTest {
     public static void main(String[] args) {
         AVLTree<Integer> avlTree = new AVLTree<>();
 
-        avlTree
-                .insert(10)
-                .insert(10)
-                .insert(9)
-                .insert(13)
-                .insert(7)
-                .insert(11)
-                .insert(15)
-                .insert(14)
-                .insert(16);
+        avlTree.insert(10);
+        avlTree.insert(10);
+        avlTree.insert(9);
+        avlTree.insert(13);
+        avlTree.insert(7);
+        avlTree.insert(11);
+        avlTree.insert(15);
+        avlTree.insert(14);
+        avlTree.insert(16);
 
         System.out.println("原始二叉平衡树：");
         avlTree.levelOrderTraversal();
@@ -40,15 +39,14 @@ public class AVLTreeTest {
         System.out.println("-----测试LL-----");
         AVLTree<Integer> llTree = new AVLTree<>();
 
-        llTree
-                .insert(14)
-                .insert(10)
-                .insert(16)
-                .insert(9)
-                .insert(12)
-                .insert(18)
-                .insert(8)
-                .insert(13);
+        llTree.insert(14);
+        llTree.insert(10);
+        llTree.insert(16);
+        llTree.insert(9);
+        llTree.insert(12);
+        llTree.insert(18);
+        llTree.insert(8);
+        llTree.insert(13);
 
         System.out.println("原始二叉平衡树：");
         llTree.levelOrderTraversal();
@@ -59,15 +57,15 @@ public class AVLTreeTest {
 
         System.out.println("-----测试RR-----");
         AVLTree<Integer> rrTree = new AVLTree<>();
-        rrTree
-                .insert(13)
-                .insert(10)
-                .insert(16)
-                .insert(9)
-                .insert(15)
-                .insert(18)
-                .insert(14)
-                .insert(19);
+
+        rrTree.insert(13);
+        rrTree.insert(10);
+        rrTree.insert(16);
+        rrTree.insert(9);
+        rrTree.insert(15);
+        rrTree.insert(18);
+        rrTree.insert(14);
+        rrTree.insert(19);
 
         System.out.println("原始二叉平衡树：");
         rrTree.levelOrderTraversal();

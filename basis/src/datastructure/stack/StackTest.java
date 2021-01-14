@@ -1,18 +1,17 @@
 package datastructure.stack;
 
 /**
- * @Description: 用链表实现栈 - 测试类
+ * @Description: 栈 - 测试类
  */
 public class StackTest {
     public static void main(String[] args) {
         Stack<Integer> stack = new Stack<>();
 
-        /* 元素入栈 */
-        stack
-                .push(10)
-                .push(20)
-                .push(30)
-                .push(40);
+        /* 入栈 */
+        stack.push(10);
+        stack.push(20);
+        stack.push(30);
+        stack.push(40);
 
         System.out.println("初始时的栈：");
         stack.show();
@@ -26,7 +25,7 @@ public class StackTest {
         stack.update(3, 100);
         stack.show();
 
-        /* 元素出栈 */
+        /* 出栈 */
         System.out.println("第一次弹栈的元素为：" + stack.pop().getItem());
         System.out.println("第一次弹栈后的栈：");
         stack.show();

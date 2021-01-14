@@ -1,7 +1,7 @@
 package datastructure.symboltable.withorder;
 
 /**
- * @Description: 用链表实现有序符号表 - 测试类
+ * @Description: 有序符号表 - 测试类
  */
 public class SymbolTableWithOrderTest {
     public static void main(String[] args) {

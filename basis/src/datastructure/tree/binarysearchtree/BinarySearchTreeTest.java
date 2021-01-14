@@ -1,23 +1,22 @@
 package datastructure.tree.binarysearchtree;
 
 /**
- * @Description: 用链表实现二叉查找树 - 测试类
+ * @Description: 二叉查找树 - 测试类
  */
 public class BinarySearchTreeTest {
     public static void main(String[] args) {
         BinarySearchTree<Integer> binaryTree = new BinarySearchTree<>();
 
         /* 添加元素 */
-        binaryTree
-                .insert(10)
-                .insert(9)
-                .insert(12)
-                .insert(7)
-                .insert(11)
-                .insert(15)
-                .insert(8)
-                .insert(14)
-                .insert(16);
+        binaryTree.insert(10);
+        binaryTree.insert(9);
+        binaryTree.insert(12);
+        binaryTree.insert(7);
+        binaryTree.insert(11);
+        binaryTree.insert(15);
+        binaryTree.insert(8);
+        binaryTree.insert(14);
+        binaryTree.insert(16);
 
         System.out.println("添加元素后的树结点个数：" + binaryTree.getSize());
 

@@ -22,17 +22,12 @@ public class BracketMatchTest {
 
             String str = sc.next();
 
-            switch (str) {
-                case "q":
-                    flag = false;
-                    break;
+            if ("q".equals(str)) {
+                flag = false;
+            } else {
+                boolean match = isMatch(str);
 
-                default:
-                    boolean match = isMatch(str);
-
-                    System.out.println("字符串括号是否匹配：" + match);
-
-                    break;
+                System.out.println("字符串括号是否匹配：" + match);
             }
         }
     }

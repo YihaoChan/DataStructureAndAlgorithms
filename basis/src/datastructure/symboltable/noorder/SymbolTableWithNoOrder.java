@@ -1,13 +1,13 @@
 package datastructure.symboltable.noorder;
 
 /**
- * @Description: 用链表实现无序符号表
+ * @Description: 无序符号表
  */
 public class SymbolTableWithNoOrder<Key, Value> {
     /*
      * @Description: 结点类
      */
-    public class Node {
+    class Node {
         // 键
         private Key key;
 
@@ -27,27 +27,11 @@ public class SymbolTableWithNoOrder<Key, Value> {
         }
 
         public Key getKey() {
-            return key;
-        }
-
-        public void setKey(Key key) {
-            this.key = key;
+            return this.key;
         }
 
         public Value getValue() {
-            return value;
-        }
-
-        public void setValue(Value value) {
-            this.value = value;
-        }
-
-        public Node getNext() {
-            return next;
-        }
-
-        public void setNext(Node next) {
-            this.next = next;
+            return this.value;
         }
     }
 
@@ -95,8 +79,7 @@ public class SymbolTableWithNoOrder<Key, Value> {
         }
 
         // 如果表中没有键和传入的key相同，则将新键值对插入到链表头部
-        Node newNode = new Node(key, value, head.next);
-        head.next = newNode;
+        head.next = new Node(key, value, head.next);
 
         num++;
     }

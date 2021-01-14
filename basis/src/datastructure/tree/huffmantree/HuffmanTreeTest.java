@@ -3,22 +3,22 @@ package datastructure.tree.huffmantree;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
- * @Description: 哈夫曼树 - 哈夫曼编码与测试
+ * @Description: 哈夫曼树、哈夫曼编码 - 测试类
  */
 public class HuffmanTreeTest {
     public static void main(String[] args) {
+        // 《清华数据结构》 P146
         HuffmanTree huffmanTree = new HuffmanTree();
 
-        List<Node> nodes = new ArrayList<>();
+        List<HuffmanTree.Node> nodes = new ArrayList<>();
 
-        nodes.add(new Node("a", 7));
-        nodes.add(new Node("b", 5));
-        nodes.add(new Node("c", 2));
-        nodes.add(new Node("d", 4));
+        nodes.add(huffmanTree.new Node("a", 7));
+        nodes.add(huffmanTree.new Node("b", 5));
+        nodes.add(huffmanTree.new Node("c", 2));
+        nodes.add(huffmanTree.new Node("d", 4));
 
-        List<Node> huffmanNodes = huffmanTree.createHuffmanTree(nodes);
+        List<HuffmanTree.Node> huffmanNodes = huffmanTree.createHuffmanTree(nodes);
 
         System.out.print("前序遍历：");
         huffmanTree.preOrderTraversal(huffmanNodes);

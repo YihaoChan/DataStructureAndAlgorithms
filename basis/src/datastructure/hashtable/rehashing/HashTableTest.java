@@ -1,10 +1,11 @@
 package datastructure.hashtable.rehashing;
 
 /**
- * @Description: 测试类 - 样例来源：《数据结构与算法分析Java语言描述》 P130 - P131
+ * @Description: 散列表 - 测试类
  */
 public class HashTableTest {
     public static void main(String[] args) {
+        //《数据结构与算法分析Java语言描述》 P130 - P131
         HashTable hashTable = new HashTable(7);
 
         hashTable.insert(13);
