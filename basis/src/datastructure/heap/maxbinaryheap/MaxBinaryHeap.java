@@ -4,43 +4,42 @@ package datastructure.heap.maxbinaryheap;
  * @Description: 最大堆(大顶堆)
  */
 public class MaxBinaryHeap {
-    // 存储堆中元素的数组
-    private Integer[] heap;
+    // 存储元素的数组
+    private int[] heap;
 
-    // 堆中元素个数，同时也是数组中最后一个元素的索引(因为0号索引为哨兵，不参与数组计算)
+    // 堆中元素个数
     private int size;
+
+    // 数组容量
+    private int capacity;
 
     /* 构造方法 */
     public MaxBinaryHeap(int capacity) {
-        this.heap = new Integer[++capacity]; // 0号位置为哨兵，所以要多申请一个空间
-        this.heap[0] = Integer.MAX_VALUE; // 哨兵定义为正无穷，大于堆中的所有元素
+        this.capacity = capacity;
         this.size = 0;
+        this.heap = new int[++capacity]; // 0号位置为哨兵
+        this.heap[0] = Integer.MAX_VALUE; // 哨兵为正无穷，大于堆中的所有元素
     }
 
-    /* 获取堆中元素数量 */
+    /* 堆中元素数量 */
     public int size() {
-        return size;
+        return this.size;
+    }
+
+    private boolean isFull() {
+        return this.size == this.capacity;
     }
 
     /**
-     * @Description: 向堆中插入一个元素
+     * @Description: 插入元素
      */
-    public void insert(int t) {
-        // 数组中存放的最后一个元素的索引+1，用于存放新元素
-        size++;
+    public void insert(int x) {
+        if (isFull()) {
+            throw new RuntimeException("堆已满");
+        }
 
-        // 将新元素放入数组
-        heap[size] = t;
+        int i = ++this.size; // 从数组末尾开始上滤
 
-        // 根据新添加的元素索引，使新添加的元素通过上滤找到插入的合适位置
-        percolateUp(size);
-    }
-
-    /**
-     * @Description: 末端插入 - 上滤
-     * 在数组的末端插入元素，并使该元素通过上浮正确插入到堆中，以保持堆的秩序
-     */
-    private void percolateUp(int k) {
         /*
          * 如果添加的新结点的元素大于其父结点的元素，则交换位置，直至父结点元素大于等于子结点为止.
          * 1. 设置哨兵为正无穷的好处在于：如果没有哨兵，则每一次都要判断当前调整的元素是否为堆顶元素，
@@ -51,73 +50,39 @@ public class MaxBinaryHeap {
          *    2.2 遇到了正无穷，即调整到了堆顶。
          *    设置哨兵后，就不需要每一次再多去判断下标是否碰到0，只需要比较结点的大小即可，节省时间。
          */
-        while (heap[k].compareTo(heap[k / 2]) > 0) {
-            // 交换新元素和父结点元素
-            Integer temp = heap[k / 2];
-            heap[k / 2] = heap[k];
-            heap[k] = temp;
-
-            // k步进，让添加的元素上浮，继续进行判断
-            k = k / 2;
+        for (; x > heap[i / 2]; i /= 2) {
+            heap[i] = heap[i / 2]; // 将父结点换下来，上滤x
         }
+
+        heap[i] = x; // 插入
     }
 
     /**
-     * @Description: 从堆中删除最大元素，即堆顶元素，并返回该元素
+     * @Description: 从堆中删除最大元素，即堆顶元素
      */
     public int deleteMax() {
-        // 0号元素为哨兵，最大堆的1号元素为删除的最大元素
-        int maxEle = heap[1];
+        int maxItem = heap[1]; // 取出堆的最大值
 
-        // 拿出最大元素，并通过下滤调整其他元素的位置，使堆保持原有秩序
-        percolateDown(1);
+        int x = heap[this.size--]; // 取出堆的最后一个元素，同时堆元素个数-1
 
-        // 元素数量减1
-        size--;
+        int parent, child;
 
-        return maxEle;
-    }
+        for (parent = 1; parent * 2 <= this.size; parent = child) {
+            child = parent * 2; // 左子结点下标
 
-    /**
-     * @Description: 顶端删除 - 下滤
-     * 将最大元素删除，并让其他元素不断比较，进行空结点的填充
-     */
-    private void percolateDown(int k) {
-        // 原来的被删除结点的子结点中较大者的索引
-        int largerChildIndex;
-
-        // 让被移动的元素的子结点中的较大者移动到原来的父结点处
-        while (k <= size || k + 1 <= size) {
-            if (2 * k > size || 2 * k + 1 > size) {
-                // 子结点下标超过堆的长度，说明已经下滤到最底层，跳出
-                break;
+            if (child != this.size && heap[child] < heap[child + 1]) {
+                child++; // child指向左右子结点的较大者
             }
 
-            if (heap[2 * k] == null && heap[2 * k + 1] == null) {
-                // 跳出while单独处理
-                break;
-            }
-
-            if (heap[2 * k] != null && heap[2 * k + 1] != null) {
-                // 左右子结点都不为空
-                largerChildIndex = heap[2 * k].compareTo(heap[2 * k + 1]) > 0 ? 2 * k : 2 * k + 1;
+            if (x < heap[child]) {
+                heap[parent] = heap[child]; // 下滤
             } else {
-                // 有任意一个为空，则找到非空结点
-                largerChildIndex = heap[2 * k] != null ? 2 * k : 2 * k + 1;
+                break; // 调整结束
             }
-
-            // 移动较大子结点进行被移动结点的填充
-            heap[k] = heap[largerChildIndex];
-
-            // 删除移动的结点
-            heap[largerChildIndex] = null;
-
-            // k步进
-            k = largerChildIndex;
         }
 
-        // 如果两个子结点都为空，说明已经下滤到最底层，则将数组末端元素移动到该位置进行填充，并将数组末端元素置空
-        heap[k] = heap[size];
-        heap[size] = null;
+        heap[parent] = x; // 原先堆的最后一个元素放到新位置
+
+        return maxItem;
     }
 }

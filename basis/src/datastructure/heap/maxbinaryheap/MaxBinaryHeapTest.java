@@ -5,25 +5,19 @@ package datastructure.heap.maxbinaryheap;
  */
 public class MaxBinaryHeapTest {
     public static void main(String[] args) {
-        // 《数据结构与算法分析》 P159
-        MaxBinaryHeap maxHeap = new MaxBinaryHeap(11);
+        // 《浙江大学数据结构》 P145
+        MaxBinaryHeap maxBinaryHeap = new MaxBinaryHeap(6);
 
-        /* 插入元素 */
-        maxHeap.insert(32);
-        maxHeap.insert(65);
-        maxHeap.insert(26);
-        maxHeap.insert(19);
-        maxHeap.insert(68);
-        maxHeap.insert(24);
-        maxHeap.insert(31);
-        maxHeap.insert(16);
-        maxHeap.insert(21);
-        maxHeap.insert(13);
-        maxHeap.insert(14);
+        maxBinaryHeap.insert(18);
+        maxBinaryHeap.insert(10);
+        maxBinaryHeap.insert(31);
+        maxBinaryHeap.insert(25);
+        maxBinaryHeap.insert(44);
+        maxBinaryHeap.insert(58);
 
-        /* 删除顶端最大元素并查看 */
-        while (maxHeap.size() != 0) {
-            System.out.print(maxHeap.deleteMax() + "\t");
+        /* 删除堆顶最大元素并查看 */
+        while (maxBinaryHeap.size() != 0) {
+            System.out.print(maxBinaryHeap.deleteMax() + "\t");
         }
     }
 }
