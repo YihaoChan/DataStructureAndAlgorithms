@@ -19,7 +19,7 @@ public class Kruskal {
 
         for (int i = 0; i < weightedUndigraph.getVertexNum(); i++) {
             parent[i] = -1;
-            scale[i] = 1; // 初始时每棵树的规模都是1
+            scale[i] = 1;
         }
     }
 
@@ -62,7 +62,7 @@ public class Kruskal {
      * 如(2, 0)与(0, 2)在无向图中算同一条边，则不进行添加
      */
     private boolean isExistSameEdge(int start, int end, MinBinaryHeap minBinaryHeap) {
-        for (int i = 1; i <= minBinaryHeap.getLength(); i++) {
+        for (int i = 1; i <= minBinaryHeap.getHeap().length; i++) {
             MinBinaryHeap.Edge edge = minBinaryHeap.getHeap()[i];
 
             // 如果扫描完最小堆中的有效edge都没有发现重复，则跳出返回false
@@ -83,7 +83,7 @@ public class Kruskal {
      * @return 根据权重排序的 边-权重(起点，终点，权重) 的最小堆
      * @Description: 用最小堆存放图中的边(包含起点和终点)和权重
      */
-    private MinBinaryHeap createMinBinaryHeap(WeightedUndigraph weightedUndigraph) {
+    private MinBinaryHeap buildHeap(WeightedUndigraph weightedUndigraph) {
         MinBinaryHeap minBinaryHeap = new MinBinaryHeap(weightedUndigraph.getEdgeNum());
 
         for (int i = 0; i < weightedUndigraph.getVertexNum(); i++) {
@@ -92,9 +92,7 @@ public class Kruskal {
             while (edge != null) {
                 // 不添加重复的边：无向图中，如果(0, 2)已经在最小堆中，则不添加(2, 0)
                 if (!isExistSameEdge(i, edge.getAdjacentListPos(), minBinaryHeap)) {
-                    minBinaryHeap.insert(
-                            minBinaryHeap.new Edge(i, edge.getAdjacentListPos(), edge.getWeight())
-                    );
+                    minBinaryHeap.insert(minBinaryHeap.new Edge(i, edge.getAdjacentListPos(), edge.getWeight()));
                 }
 
                 edge = edge.getNextEdge();
@@ -125,15 +123,15 @@ public class Kruskal {
      * @Description: 构建生成树
      */
     public int[] createMiniSpanTree(WeightedUndigraph weightedUndigraph) {
-        MinBinaryHeap edgeWeightHeap = createMinBinaryHeap(weightedUndigraph);
+        MinBinaryHeap edgeWeightHeap = buildHeap(weightedUndigraph);
 
         // 如果最小生成树还没完全形成，且堆中还有边，则循环弹出边并进行合并
         while (countVertex(parent) != weightedUndigraph.getVertexNum() && edgeWeightHeap.getSize() != 0) {
-            // 弹出权重最小的边
-            MinBinaryHeap.Edge edge = edgeWeightHeap.deleteMin();
+            // 取权重最小的边
+            MinBinaryHeap.Edge minWeightEdge = edgeWeightHeap.getMinWeightEdge();
 
             // 如果这条边指向的起始点和终端点不属于同一个集合，即合并它们不会使生成树构成回路，就合并
-            union(edge.getStart(), edge.getEnd());
+            union(minWeightEdge.getStart(), minWeightEdge.getEnd());
         }
 
         // 如果最小生成树的结点个数小于图的顶点个数，说明图不连通
