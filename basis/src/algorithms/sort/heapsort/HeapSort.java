@@ -107,7 +107,7 @@ public class HeapSort {
             percolateDown(arr, i, arr.length);
         }
         
-        /* 交换堆顶和数组末尾元素，并调整 */
+        /* 交换堆顶元素和最后一个参与下滤的元素，并对除了交换到数组末尾的原堆顶元素的其他所有元素进行调整 */
         for (i = arr.length - 1; i > 0; i--) {
             swap(arr, 0, i);
             percolateDown(arr, 0, i);
