@@ -119,7 +119,7 @@ public class HeapSort {
      */
     public void printArr(Info[] arr) {
         for (int i = 0; i < arr.length; i++) {
-            System.out.println(arr[i].getKey() + ": " + arr[i].getTag());
+            System.out.println(arr[i].key + ": " + arr[i].tag);
         }
     }
 }
