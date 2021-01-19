@@ -32,7 +32,7 @@ public class HuffmanTreeTest {
 
     public static void main(String[] args) {
         // 《清华数据结构》 P146  a:7, b:5, c:2, d:4
-        String str = "aaaaaaabbbbbccdddd";
+        String str = "abcd, abcd, abd, abd, ab, a, a";
 
         Map<Character, Integer> charFreq = getCharFreq(str);
 

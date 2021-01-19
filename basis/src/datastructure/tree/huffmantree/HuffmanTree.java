@@ -9,7 +9,7 @@ public class HuffmanTree {
     /**
      * @Description: 结点类
      */
-    class Node {
+    private class Node {
         // 数据域
         private Character data;
 
@@ -36,7 +36,7 @@ public class HuffmanTree {
     // 初始哈夫曼树数组容量
     private int capacity;
 
-    // 二叉树数量
+    // 数组中的二叉树数量
     private int size;
 
     /**
@@ -54,7 +54,7 @@ public class HuffmanTree {
     }
 
     /**
-     * @Description: 删除给定下标对应二叉树
+     * @Description: 删除给定下标对应的二叉树
      */
     private void remove(Node[] arr, int index) {
         arr[index] = null;
@@ -101,7 +101,7 @@ public class HuffmanTree {
     }
 
     /**
-     * @Description: 快速排序
+     * @Description: 快速排序 - 按权值从大到小排序
      */
     private void sort(Node[] arr) {
         quickSort(arr, 0, this.size - 1);
@@ -213,7 +213,7 @@ public class HuffmanTree {
         // 计算哈夫曼编码
         Map<Character, String> charCode = getHuffmanCode(huffmanTree, new HashMap<>());
 
-        // 替换字符串
+        // 编码字符串
         for (Character character : charCode.keySet()) {
             String code = charCode.get(character);
 
