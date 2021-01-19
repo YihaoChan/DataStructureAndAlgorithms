@@ -56,7 +56,7 @@ public class HeapSort {
      */
     public void insert(int key, String tag) {
         if (isFull()) {
-            throw new RuntimeException("堆已满");
+            throw new RuntimeException("数组已满");
         }
 
         sequence[this.size++] = new Info(key, tag);
