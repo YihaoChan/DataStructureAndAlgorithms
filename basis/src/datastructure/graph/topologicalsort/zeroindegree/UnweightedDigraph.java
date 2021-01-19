@@ -5,7 +5,7 @@ package datastructure.graph.topologicalsort.zeroindegree;
  */
 public class UnweightedDigraph {
     /**
-     * @Description: 头结点，包含顶点名字，指向该顶点的第一个邻接点的指针，和顶点的入度
+     * @Description: 顶点，包含顶点名字，指向该顶点的第一个邻接点的指针，和顶点的入度
      */
     class Vertex {
         // 顶点名字
@@ -36,15 +36,15 @@ public class UnweightedDigraph {
         /**
          * @Description: 构造方法
          */
-        public Vertex(String vertexName, Edge firstEdge, int indegree) {
+        public Vertex(String vertexName, Edge firstEdge) {
             this.vertexName = vertexName;
             this.firstEdge = firstEdge;
-            this.indegree = indegree;
+            this.indegree = 0;
         }
     }
 
     /**
-     * @Description: 表中顶点类，即边，包含所指向的顶点在邻接表中的位置，指向下一个邻接点的指针
+     * @Description: 边，包含所指向的顶点在邻接表中的位置，指向下一个邻接点的指针
      */
     class Edge {
         // 所指向的顶点的在邻接表中的下标
@@ -107,9 +107,9 @@ public class UnweightedDigraph {
         // 创建邻接表
         adjacentList = new Vertex[this.vertexNum];
 
-        // 往邻接表中添加顶点名称
+        // 顶点放入邻接表中
         for (int i = 0; i < vertexNum; i++) {
-            adjacentList[i] = new Vertex("V" + (i + 1), null, 0);
+            adjacentList[i] = new Vertex("V" + (i + 1), null);
         }
     }
 

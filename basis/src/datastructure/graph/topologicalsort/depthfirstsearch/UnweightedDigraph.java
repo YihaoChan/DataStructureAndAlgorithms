@@ -55,12 +55,15 @@ public class UnweightedDigraph {
             this.finishTime = finishTime;
         }
 
-        public Vertex(String vertexName, Edge firstEdge, Color color, int discoverTime, int finishTime) {
+        /**
+         * @Description: 构造方法
+         */
+        public Vertex(String vertexName, Edge firstEdge) {
             this.vertexName = vertexName;
             this.firstEdge = firstEdge;
-            this.color = color;
-            this.discoverTime = discoverTime;
-            this.finishTime = finishTime;
+            this.color = Color.WHITE;
+            this.discoverTime = 0;
+            this.finishTime = 0;
         }
     }
 
@@ -82,6 +85,9 @@ public class UnweightedDigraph {
             return this.nextEdge;
         }
 
+        /**
+         * @Description: 构造方法
+         */
         public Edge(int adjacentListPos, Edge nextEdge) {
             this.adjacentListPos = adjacentListPos;
             this.nextEdge = nextEdge;
@@ -125,10 +131,9 @@ public class UnweightedDigraph {
         // 创建邻接表
         adjacentList = new Vertex[this.vertexNum];
 
-        // 往邻接表中添加顶点名称
+        // 顶点放入邻接表中
         for (int i = 0; i < vertexNum; i++) {
-            // 每个顶点涂上白色
-            adjacentList[i] = new Vertex("V" + (i + 1), null, Color.WHITE, 0, 0);
+            adjacentList[i] = new Vertex("V" + (i + 1), null);
         }
     }
 
