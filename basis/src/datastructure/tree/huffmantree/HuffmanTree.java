@@ -26,7 +26,7 @@ public class HuffmanTree {
         private String code;
 
         /* 构造方法 */
-        public Node(Character data, int weight) {
+        private Node(Character data, int weight) {
             this.data = data;
             this.weight = weight;
             this.code = "";
