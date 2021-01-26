@@ -1,4 +1,4 @@
-package algorithms.sort.heapsort;
+package algorithms.sorting.internalsorting.selectionsort.heapsort;
 
 /**
  * @Description: 堆排序
@@ -11,15 +11,7 @@ public class HeapSort {
         // 是否与其他元素关键字相等
         private String tag;
 
-        public int getKey() {
-            return this.key;
-        }
-
-        public String getTag() {
-            return this.tag;
-        }
-
-        public Info(int key, String tag) {
+        private Info(int key, String tag) {
             this.key = key;
             this.tag = tag;
         }
@@ -43,8 +35,10 @@ public class HeapSort {
      */
     public HeapSort(int capacity) {
         this.capacity = capacity;
+
         this.size = 0;
-        sequence = new Info[capacity]; // 实际排序中，"用户"不会像用最大堆存放数据一样会留出一个位置用做哨兵
+
+        this.sequence = new Info[capacity]; // 实际排序中，"用户"不会像用最大堆存放数据一样会留出一个位置用做哨兵
     }
 
     private boolean isFull() {
@@ -59,7 +53,7 @@ public class HeapSort {
             throw new RuntimeException("数组已满");
         }
 
-        sequence[this.size++] = new Info(key, tag);
+        this.sequence[this.size++] = new Info(key, tag);
     }
 
     /**
@@ -103,12 +97,12 @@ public class HeapSort {
         int i;
         
         /* 建立最大堆 */
-        for (i = arr.length / 2 - 1; i >= 0; i--) {
-            percolateDown(arr, i, arr.length);
+        for (i = this.size / 2 - 1; i >= 0; i--) {
+            percolateDown(arr, i, this.size);
         }
         
         /* 交换堆顶元素和最后一个参与下滤的元素，并对除了交换到数组末尾的原堆顶元素的其他所有元素进行调整 */
-        for (i = arr.length - 1; i > 0; i--) {
+        for (i = this.size - 1; i > 0; i--) {
             swap(arr, 0, i);
             percolateDown(arr, 0, i);
         }
@@ -118,7 +112,7 @@ public class HeapSort {
      * @Description: 查看数组元素
      */
     public void printArr(Info[] arr) {
-        for (int i = 0; i < arr.length; i++) {
+        for (int i = 0; i < this.size; i++) {
             System.out.println(arr[i].key + ": " + arr[i].tag);
         }
     }

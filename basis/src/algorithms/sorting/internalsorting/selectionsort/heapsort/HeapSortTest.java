@@ -1,4 +1,4 @@
-package algorithms.sort.heapsort;
+package algorithms.sorting.internalsorting.selectionsort.heapsort;
 
 /**
  * @Description: 堆排序 - 测试类
@@ -6,7 +6,7 @@ package algorithms.sort.heapsort;
 public class HeapSortTest {
     public static void main(String[] args) {
         // 《清华数据结构》 P280
-        HeapSort heapSort = new HeapSort(8);
+        HeapSort heapSort = new HeapSort(15);
 
         heapSort.insert(38, "");
         heapSort.insert(65, "");
