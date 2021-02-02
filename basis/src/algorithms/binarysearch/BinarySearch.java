@@ -3,7 +3,7 @@ package algorithms.binarysearch;
 /**
  * @Description: 二分查找
  */
-public class BinarySearchTest {
+public class BinarySearch {
     public static <T extends Comparable<? super T>> int binarySearch(T[] arr, T item, int left, int right) {
         // 结束条件
         if (item.compareTo(arr[left]) < 0 || item.compareTo(arr[right]) > 0 || left > right) {
