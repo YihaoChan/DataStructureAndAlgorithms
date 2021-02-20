@@ -121,14 +121,19 @@ int right_bound(int[] nums, int target) {
 
 2. 空间复杂度：只用到常数个额外空间，所以空间复杂度为**O(1)**。
 
-## 5 典型例题
+## 5 题目
 
 看到有序数组，肯定不能只是顺序扫描，这样就浪费了**有序**这个条件。所以要首先想到二分查找。
 
-| 题目                                                         | 描述                   | 解答                                                         |
-| ------------------------------------------------------------ | ---------------------- | ------------------------------------------------------------ |
-| [704. 二分查找](https://leetcode-cn.com/problems/binary-search/) | 二分查找数组           | [704_Binary_Search](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/704_Binary_Search.md) |
-| [35. 搜索插入位置](https://leetcode-cn.com/problems/search-insert-position/) | 二分查找数组           | [35_Search_Insert](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/35_Search_Insert.md) |
-| [278. 第一个错误的版本](https://leetcode-cn.com/problems/first-bad-version/) | 二分查找序列           | [278_First_Bad_Version](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/278_First_Bad_Version.md) |
-| [34. 在排序数组中查找元素的第一个和最后一个位置](https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/) | 数组左侧边界与右侧边界 | [34_Search_Range](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/34_Search_Range.md) |
+| 题目                                                         | 描述                         | 解答                                                         |
+| ------------------------------------------------------------ | ---------------------------- | ------------------------------------------------------------ |
+| [704. 二分查找](https://leetcode-cn.com/problems/binary-search/) | 二分查找序列                 | [704_Binary_Search](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/704_Binary_Search.md) |
+| [35. 搜索插入位置](https://leetcode-cn.com/problems/search-insert-position/) | 二分查找序列                 | [35_Search_Insert_Position](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/35_Search_Insert_Position.md) |
+| [278. 第一个错误的版本](https://leetcode-cn.com/problems/first-bad-version/) | 二分查找序列                 | [278_First_Bad_Version](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/278_First_Bad_Version.md) |
+| [34. 在排序数组中查找元素的第一个和最后一个位置](https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/) | 左侧边界与右侧边界           | [34_Find_First_and_Last_Position_of_Element_in_Sorted_Array](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/34_Find_First_and_Last_Position_of_Element_in_Sorted_Array.md) |
+| [剑指 Offer 53 - I. 在排序数组中查找数字 I](https://leetcode-cn.com/problems/zai-pai-xu-shu-zu-zhong-cha-zhao-shu-zi-lcof/) | 左侧边界与右侧边界           | [J_53_I_Find_Same_Number_Count_in_Sorted_Array](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/J_53_I_Find_Same_Number_Count_in_Sorted_Array.md) |
+| [69. x的平方根](https://leetcode-cn.com/problems/sqrtx/)     | 二分查找序列                 | [69_Sqrt(x)](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/69_Sqrt(x).md) |
+| [367. 有效的完全平方数](https://leetcode-cn.com/problems/valid-perfect-square/) | 二分查找序列                 | [367_Valid_Perfect_Square](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/367_Valid_Perfect_Square.md) |
+| [374. 猜数字大小](https://leetcode-cn.com/problems/guess-number-higher-or-lower/) | 二分查找序列                 | [374_Guess_Number_Higher_or_Lower](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/374_Guess_Number_Higher_or_Lower.md) |
+| [744. 寻找比目标字母大的最小字母](https://leetcode-cn.com/problems/find-smallest-letter-greater-than-target/) | 二分查找序列<br>循环数组下标 | [744_Find_Smallest_Letter_Greater_Than_Target](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/744_Find_Smallest_Letter_Greater_Than_Target.md) |
 
