@@ -24,28 +24,28 @@
 
 # 2 解法
 
-判断后面一个元素是否等于当前元素，如果不等，则把它搬到前面，并更新边界。
+快慢指针，判断后面一个元素是否等于当前元素，如果不等，则把它搬到前面，并更新慢指针。
 
 ```
 class Solution {
     public int removeDuplicates(int[] nums) {
-        int bound = 0;
+        int slow = 0;
 
-        int ptr = 0;
+        int fast = 0;
 
         int len = nums.length;
 
-        while (ptr + 1 < len) {
-            int curr = nums[ptr];
-
-            int rear = nums[++ptr];
-
-            if (rear != curr) {
-                nums[++bound] = rear;
+        while (fast < len) {
+            if (nums[fast] != nums[slow]) {
+                slow++;
+                
+                nums[slow] = nums[fast];
             }
+
+            fast++;
         }
 
-        return (bound + 1);
+        return (slow + 1);
     }
 }
 ```
