@@ -30,13 +30,13 @@
 
 ## 2 解法
 
-双指针形成滑动窗口。遍历数组，累加当前数组元素，当sum ≥ target时，减去窗口最左边的元素，并步进left指针，相当于收缩窗口。
+快慢指针形成滑动窗口。遍历数组，累加当前数组元素，当sum ≥ target时，减去窗口最左边的元素，并步进慢指针，相当于收缩窗口。
 
 ```
 class Solution {
     public int minSubArrayLen(int target, int[] nums) {
-        int left = 0;
-        int right = 0;
+        int slow = 0;
+        int fast = 0;
 
         int sum = 0;
 
@@ -44,15 +44,15 @@ class Solution {
 
         int subLen = Integer.MAX_VALUE;
 
-        for (right = 0; right < numsLen; right++) {
-            int current = nums[right];
+        for (fast = 0; fast < numsLen; fast++) {
+            int current = nums[fast];
 
             sum += current;
 
             while (sum >= target) {
-                sum -= nums[left];
-                subLen = Math.min(right - left + 1, subLen);
-                left++;
+                sum -= nums[slow];
+                subLen = Math.min(fast - slow + 1, subLen);
+                slow++;
             }
         }
 
@@ -63,5 +63,5 @@ class Solution {
 
 复杂度分析：
 
-1. 时间复杂度：right顺序扫描花费O(n)，left最多移动n次，所以时间复杂度为**O(n)**；
+1. 时间复杂度：fast顺序扫描花费O(n)，slow最多移动n次，所以时间复杂度为**O(n)**；
 2. 空间复杂度：仅用到常数个额外空间，故空间复杂度为**O(1)**。
