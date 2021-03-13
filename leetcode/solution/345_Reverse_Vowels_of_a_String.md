@@ -1,6 +1,6 @@
 # 第345题 反转字符串中的元音字母
 
-# 1 题目
+## 1 题目
 
 编写一个函数，以字符串作为输入，反转该字符串中的元音字母。
 
@@ -18,36 +18,36 @@
 输出："leotcede"
 ```
 
-# 2 解法
+## 2 解法
 
-双指针，注意元音有大小写。
+左右指针分别指向数组两端，交换相应元素。注意元音有大小写。
 
 ```
 class Solution {
     public String reverseVowels(String s) {
         char[] sArr = s.toCharArray();
 
-        int low = 0;
-        int high = sArr.length - 1;
+        int left = 0;
+        int right = sArr.length - 1;
 
-        while (low < high) {
-            boolean isLowVowel = isVowel(sArr[low]);
-            boolean isHighVowel = isVowel(sArr[high]);
+        while (left < right) {
+            boolean isLowVowel = isVowel(sArr[left]);
+            boolean isHighVowel = isVowel(sArr[right]);
 
             if (isLowVowel && isHighVowel) {
-                char temp = sArr[high];
-                sArr[high] = sArr[low];
-                sArr[low] = temp;
+                char temp = sArr[right];
+                sArr[right] = sArr[left];
+                sArr[left] = temp;
 
-                low++;
-                high--;
+                left++;
+                right--;
             } else if (isLowVowel && !isHighVowel){
-                high--;
+                right--;
             } else if (!isLowVowel && isHighVowel) {
-                low++;
+                left++;
             } else if (!isLowVowel && !isHighVowel) {
-                low++;
-                high--;
+                left++;
+                right--;
             }
         }
 
@@ -62,7 +62,7 @@ class Solution {
             letter == 'u'
         ); 
         
-        // 逐个比较比二分查找、HashSet快很多，暂时不知道为什么
+        // 逐个比较比二分查找、HashSet更快，暂时不知道为什么
     }
 }
 ```
