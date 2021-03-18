@@ -62,10 +62,13 @@ void slidingWindow(string s, string t) {
 
 ## 4 题目
 
-| 题目                                                         | 描述             | 解答                                                         |
-| ------------------------------------------------------------ | ---------------- | ------------------------------------------------------------ |
-| [76. 最小覆盖子串](https://leetcode-cn.com/problems/minimum-window-substring/) | 哈希表统计次数   | [76_Minimum_Window_Substring](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/76_Minimum_Window_Substring.md) |
-| [567. 字符串的排列](https://leetcode-cn.com/problems/permutation-in-string/) | 哈希表统计次数   | [567_Permutation_in_String](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/567_Permutation_in_String.md) |
-| [438. 找到字符串中所有字母异位词](https://leetcode-cn.com/problems/find-all-anagrams-in-a-string/) | 哈希表统计次数   | [438_Find_All_Anagrams_in_a_String](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/438_Find_All_Anagrams_in_a_String.md) |
-| [209. 长度最小的子数组](https://leetcode-cn.com/problems/minimum-size-subarray-sum/) | 快慢指针形成窗口 | [209_Minimum_Size_Subarray_Sum](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/209_Minimum_Size_Subarray_Sum.md) |
+| 题目                                                         | 描述                 | 解答                                                         |
+| ------------------------------------------------------------ | -------------------- | ------------------------------------------------------------ |
+| [76. 最小覆盖子串](https://leetcode-cn.com/problems/minimum-window-substring/) | 哈希表统计次数       | [76_Minimum_Window_Substring](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/76_Minimum_Window_Substring.md) |
+| [567. 字符串的排列](https://leetcode-cn.com/problems/permutation-in-string/) | 哈希表统计次数       | [567_Permutation_in_String](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/567_Permutation_in_String.md) |
+| [438. 找到字符串中所有字母异位词](https://leetcode-cn.com/problems/find-all-anagrams-in-a-string/) | 哈希表统计次数       | [438_Find_All_Anagrams_in_a_String](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/438_Find_All_Anagrams_in_a_String.md) |
+| [209. 长度最小的子数组](https://leetcode-cn.com/problems/minimum-size-subarray-sum/) | 快慢指针形成窗口     | [209_Minimum_Size_Subarray_Sum](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/209_Minimum_Size_Subarray_Sum.md) |
+| [3. 无重复字符的最长子串](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/) | 哈希表统计次数       | [3_Longest_Substring_Without_Repeating_Characters](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/3_Longest_Substring_Without_Repeating_Characters.md) |
+| [面试题 17.18. 最短超串](https://leetcode-cn.com/problems/shortest-supersequence-lcci/) | 哈希集合统计出现字母 | [M_17.18_Shortest_Supersequence](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/M_17.18_Shortest_Supersequence.md) |
+| [1004. 最大连续1的个数 III](https://leetcode-cn.com/problems/max-consecutive-ones-iii/) | 快慢指针形成窗口     | [1004_Max_Consecutive_Ones_III](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/1004_Max_Consecutive_Ones_III.md) |
 
