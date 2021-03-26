@@ -32,7 +32,7 @@ class MonotonicQueue {
     }
     
     public int max() {
-    	// 队头的元素最大
+        // 队头的元素最大
         if (!queue.isEmpty()) {
             return queue.peekFirst();
         }
@@ -41,7 +41,7 @@ class MonotonicQueue {
 	}
 	
 	public void pop(int item) {
-        if (queue.peekFirst() == item) {
+		if (queue.peekFirst() == item) {
            queue.removeFirst();
         }
 	}
