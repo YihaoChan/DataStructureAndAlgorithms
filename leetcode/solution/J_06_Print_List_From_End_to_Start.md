@@ -13,6 +13,8 @@
 
 ## 2 解法
 
+![从尾到头打印链表](images/从尾到头打印链表.jpg)
+
 ```
 /**
  * Definition for singly-linked list.
