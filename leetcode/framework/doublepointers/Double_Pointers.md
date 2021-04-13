@@ -38,5 +38,6 @@
 | [82. 删除排序链表中的重复元素 II](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list-ii/) | 快慢指针搜索链表                       | [82_Remove_Duplicates_from_Sorted_List_II](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/82_Remove_Duplicates_from_Sorted_List_II.md) |
 | [21. 合并两个有序链表](https://leetcode-cn.com/problems/merge-two-sorted-lists/) | 上下指针搜索链表                       | [21_Merge_Two_Sorted_Lists](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/21_Merge_Two_Sorted_Lists.md) |
 | [1669. 合并两个链表](https://leetcode-cn.com/problems/merge-in-between-linked-lists/) | 上下指针搜索链表                       | [1669_Merge_In_Between_Linked_Lists](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/1669_Merge_In_Between_Linked_Lists.md) |
-| [328. 奇偶链表](https://leetcode-cn.com/problems/odd-even-linked-list/) | 快慢指针搜索链表                       | [328_Odd_Even_Linked_List](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/328_Odd_Even_Linked_List.md) |
+| [328. 奇偶链表](https://leetcode-cn.com/problems/odd-even-linked-list/) | 双指针，跳跃连接                       | [328_Odd_Even_Linked_List](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/328_Odd_Even_Linked_List.md) |
+| [86. 分隔链表](https://leetcode-cn.com/problems/partition-list/) | 新建两个头结点，分别收集链表的两部分   | [86_Partition_List](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/86_Partition_List.md) |
 

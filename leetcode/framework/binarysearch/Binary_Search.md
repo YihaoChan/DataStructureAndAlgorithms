@@ -138,4 +138,5 @@ int right_bound(int[] nums, int target) {
 | [374. 猜数字大小](https://leetcode-cn.com/problems/guess-number-higher-or-lower/) | 二分查找序列                 | [374_Guess_Number_Higher_or_Lower](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/374_Guess_Number_Higher_or_Lower.md) |
 | [744. 寻找比目标字母大的最小字母](https://leetcode-cn.com/problems/find-smallest-letter-greater-than-target/) | 二分查找序列<br>循环数组下标 | [744_Find_Smallest_Letter_Greater_Than_Target](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/744_Find_Smallest_Letter_Greater_Than_Target.md) |
 | [852. 山脉数组的峰顶索引](https://leetcode-cn.com/problems/peak-index-in-a-mountain-array/) | 二分查找序列                 | [852_Peak_Index_in_a_Mountain_Array](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/852_Peak_Index_in_a_Mountain_Array.md) |
+| [540. 有序数组中的单一元素](https://leetcode-cn.com/problems/single-element-in-a-sorted-array/) | 二分查找序列                 | [540_Single_Element_in_Sorted_Array](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/540_Single_Element_in_Sorted_Array.md) |
 
