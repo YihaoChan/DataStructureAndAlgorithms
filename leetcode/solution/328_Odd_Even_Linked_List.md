@@ -28,6 +28,10 @@
 
 ## 2 解法
 
+### 2.1 快慢指针+插入删除结点
+
+根据快指针所指向的结点的值创建新结点，插入到慢指针后面，同时删除当前结点。
+
 ```
 /**
  * Definition for singly-linked list.
@@ -85,3 +89,112 @@ class Solution {
 1. 时间复杂度：遍历n个结点，每次的插入、删除操作都花费O(1)，因此，总时间复杂度为**O(n)**；
 2. 空间复杂度：仅花费常数个额外空间，故空间复杂度为**O(1)**。
 
+### 2.2 分别收集链表的两部分
+
+分别创建两个头结点，一个所在链表用于收集奇数位置的结点，另一个所在链表用于偶数位置的结点。之后，将用于收集奇数位置的结点的next指针指向用于收集偶数位置的结点的首结点，再将末尾置空即可。
+
+```
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { 
+ *         this.val = val; 
+ *         this.next = next; 
+ *     }
+ * }
+ */
+class Solution {
+    public ListNode oddEvenList(ListNode head) {
+        if (head == null || 
+            head.next == null || 
+            head.next.next == null
+        ) {
+            return head;
+        }
+
+        ListNode oddHead = new ListNode(-1);
+        ListNode odd = oddHead;
+        ListNode evenHead = new ListNode(-1);
+        ListNode even = evenHead;
+
+        int count = 1;
+
+        while (head != null) {
+            if (count % 2 != 0) {
+                odd.next = head;
+                odd = odd.next;
+            } else {
+                even.next = head;
+                even = even.next;
+            }
+
+            head = head.next;
+            count++;
+        }
+
+        odd.next = evenHead.next;
+        even.next = null;
+
+        return oddHead.next;
+    }
+}
+```
+
+复杂度分析：
+
+1. 时间复杂度：遍历n个结点，每次更新两个不同链表的next指针花费O(1)，因此，总时间复杂度为**O(n)**；
+2. 空间复杂度：新建了两个链表的头结点，后面都是在更改原链表中结点的连接关系，只是改变了链表结构。因此，仅花费常数个额外空间，故空间复杂度为**O(1)**。
+
+### 2.3 跳跃连接
+
+奇数位置的结点越过后继结点，达到奇数位置的结点之间相连的效果。同时，步进奇数位置的结点之后，偶数位置的结点越过后继结点，达到偶数位置的结点之间相连的效果。最后，奇数位置的结点指向偶数位置的结点链表的首结点即可。
+
+```
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { 
+ *         this.val = val; 
+ *         this.next = next; 
+ *     }
+ * }
+ */
+class Solution {
+    public ListNode oddEvenList(ListNode head) {
+        if (head == null || 
+            head.next == null || 
+            head.next.next == null
+        ) {
+            return head;
+        }
+
+        ListNode odd = head;
+        ListNode even = head.next;
+        ListNode evenHead = even;
+
+        while (even != null && even.next != null) {
+            odd.next = even.next;
+            odd = odd.next;
+            even.next = odd.next;
+            even = even.next;
+        }
+
+        odd.next = evenHead;
+
+        return head;
+    }
+}
+```
+
+复杂度分析：
+
+1. 时间复杂度：遍历n个结点，每次更新链表两个不同部分的next指针花费O(1)，因此，总时间复杂度为**O(n)**；
+2. 空间复杂度：在原链表中更改结点的连接关系，只是改变了链表结构，并没有新创造结点。因此，仅花费常数个额外空间，故空间复杂度为**O(1)**。
