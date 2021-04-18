@@ -25,33 +25,34 @@
  * }
  */
 class Solution {
-    List<Integer> list = new ArrayList<>();
+    Queue<ListNode> queue = new LinkedList<>();
 
     public int[] reversePrint(ListNode head) {
         if (head == null) {
             return new int[0];
         }
 
-        pushList(head);
+        reversePushNodes(head);
 
-        int listSize = list.size();
-        int[] res = new int[listSize];
+        int[] res = new int[queue.size()];
+        int ptr = 0;
 
-        for (int i = 0; i < listSize; i++) {
-            res[i] = list.get(i);
+        while (!queue.isEmpty()) {
+            res[ptr] = queue.poll().val;
+            ptr++;
         }
 
         return res;
     }
 
-    private void pushList(ListNode head) {
+    private void reversePushNodes(ListNode head) {
         if (head == null) {
             return;
         }
 
-        pushList(head.next);
+        reversePushNodes(head.next);
 
-        list.add(head.val);
+        queue.offer(head);
 
         return;
     }
