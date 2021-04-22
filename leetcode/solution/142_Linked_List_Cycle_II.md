@@ -41,6 +41,10 @@
 
 原理见：[链表相关知识点](https://github.com/YihaoChan/DataStructureAndAlgorithms/tree/main/basis/src/datastructure/linkedlist)
 
+如下图所示，快慢指针在结点5处相遇，之后新结点从首结点出发，走两步之后在结点3处与慢指针相遇，此时即为环的入口。
+
+![环的入口演示](images/环的入口演示.png)
+
 ```
 /**
  * Definition for singly-linked list.
