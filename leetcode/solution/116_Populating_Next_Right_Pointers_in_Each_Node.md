@@ -64,27 +64,20 @@ class Node {
 
 class Solution {
     public Node connect(Node root) {
-        if (root == null) {
-            return null;
+        if (root == null || (root.left == null && root.right == null))
+        {
+            return root;
         }
 
-        connectTwoNodes(root.left, root.right);
+        root.left.next = root.right;
+        if (root.next != null) {
+            root.right.next = root.next.left;
+        }
+
+        connect(root.left);
+        connect(root.right);
 
         return root;
-    }
-
-    private void connectTwoNodes(Node node1, Node node2) {
-        if (node1 == null || node2 == null) {
-            return;
-        }
-
-        node1.next = node2;
-
-        connectTwoNodes(node1.left, node1.right);
-        connectTwoNodes(node2.left, node2.right);
-        connectTwoNodes(node1.right, node2.left);
-
-        return;
     }
 }
 ```
@@ -92,7 +85,7 @@ class Solution {
 复杂度分析：
 
 1. 时间复杂度：每个结点的子结点之间都进行了一次修改next指针的操作，故时间复杂度为**O(n)**；
-2. 空间复杂度：n个结点占用n层递归的栈空间，故空间复杂度为**O(n)**。
+2. 空间复杂度：递归空间复杂度为递归树深度，故空间复杂度为**O(logn)**，最坏情况下树退化为链表，空间复杂度为O(n)。其中，n为树的结点总个数。
 
 ### 2.2 迭代
 
