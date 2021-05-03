@@ -4,8 +4,6 @@
 
 请考虑一棵二叉树上所有的叶子，这些叶子的值按从左到右的顺序排列形成一个 叶值序列 。
 
-
-
 举个例子，如上图所示，给定一棵叶值序列为 (6, 7, 4, 9, 8) 的树。
 
 如果有两棵二叉树的叶值序列是相同，那么我们就认为它们是 叶相似 的。
@@ -45,8 +43,6 @@
 
 ## 2 解法
 
-### 2.1 递归
-
 ```
 /**
  * Definition for a binary tree node.
@@ -64,44 +60,28 @@
  * }
  */
 class Solution {
-    List<Integer> list1 = new ArrayList<>();
-    List<Integer> list2 = new ArrayList<>();
-
     public boolean leafSimilar(TreeNode root1, TreeNode root2) {
-        addLeafValue1(root1);
-        addLeafValue2(root2);
+        List<Integer> list1 = new ArrayList<>();
+        List<Integer> list2 = new ArrayList<>();
+
+        addLeavesValues(root1, list1);
+        addLeavesValues(root2, list2);
 
         return list1.equals(list2);
     }
 
-    private void addLeafValue1(TreeNode root1) {
-        if (root1 == null) {
+    private void addLeavesValues(TreeNode root, List<Integer> list) {
+        if (root == null) {
+            return;
+        }
+        
+        if (root.left == null && root.right == null) {
+            list.add(root.val);
             return;
         }
 
-        if (root1.left == null && root1.right == null) {
-            list1.add(root1.val);
-            return;
-        }
-
-        addLeafValue1(root1.left);
-        addLeafValue1(root1.right);
-
-        return;
-    }
-
-    private void addLeafValue2(TreeNode root2) {
-        if (root2 == null) {
-            return;
-        }
-
-        if (root2.left == null && root2.right == null) {
-            list2.add(root2.val);
-            return;
-        }
-
-        addLeafValue2(root2.left);
-        addLeafValue2(root2.right);
+        addLeavesValues(root.left, list);
+        addLeavesValues(root.right, list);
 
         return;
     }
