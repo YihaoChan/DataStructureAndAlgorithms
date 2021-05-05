@@ -52,28 +52,30 @@ class Solution {
             return res;
         }
 
-        StringBuilder str = new StringBuilder();
-
-        appendString(root, str);
+        addPath(root, new StringBuilder());
 
         return res;
     }
 
-    private void appendString(TreeNode root, StringBuilder str) {
+    private void addPath(TreeNode root, StringBuilder sb) {
         if (root == null) {
             return;
         }
 
         if (root.left == null && root.right == null) {
-            res.add(str.append(root.val).toString());
-            return;
+            res.add(sb.append(root.val).toString());
         }
 
-        str.append(root.val).append("->");
+        sb.append(root.val);
 
-        appendString(root.left, new StringBuilder(str));
-        appendString(root.right, new StringBuilder(str));
-        
+        if (root.left != null) {
+            addPath(root.left, new StringBuilder(sb).append("->"));
+        }
+
+        if (root.right != null) {
+            addPath(root.right, new StringBuilder(sb).append("->"));
+        }
+
         return;
     }
 }
