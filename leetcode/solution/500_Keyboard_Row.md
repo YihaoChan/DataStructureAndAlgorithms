@@ -40,6 +40,8 @@ words[i] 由英文字母（小写和大写字母）组成
 
 ## 2 解法
 
+先判断第一个字符属于键盘上的哪一行。
+
 ```
 class Solution {
     public String[] findWords(String[] words) {
@@ -55,15 +57,15 @@ class Solution {
         Set[] sets = {topLine, midLine, bottomLine};
 
         for (String word : words) {
-            String lowerCopy = word.toLowerCase();
-
             Set<Character> line = chooseSet(
-            	sets, lowerCopy.charAt(0)
+                sets, convertCharToLowerCase(word.charAt(0))
             );
             boolean writeFlag = true;
 
-            for (int i = 0; i < lowerCopy.length(); i++) {
-                if (!line.contains(lowerCopy.charAt(i))) {
+            for (int i = 1; i < word.length(); i++) {
+                char lowerCopy = 
+                convertCharToLowerCase(word.charAt(i));
+                if (!line.contains(lowerCopy)) {
                     writeFlag = false;
                     break;
                 }
@@ -100,6 +102,14 @@ class Solution {
             }
         }
         return null;
+    }
+
+    private char convertCharToLowerCase(char c) {
+        if (c < 'a') {
+            c = (char) ((int) (c + 32));
+        }
+
+        return c;
     }
 }
 ```
