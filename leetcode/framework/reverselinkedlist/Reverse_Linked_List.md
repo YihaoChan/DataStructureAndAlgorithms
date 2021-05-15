@@ -232,4 +232,5 @@ class Solution {
 | [92. 反转链表 II](https://leetcode-cn.com/problems/reverse-linked-list-ii/) | 反转链表的一部分 | [92_Reverse_Linked_List_II](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/92_Reverse_Linked_List_II.md) |
 | [剑指 Offer 06. 从尾到头打印链表](https://leetcode-cn.com/problems/cong-wei-dao-tou-da-yin-lian-biao-lcof/) | 反转整个链表     | [J_06_Print_List_From_End_to_Start](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/J_06_Print_List_From_End_to_Start.md) |
 | [25. K 个一组翻转链表](https://leetcode-cn.com/problems/reverse-nodes-in-k-group/) | k个一组反转链表  | [25_Reverse_Nodes_in_k-Group](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/25_Reverse_Nodes_in_k-Group.md) |
+| [24. 两两交换链表中的节点](https://leetcode-cn.com/problems/swap-nodes-in-pairs/) | 两两反转         | [24_Swap_Nodes_in_Pairs](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/24_Swap_Nodes_in_Pairs.md) |
 
