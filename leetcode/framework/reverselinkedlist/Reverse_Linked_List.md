@@ -225,12 +225,13 @@ class Solution {
 
 ## 4 题目
 
-| 题目                                                         | 描述             | 解答                                                         |
-| ------------------------------------------------------------ | ---------------- | ------------------------------------------------------------ |
-| [206. 反转链表](https://leetcode-cn.com/problems/reverse-linked-list/) | 反转整个链表     | [206_Reverse_Linked_List](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/206_Reverse_Linked_List.md) |
-| [剑指 Offer 24. 反转链表](https://leetcode-cn.com/problems/fan-zhuan-lian-biao-lcof/) | 反转整个链表     | [J_24_Reverse_Linked_list](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/J_24_Reverse_Linked_list.md) |
-| [92. 反转链表 II](https://leetcode-cn.com/problems/reverse-linked-list-ii/) | 反转链表的一部分 | [92_Reverse_Linked_List_II](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/92_Reverse_Linked_List_II.md) |
-| [剑指 Offer 06. 从尾到头打印链表](https://leetcode-cn.com/problems/cong-wei-dao-tou-da-yin-lian-biao-lcof/) | 反转整个链表     | [J_06_Print_List_From_End_to_Start](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/J_06_Print_List_From_End_to_Start.md) |
-| [25. K 个一组翻转链表](https://leetcode-cn.com/problems/reverse-nodes-in-k-group/) | k个一组反转链表  | [25_Reverse_Nodes_in_k-Group](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/25_Reverse_Nodes_in_k-Group.md) |
-| [24. 两两交换链表中的节点](https://leetcode-cn.com/problems/swap-nodes-in-pairs/) | 两两反转         | [24_Swap_Nodes_in_Pairs](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/24_Swap_Nodes_in_Pairs.md) |
+| 题目                                                         | 描述                                                 | 解答                                                         |
+| ------------------------------------------------------------ | ---------------------------------------------------- | ------------------------------------------------------------ |
+| [206. 反转链表](https://leetcode-cn.com/problems/reverse-linked-list/) | 反转整个链表                                         | [206_Reverse_Linked_List](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/206_Reverse_Linked_List.md) |
+| [剑指 Offer 24. 反转链表](https://leetcode-cn.com/problems/fan-zhuan-lian-biao-lcof/) | 反转整个链表                                         | [J_24_Reverse_Linked_list](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/J_24_Reverse_Linked_list.md) |
+| [92. 反转链表 II](https://leetcode-cn.com/problems/reverse-linked-list-ii/) | 反转链表的一部分                                     | [92_Reverse_Linked_List_II](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/92_Reverse_Linked_List_II.md) |
+| [剑指 Offer 06. 从尾到头打印链表](https://leetcode-cn.com/problems/cong-wei-dao-tou-da-yin-lian-biao-lcof/) | 反转整个链表                                         | [J_06_Print_List_From_End_to_Start](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/J_06_Print_List_From_End_to_Start.md) |
+| [25. K 个一组翻转链表](https://leetcode-cn.com/problems/reverse-nodes-in-k-group/) | k个一组反转链表                                      | [25_Reverse_Nodes_in_k-Group](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/25_Reverse_Nodes_in_k-Group.md) |
+| [24. 两两交换链表中的节点](https://leetcode-cn.com/problems/swap-nodes-in-pairs/) | 两两反转                                             | [24_Swap_Nodes_in_Pairs](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/24_Swap_Nodes_in_Pairs.md) |
+| [234. 回文链表](https://leetcode-cn.com/problems/palindrome-linked-list/) | 找到链表中点的前一个结点；反转后半部分链表；还原链表 | [234_Palindrome_Linked_List](https://github.com/YihaoChan/DataStructureAndAlgorithms/blob/main/leetcode/solution/234_Palindrome_Linked_List.md) |
 
