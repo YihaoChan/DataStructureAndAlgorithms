@@ -46,16 +46,16 @@ class Solution {
             return 0;
         }
 
-        int leftDepth = 1 + minDepth(root.left);
-        int rightDepth = 1 + minDepth(root.right);
+        int leftDepth = minDepth(root.left);
+        int rightDepth = minDepth(root.right);
 
-        if (leftDepth == 1) {
-            return rightDepth;
-        } else if (rightDepth == 1) {
-            return leftDepth;
+        if (root.left == null) {
+            return rightDepth + 1;
+        } else if (root.right == null) {
+            return leftDepth + 1;
         }
 
-        return Math.min(leftDepth, rightDepth);
+        return Math.min(leftDepth, rightDepth) + 1;
     }
 }
 ```
