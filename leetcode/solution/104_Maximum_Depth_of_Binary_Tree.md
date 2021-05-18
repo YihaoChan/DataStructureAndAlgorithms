@@ -45,10 +45,10 @@ class Solution {
             return 0;
         }
 
-        int leftDepth = 1 + maxDepth(root.left);
-        int rightDepth = 1 + maxDepth(root.right);
+        int leftDepth = maxDepth(root.left);
+        int rightDepth = maxDepth(root.right);
 
-        return Math.max(leftDepth, rightDepth);
+        return Math.max(leftDepth, rightDepth) + 1;
     }
 }
 ```
