@@ -68,3 +68,64 @@ class Solution {
 
 1. 时间复杂度：每个结点均被访问一遍，故时间复杂度为**O(n)**；
 2. 空间复杂度：递归栈空间为树的深度，故空间复杂度为**O(logn)**，最坏情况下二叉树退化为链表，空间复杂度为O(n)。
+
+### 2.2 迭代
+
+```
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public List<Node> children;
+
+    public Node() {}
+
+    public Node(int _val) {
+        val = _val;
+    }
+
+    public Node(int _val, List<Node> _children) {
+        val = _val;
+        children = _children;
+    }
+};
+*/
+
+class Solution {
+    public int maxDepth(Node root) {
+        if (root == null) {
+            return 0;
+        }
+
+        int depth = 0;
+
+        Queue<Node> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            int count = queue.size();
+
+            depth++;
+
+            while (count > 0) {
+                Node dequeueNode = queue.poll();
+
+                List<Node> childrenNodes = dequeueNode.children;
+
+                for (Node child : childrenNodes) {
+                    queue.offer(child);
+                }
+
+                count--;
+            }
+        }
+
+        return depth;
+    }
+}
+```
+
+复杂度分析：
+
+1. 时间复杂度：每个结点均被访问一遍，故时间复杂度为**O(n)**；
+2. 空间复杂度：队列中结点数不超过n，故空间复杂度为**O(n)**。
