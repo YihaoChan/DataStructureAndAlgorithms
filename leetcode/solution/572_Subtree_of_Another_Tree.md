@@ -50,52 +50,49 @@
 
 类似第1367题，每次都要从树s的当前结点检查整棵树t，即根据树s的当前结点和从树t的根结点出发的子结点们判断是否一一匹配成功。如果匹配失败，就根据树s的当前结点的左右结点继续匹配。
 
-```java
+```c++
 /**
  * Definition for a binary tree node.
- * public class TreeNode {
+ * struct TreeNode {
  *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
  */
 class Solution {
-    public boolean isSubtree(TreeNode root, TreeNode subRoot) {
-        if (root == null) {
+public:
+    bool isSubtree(TreeNode* root, TreeNode* subRoot) {
+        if (!root) {
             return false;
         }
 
         return dfs(root, subRoot) ||
-               isSubtree(root.left, subRoot) || 
-               isSubtree(root.right, subRoot);
+               isSubtree(root->left, subRoot) ||
+               isSubtree(root->right, subRoot);
     }
 
-    private boolean dfs(TreeNode root, TreeNode subRoot) {
-        if (root == null && subRoot == null) {
+    bool dfs(TreeNode *root, TreeNode *subRoot) {
+        if (!root && !subRoot) {
             return true;
         }
-        
-        if ((root == null) ^ (subRoot == null)) {
+
+        if (!root ^ !subRoot) {
             return false;
         }
 
-        if (root.val != subRoot.val) {
+        if (root->val != subRoot->val) {
             return false;
         }
 
-        boolean leftRes = dfs(root.left, subRoot.left);
-        boolean rightRes = dfs(root.right, subRoot.right);
+        bool leftRes = dfs(root->left, subRoot->left);
+        bool rightRes = dfs(root->right, subRoot->right);
 
         return leftRes && rightRes;
     }
-}
+};
 ```
 
 复杂度分析：
