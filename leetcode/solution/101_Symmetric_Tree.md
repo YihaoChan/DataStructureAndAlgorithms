@@ -34,46 +34,47 @@
 2. 如果同时为空，直接返回true；
 3. 如果都非空，先判断它们之间是否相等，再递归往下判断左子结点和右子结点以及右子结点和左子结点。
 
-```
+```c++
 /**
  * Definition for a binary tree node.
- * public class TreeNode {
+ * struct TreeNode {
  *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
  */
 class Solution {
-    public boolean isSymmetric(TreeNode root) {
-        if (root == null || 
-           (root.left == null && root.right == null)) {
+public:
+    bool isSymmetric(TreeNode* root) {
+        if (!root) {
             return true;
         }
 
-        return isSymmetric(root.left, root.right);
+        return isSymmetric(root->left, root->right);
     }
 
-    private boolean isSymmetric(TreeNode node1, TreeNode node2) {
-        if ((node1 != null) ^ (node2 != null)) {
+    bool isSymmetric(TreeNode* leftRoot, TreeNode* rightRoot) {
+        if (!leftRoot && !rightRoot) {
+            return true;
+        }
+
+        if (!leftRoot ^ !rightRoot) {
             return false;
         }
 
-        if (node1 == null && node2 == null) {
-            return true;
+        if (leftRoot->val != rightRoot->val) {
+            return false;
         }
 
-        return (node1.val == node2.val) && 
-               isSymmetric(node1.left, node2.right) &&
-               isSymmetric(node1.right, node2.left);
+        bool outerRes = isSymmetric(leftRoot->left, rightRoot->right);
+        bool innerRes = isSymmetric(leftRoot->right, rightRoot->left);
+
+        return outerRes && innerRes;
     }
-}
+};
 ```
 
 复杂度分析：
