@@ -50,7 +50,7 @@
 
 类似第1367题，每次都要从树s的当前结点检查整棵树t，即根据树s的当前结点和从树t的根结点出发的子结点们判断是否一一匹配成功。如果匹配失败，就根据树s的当前结点的左右结点继续匹配。
 
-```
+```java
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
