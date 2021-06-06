@@ -38,7 +38,7 @@
 3. 2 * 2 + 0 = 4；
 4. 4 * 2 + 0 = 8.
 
-```
+```c++
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
