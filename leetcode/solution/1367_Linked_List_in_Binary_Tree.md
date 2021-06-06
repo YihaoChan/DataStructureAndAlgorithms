@@ -33,59 +33,59 @@
 
 ![图解](images/图解.jpg)
 
-```
+```c++
 /**
  * Definition for singly-linked list.
- * public class ListNode {
+ * struct ListNode {
  *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
  */
 /**
  * Definition for a binary tree node.
- * public class TreeNode {
+ * struct TreeNode {
  *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
  */
 class Solution {
-    public boolean isSubPath(ListNode head, TreeNode root) {
-        if (root == null) {
+public:
+    bool isSubPath(ListNode* head, TreeNode* root) {
+        if (!root) {
             return false;
         }
 
-        return dfs(head, root) || // 从当前结点出发和链表结点一一匹配
-               isSubPath(head, root.left) || // 判断完当前结点，就判断子结点
-               isSubPath(head, root.right);
+        return dfs(head, root) ||
+               isSubPath(head, root->left) ||
+               isSubPath(head, root->right);
     }
 
-    private boolean dfs(ListNode head, TreeNode root) {
-        if (head == null) {
+    bool dfs(ListNode* head, TreeNode* root) {
+        if (!head) {
             return true;
         }
 
-        if (root == null) {
+        if (!root) {
             return false;
         }
 
-        if (head.val != root.val) {
+        if (head->val != root->val) {
             return false;
         }
 
-        return dfs(head.next, root.left) || dfs(head.next, root.right);
+        bool leftRes = dfs(head->next, root->left);
+        bool rightRes = dfs(head->next, root->right);
+
+        return leftRes || rightRes;
     }
-}
+};
 ```
 
 复杂度分析：
