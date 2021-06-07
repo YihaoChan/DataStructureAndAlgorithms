@@ -45,46 +45,45 @@
 
 巧妙解法：当其中一个链表遍历到尽头时，将其重定位到另一个链表的头结点，循环下去之后两个结点相等为止，此时有可能两个结点就是链表的相交点处，也有可能都是null。
 
-```
+```c++
 /**
  * Definition for singly-linked list.
- * public class ListNode {
+ * struct ListNode {
  *     int val;
- *     ListNode next;
- *     ListNode(int x) {
- *         val = x;
- *         next = null;
- *     }
- * }
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
  */
-public class Solution {
-    public ListNode getIntersectionNode(
-    	ListNode headA, ListNode headB
-    ) {
-        if (headA == null || headB == null) {
-            return null;
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        if (headA == nullptr || headB == nullptr) {
+            return nullptr;
         }
-
-        ListNode nodeA = headA;
-        ListNode nodeB = headB;
-
+        
+        ListNode* nodeA = headA;
+        ListNode* nodeB = headB;
+        
         while (nodeA != nodeB) {
-            if (nodeA != null) {
-                nodeA = nodeA.next;
-            } else {
+            nodeA = nodeA->next;
+            nodeB = nodeB->next;
+
+            if (nodeA == nullptr && nodeB == nullptr) {
+                return nullptr;
+            }
+
+            if (nodeA == nullptr) {
                 nodeA = headB;
             }
 
-            if (nodeB != null) {
-                nodeB = nodeB.next;
-            } else {
+            if (nodeB == nullptr) {
                 nodeB = headA;
             }
         }
 
         return nodeA;
     }
-}
+};
 ```
 
 复杂度分析：
