@@ -65,7 +65,7 @@
 class Solution {
 public:
     bool isSubtree(TreeNode* root, TreeNode* subRoot) {
-        if (!root) {
+        if (root == nullptr) {
             return false;
         }
 
@@ -75,11 +75,11 @@ public:
     }
 
     bool dfs(TreeNode *root, TreeNode *subRoot) {
-        if (!root && !subRoot) {
+        if (root == nullptr && subRoot == nullptr) {
             return true;
         }
 
-        if (!root ^ !subRoot) {
+        if (root == nullptr ^ subRoot == nullptr) {
             return false;
         }
 
