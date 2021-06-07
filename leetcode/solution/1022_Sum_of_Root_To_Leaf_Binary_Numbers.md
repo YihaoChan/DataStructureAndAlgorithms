@@ -61,13 +61,13 @@ public:
     }
 
     void getSum(TreeNode *root, int curr) {
-        if (!root) {
+        if (root == nullptr) {
             return;
         }
 
         int temp = curr * 2 + root->val;
 
-        if (!root->left && !root->right) {
+        if (root->left == nullptr && root->right == nullptr) {
             sum += temp;
             return;
         }
