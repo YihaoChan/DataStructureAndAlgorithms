@@ -18,37 +18,38 @@
 
 快慢指针，让快指针先走k步。然后快指针和慢指针一起出发，当快指针为空时，慢指针即为倒数第k个结点。
 
-```
+```c++
 /**
  * Definition for singly-linked list.
- * public class ListNode {
+ * struct ListNode {
  *     int val;
- *     ListNode next;
- *     ListNode(int x) { val = x; }
- * }
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
  */
 class Solution {
-    public ListNode getKthFromEnd(ListNode head, int k) {
-        if (head == null) return null;
+public:
+    ListNode* getKthFromEnd(ListNode* head, int k) {
+        if (head == nullptr) {
+            return nullptr;
+        }
 
-        ListNode slow = head;
-        ListNode fast = head;
+        ListNode* slow = head;
+        ListNode* fast = head;
 
         while (k > 0) {
-            fast = fast.next;
-
+            fast = fast->next;
             k--;
         }
 
-        while (fast != null) {
-            fast = fast.next;
-
-            slow = slow.next;
+        while (fast != nullptr) {
+            slow = slow->next;
+            fast = fast->next;
         }
 
         return slow;
     }
-}
+};
 ```
 
 复杂度分析：
