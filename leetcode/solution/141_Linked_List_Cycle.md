@@ -38,39 +38,33 @@
 
 快慢指针，快指针速度为慢指针的2倍。如果快指针和慢指针相遇，说明链表存在环。
 
-```
+```c++
 /**
  * Definition for singly-linked list.
- * class ListNode {
+ * struct ListNode {
  *     int val;
- *     ListNode next;
- *     ListNode(int x) {
- *         val = x;
- *         next = null;
- *     }
- * }
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
  */
-public class Solution {
-    public boolean hasCycle(ListNode head) {
-       if (head == null || head.next == null) {
-           return false;
-       }
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        ListNode* slow = head;
+        ListNode* fast = head;
 
-       ListNode slow = head;
-       ListNode fast = head;
+        while (fast != nullptr && fast->next != nullptr) {
+            slow = slow->next;
+            fast = fast->next->next;
 
-       while (fast != null && fast.next != null) {
-           slow = slow.next;
-           fast = fast.next.next;
+            if (slow == fast) {
+                return true;
+            }
+        }
 
-           if (fast == slow) {
-               return true;
-           }
-       }
-
-       return false;
+        return false;
     }
-}
+};
 ```
 
 复杂度分析：
