@@ -58,7 +58,7 @@
 class Solution {
 public:
     bool isSubPath(ListNode* head, TreeNode* root) {
-        if (!root) {
+        if (root == nullptr) {
             return false;
         }
 
@@ -68,11 +68,11 @@ public:
     }
 
     bool dfs(ListNode* head, TreeNode* root) {
-        if (!head) {
+        if (head == nullptr) {
             return true;
         }
 
-        if (!root) {
+        if (root == nullptr) {
             return false;
         }
 
