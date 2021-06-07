@@ -28,31 +28,35 @@ ans.val = 3, ans.next.val = 4, ans.next.next.val = 5, 以及 ans.next.next.next 
 
 快慢指针。慢指针走的路程为快指针的一半，所以速度也为快指针的一半，即：快指针每次步进两个单位，慢指针步进一个单位。
 
-```
+```c++
 /**
  * Definition for singly-linked list.
- * public class ListNode {
+ * struct ListNode {
  *     int val;
- *     ListNode next;
- *     ListNode(int x) { val = x; }
- * }
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
  */
 class Solution {
-    public ListNode middleNode(ListNode head) {
-        if (head == null) return null;
+public:
+    ListNode* middleNode(ListNode* head) {
+        if (head == nullptr) {
+            return nullptr;
+        }
 
-        ListNode slow = head;
-        ListNode fast = head;
+        ListNode* slow = head;
+        ListNode* fast = head;
 
-        while (fast != null && fast.next != null) {
-            slow = slow.next;
-
-            fast = fast.next.next;
+        while (fast != nullptr && fast->next != nullptr) {
+            slow = slow->next;
+            fast = fast->next->next;
         }
 
         return slow;
     }
-}
+};
 ```
 
 复杂度分析：
