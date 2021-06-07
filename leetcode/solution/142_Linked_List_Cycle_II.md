@@ -45,50 +45,44 @@
 
 ![环的入口演示](images/环的入口演示.png)
 
-```
+```c++
 /**
  * Definition for singly-linked list.
- * class ListNode {
+ * struct ListNode {
  *     int val;
- *     ListNode next;
- *     ListNode(int x) {
- *         val = x;
- *         next = null;
- *     }
- * }
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
  */
-public class Solution {
-    public ListNode detectCycle(ListNode head) {
-        if (head == null || head.next == null) {
-            return null;
-        }
+class Solution {
+public:
+    ListNode *detectCycle(ListNode *head) {
+        ListNode *slow = head;
+        ListNode *fast = head;
 
-        ListNode slow = head;
-        ListNode fast = head;
+        while (fast != nullptr && fast->next != nullptr) {
+            slow = slow->next;
+            fast = fast->next->next;
 
-        while (fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
-
-            if (fast == slow) {
+            if (slow == fast) {
                 break;
             }
         }
 
-        if (fast == null || fast.next == null) {
-            return null;
+        if (fast == nullptr || fast->next == nullptr) {
+            return nullptr;
         }
 
-        ListNode meet = head;
+        ListNode *entrance = head;
 
-        while (meet != slow) {
-            meet = meet.next;
-            slow = slow.next;
+        while (entrance != slow) {
+            entrance = entrance->next;
+            slow = slow->next;
         }
 
-        return meet;
+        return entrance;
     }
-}
+};
 ```
 
 复杂度分析：
