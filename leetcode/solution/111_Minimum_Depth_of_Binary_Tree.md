@@ -24,40 +24,37 @@
 
 ### 2.1 递归
 
-```
+```c++
 /**
  * Definition for a binary tree node.
- * public class TreeNode {
+ * struct TreeNode {
  *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
  */
 class Solution {
-    public int minDepth(TreeNode root) {
-        if (root == null) {
+public:
+    int minDepth(TreeNode* root) {
+        if (root == nullptr) {
             return 0;
         }
 
-        int leftDepth = minDepth(root.left);
-        int rightDepth = minDepth(root.right);
+        int leftDepth = minDepth(root->left);
+        int rightDepth = minDepth(root->right);
 
-        if (root.left == null) {
+        if (root->left == nullptr) {
             return rightDepth + 1;
-        } else if (root.right == null) {
+        } else if (root->right == nullptr) {
             return leftDepth + 1;
         }
 
-        return Math.min(leftDepth, rightDepth) + 1;
+        return min(1 + leftDepth, 1 + rightDepth);
     }
-}
+};
 ```
 
 复杂度分析：
