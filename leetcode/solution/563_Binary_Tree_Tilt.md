@@ -52,43 +52,41 @@
 
 计算当前树的总和时，将当前结点及其左右子树的和相加后返回，即可求出总和。
 
-```
+```c++
 /**
  * Definition for a binary tree node.
- * public class TreeNode {
+ * struct TreeNode {
  *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
  */
 class Solution {
-    private int tilt = 0;
+public:
+    int findTilt(TreeNode* root) {
+        int tilt = 0;
 
-    public int findTilt(TreeNode root) {
-        getSumAddTilt(root);
+        getTilt(root, tilt);
 
         return tilt;
     }
 
-    private int getSumAddTilt(TreeNode root) {
-        if (root == null) {
+    int getTilt(TreeNode* root, int &tilt) {
+        if (root == nullptr) {
             return 0;
         }
 
-        int leftSum = getSumAddTilt(root.left);
-        int rightSum = getSumAddTilt(root.right);
+        int leftSum = getTilt(root->left, tilt);
+        int rightSum = getTilt(root->right, tilt);
 
-        tilt += Math.abs(leftSum - rightSum);
-        return root.val + leftSum + rightSum;
+        tilt += abs(leftSum - rightSum);
+
+        return leftSum + rightSum + root->val;
     }
-}
+};
 ```
 
 复杂度分析：
