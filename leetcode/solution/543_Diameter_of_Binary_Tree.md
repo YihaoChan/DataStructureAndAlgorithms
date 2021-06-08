@@ -20,43 +20,42 @@
 
 求结点的左子树和右子树深度，然后相加，即为边的个数(直径)。
 
-```
+```c++
 /**
  * Definition for a binary tree node.
- * public class TreeNode {
+ * struct TreeNode {
  *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
  */
 class Solution {
-    private int res = 0;
+public:
+    int diameterOfBinaryTree(TreeNode* root) {
+        int diameter = 0;
 
-    public int diameterOfBinaryTree(TreeNode root) {
-        getDiameter(root);
+        getDepthDiameter(root, diameter);
 
-        return res;
+        return diameter;
     }
 
-    private int getDiameter(TreeNode root) {
-        if (root == null) {
+private:
+    int getDepthDiameter(TreeNode* root, int &diameter) {
+        if (root == nullptr) {
             return 0;
         }
 
-        int leftDepth = getDiameter(root.left);
-        int rightDepth = getDiameter(root.right);
+        int leftDepth = getDepthDiameter(root->left, diameter);
+        int rightDepth = getDepthDiameter(root->right, diameter);
 
-        res = Math.max(res, leftDepth + rightDepth);
-        return Math.max(leftDepth, rightDepth) + 1;
+        diameter = max(diameter, leftDepth + rightDepth);
+
+        return max(leftDepth, rightDepth) + 1;
     }
-}
+};
 ```
 
 复杂度分析：
