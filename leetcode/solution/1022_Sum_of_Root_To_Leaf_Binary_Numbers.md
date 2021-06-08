@@ -52,28 +52,30 @@
  */
 class Solution {
 public:
-    int sum = 0;
-
     int sumRootToLeaf(TreeNode* root) {
-        getSum(root, 0);
+        sum = 0;
+
+        getSum(root, sum);
 
         return sum;
     }
 
-    void getSum(TreeNode *root, int curr) {
+private:
+    int sum;
+
+    void getSum(TreeNode* root, int levelSum) {
         if (root == nullptr) {
             return;
         }
 
-        int temp = curr * 2 + root->val;
-
-        if (root->left == nullptr && root->right == nullptr) {
-            sum += temp;
-            return;
-        }
+        int temp = levelSum * 2 + root->val;
 
         getSum(root->left, temp);
         getSum(root->right, temp);
+
+        if (root->left == nullptr && root->right == nullptr) {
+            sum += temp;
+        }
 
         return;
     }
