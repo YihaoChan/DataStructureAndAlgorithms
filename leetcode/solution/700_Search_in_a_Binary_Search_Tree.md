@@ -26,41 +26,38 @@
 
 ### 2.1 递归
 
-```
+```c++
 /**
  * Definition for a binary tree node.
- * public class TreeNode {
+ * struct TreeNode {
  *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
  */
 class Solution {
-    public TreeNode searchBST(TreeNode root, int val) {
-        if (root == null) {
-            return null;
+public:
+    TreeNode* searchBST(TreeNode* root, int val) {
+        if (root == nullptr) {
+            return nullptr;
         }
 
-        int cmp = val - root.val;
+        int cmp = root->val - val;
 
-        if (cmp < 0) {
-            return searchBST(root.left, val);
-        } else if (cmp > 0) {
-            return searchBST(root.right, val);
+        if (cmp > 0) {
+            return searchBST(root->left, val);
+        } else if (cmp < 0) {
+            return searchBST(root->right, val);
         } else if (cmp == 0) {
             return root;
         }
 
-        return null;
+        return nullptr;
     }
-}
+};
 ```
 
 复杂度分析：
