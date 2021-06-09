@@ -24,50 +24,46 @@
 
 ### 2.1 递归
 
-```
+```c++
 /**
  * Definition for a binary tree node.
- * public class TreeNode {
+ * struct TreeNode {
  *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
  */
 class Solution {
-    private TreeNode node;
+public:
+    TreeNode* increasingBST(TreeNode* root) {
+        TreeNode* dummy = new TreeNode(-1, nullptr, nullptr);
+        TreeNode* newRoot = dummy;
 
-    public TreeNode increasingBST(TreeNode root) {
-        TreeNode dummy = new TreeNode(-1);
-        node = dummy;
+        convertTree2List(root, newRoot);
 
-        rotateBST(root);
-
-        return dummy.right;
+        return dummy->right;
     }
 
-    private void rotateBST(TreeNode root) {
-        if (root == null) {
+private:
+    void convertTree2List(TreeNode* root, TreeNode* &newRoot) {
+        if (root == nullptr) {
             return;
         }
 
-        rotateBST(root.left);
+        convertTree2List(root->left, newRoot);
 
-        root.left = null;
-        node.right = root;
-        node = node.right;
+        root->left = nullptr;
+        newRoot->right = root;
+        newRoot = newRoot->right;
 
-        rotateBST(root.right);
+        convertTree2List(root->right, newRoot);
 
         return;
     }
-}
+};
 ```
 
 复杂度分析：
