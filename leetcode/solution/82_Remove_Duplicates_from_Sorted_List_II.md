@@ -34,48 +34,43 @@
 
 此外，构造头结点时，为防止头结点的值和链表的结点的值冲突，导致出现重复的情况，应该将头结点的值赋为链表值域的最小值再减1。
 
-```
+```c++
 /**
  * Definition for singly-linked list.
- * public class ListNode {
+ * struct ListNode {
  *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { 
- *	       this.val = val; this.next = next; 	
- *	   }
- * }
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
  */
 class Solution {
-    public ListNode deleteDuplicates(ListNode head) {
-        if (head == null) {
-            return null;
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+        if (head == nullptr) {
+            return nullptr;
         }
 
-        ListNode sentinel = new ListNode(-101, head);
+        ListNode* dummy = new ListNode(-101, head);
+        ListNode* curr = dummy;
 
-        ListNode slow = sentinel;
-        ListNode fast = head;
-
-        while (fast != null && fast.next != null) {
-            if (fast.val == fast.next.val) {
-                int deleteItem = fast.val;
-
-                while (fast != null && fast.val == deleteItem) {
-                    fast = fast.next;
+        while (head != nullptr && head->next != nullptr) {
+            if (head->val == head->next->val) {
+                int memo = head->val;
+                while (head != nullptr && head->val == memo) {
+                    head = head->next;
                 }
-
-                slow.next = fast;
+                curr->next = head;
             } else {
-                slow = slow.next;
-                fast = fast.next;
+                head = head->next;
+                curr = curr->next;
             }
         }
 
-        return sentinel.next;
-    }
-}
+        return dummy->next;
+    } 
+};
 ```
 
 复杂度分析：
