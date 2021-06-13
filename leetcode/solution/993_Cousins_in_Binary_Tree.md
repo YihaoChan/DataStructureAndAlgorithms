@@ -36,33 +36,30 @@
 
 先求深度，再求父结点。
 
-```
+```c++
 /**
  * Definition for a binary tree node.
- * public class TreeNode {
+ * struct TreeNode {
  *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
  */
 class Solution {
-    public boolean isCousins(TreeNode root, int x, int y) {
-        int xDepth = findDepth(root, x, 0);
-        int yDepth = findDepth(root, y, 0);
+public:
+    bool isCousins(TreeNode* root, int x, int y) {
+        int xDepth = getDepth(root, x, 0);
+        int yDepth = getDepth(root, y, 0);
 
         if (xDepth != yDepth) {
             return false;
         }
 
-        TreeNode xParent = findParent(root, x);
-        TreeNode yParent = findParent(root, y);
+        TreeNode* xParent = getParent(root, x);
+        TreeNode* yParent = getParent(root, y);
 
         if (xParent == yParent) {
             return false;
@@ -71,51 +68,40 @@ class Solution {
         return true;
     }
 
-    private int findDepth(TreeNode root, int target, int depth) {
-        if (root == null) {
+private:
+    int getDepth(TreeNode* root, int target, int depth) {
+        if (root == nullptr) {
             return -1;
         }
 
-        if (root.val == target) {
+        if (root->val == target) {
             return depth;
         }
 
-        int leftDepth = findDepth(root.left, target, depth + 1);
-        int rightDepth = findDepth(root.right, target, depth + 1);
+        int leftDepth = getDepth(root->left, target, depth + 1);
+        int rightDepth = getDepth(root->right, target, depth + 1);
 
-        if (leftDepth != -1) {
-            return leftDepth;
-        } else if (rightDepth != -1) {
-            return rightDepth;
-        }
-        
-        return -1;
+        return leftDepth == -1 ? rightDepth : leftDepth;
     }
 
-    private TreeNode findParent(TreeNode root, int target) {
-        if (root == null) {
-            return null;
+    TreeNode* getParent(TreeNode* root, int target) {
+        if (root == nullptr) {
+            return nullptr;
         }
 
         if (
-            root.left != null && root.left.val == target ||
-            root.right != null && root.right.val == target
+            root->left != nullptr && root->left->val == target ||
+            root->right != nullptr && root->right->val == target
         ) {
             return root;
         }
 
-        TreeNode leftParent = findParent(root.left, target);
-        TreeNode rightParent = findParent(root.right, target);
+        TreeNode* leftParent = getParent(root->left, target);
+        TreeNode* rightParent = getParent(root->right, target);
 
-        if (leftParent != null) {
-            return leftParent;
-        } else if (rightParent != null) {
-            return rightParent;
-        }
-
-        return null;
-    }
-}
+        return leftParent == nullptr ? rightParent : leftParent;
+    } 
+};
 ```
 
 复杂度分析：
