@@ -49,7 +49,7 @@
 class Solution {
 public:
     bool isSymmetric(TreeNode* root) {
-        if (!root) {
+        if (root == nullptr) {
             return true;
         }
 
@@ -57,11 +57,11 @@ public:
     }
 
     bool isSymmetric(TreeNode* leftRoot, TreeNode* rightRoot) {
-        if (!leftRoot && !rightRoot) {
+        if (leftRoot == nullptr && rightRoot == nullptr) {
             return true;
         }
 
-        if (!leftRoot ^ !rightRoot) {
+        if (leftRoot == nullptr ^ rightRoot == nullptr) {
             return false;
         }
 
