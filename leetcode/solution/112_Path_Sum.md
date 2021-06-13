@@ -28,36 +28,35 @@
 
 ### 2.1 递归
 
-```
+```c++
 /**
  * Definition for a binary tree node.
- * public class TreeNode {
+ * struct TreeNode {
  *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
  */
 class Solution {
-    public boolean hasPathSum(TreeNode root, int targetSum) {
-        if (root == null) {
+public:
+    bool hasPathSum(TreeNode* root, int targetSum) {
+        if (root == nullptr) {
             return false;
         }
-
-        if (root.left == null && root.right == null) {
-            return root.val == targetSum;
+        
+        if (root->left == nullptr && root->right == nullptr) {
+            return root->val == targetSum;
         }
 
-        return hasPathSum(root.left, targetSum - root.val) ||
-               hasPathSum(root.right, targetSum - root.val);
+        bool leftRes = hasPathSum(root->left, targetSum - root->val);
+        bool rightRes = hasPathSum(root->right, targetSum - root->val);
+
+        return leftRes || rightRes;
     }
-}
+};
 ```
 
 复杂度分析：
