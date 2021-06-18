@@ -15,34 +15,32 @@
 
 ### 2.1 递归
 
-```
+```c++
 /**
  * Definition for singly-linked list.
- * public class ListNode {
+ * struct ListNode {
  *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) {
- *         this.val = val; 
- *		   this.next = next; 
- *     }
- * }
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
  */
 class Solution {
-    public ListNode reverseList(ListNode head) {
-        if (head == null || head.next == null) {
-        	return head;
+public:
+    ListNode* reverseList(ListNode* head) {
+        if (head == nullptr || head->next == nullptr) {
+            return head;
         }
 
-        ListNode last = reverseList(head.next);
+        ListNode* newHead = reverseList(head->next);
 
-        head.next.next = head;
-        head.next = null;
+        head->next->next = head;
+        head->next = nullptr;
 
-        return last;
+        return newHead;
     }
-}
+};
 ```
 
 复杂度分析：
@@ -52,39 +50,37 @@ class Solution {
 
 ### 2.2 迭代
 
-```
+```c++
 /**
  * Definition for singly-linked list.
- * public class ListNode {
+ * struct ListNode {
  *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) {
- *         this.val = val; 
- *		   this.next = next; 
- *     }
- * }
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
  */
 class Solution {
-    public ListNode reverseList(ListNode head) {
-        if (head == null || head.next == null) {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if (head == nullptr || head->next == nullptr) {
             return head;
         }
 
-        ListNode prev = null;
-        ListNode curr = head;
+        ListNode* prev = nullptr;
+        ListNode* curr = head;
 
-        while (curr != null) {
-            ListNode nextNode = curr.next;
-            curr.next = prev;
+        while (curr != nullptr) {
+            ListNode* succ = curr->next;
+            curr->next = prev;
             prev = curr;
-            curr = nextNode;
+            curr = succ;
         }
 
         return prev;
     }
-}
+};
 ```
 
 复杂度分析：
