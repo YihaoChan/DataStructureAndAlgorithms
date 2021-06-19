@@ -15,41 +15,42 @@
 
 定义一个哨兵结点作为头结点，其next指向第一个结点。slow初始为头结点，fast初始为第一个结点。最后返回头结点的next，即第一个结点。
 
-```
+```c++
 /**
  * Definition for singly-linked list.
- * public class ListNode {
+ * struct ListNode {
  *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
  */
 class Solution {
-    public ListNode removeElements(ListNode head, int val) {
-        if (head == null) return null;
-
-        ListNode sentinel = new ListNode(-1, head);
-
-        ListNode slow = sentinel;
-        ListNode fast = head;
-
-        while (fast != null) {
-            if (fast.val != val) {
-                slow = slow.next;
-
-                slow.val = fast.val;
-            }
-
-            fast = fast.next;
+public:
+    ListNode* removeElements(ListNode* head, int val) {
+        if (head == nullptr) {
+            return nullptr;
         }
 
-        slow.next = null;
+        ListNode* sentinel = new ListNode(-1);
+        ListNode* slow = sentinel;
+        ListNode* fast = head;
 
-        return sentinel.next;
+        while (fast != nullptr) {
+            if (fast->val != val) {
+                slow->next = fast;
+                slow = slow->next;
+            }
+
+            fast = fast->next;
+        }
+
+        slow->next = nullptr;
+        
+        return sentinel->next;
     }
-}
+};
 ```
 
 复杂度分析：
