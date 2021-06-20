@@ -29,104 +29,45 @@
 
 倒数第k个结点相关问题，用快慢指针。
 
-### 2.1 三个指针
+初始时，慢指针指向哨兵结点，而快指针指向head，这样子当快指针为null时，慢指针就指向了倒数第k个结点的前驱结点。
 
-构造哨兵结点，快慢指针初始时都指向哨兵结点。快指针先走k步，之后快慢指针同时出发。当快指针为null时，慢指针指向倒数第k个结点。而为了删除这个结点，需要有一个待删除结点的前驱结点。因此初始时，还需要一个结点更晚一点出发，用于删除待删除结点。
-
-```
+```c++
 /**
  * Definition for singly-linked list.
- * public class ListNode {
+ * struct ListNode {
  *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
  */
 class Solution {
-    public ListNode removeNthFromEnd(ListNode head, int n) {
-        if (head == null) {
-            return null;
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        if (head == nullptr) {
+            return nullptr;
         }
 
-        ListNode sentinel = new ListNode(-1, head);
-
-        ListNode remove = sentinel;
-        ListNode slow = sentinel;
-        ListNode fast = sentinel;
-
-        int flag = 0; // 起删除作用的结点指针什么时候出发
+        ListNode* sentinel = new ListNode(-1,head);
+        ListNode* slow = sentinel;
+        ListNode* fast = head;
 
         while (n > 0) {
-            fast = fast.next;
-            n--;
+            fast = fast->next;
+            --n;
         }
 
-        while (fast != null) {
-            fast = fast.next;
-            slow = slow.next;
-
-            flag++;
-
-            if (flag >= 2) {
-                remove = remove.next;
-            }
+        while (fast != nullptr) {
+            slow = slow->next;
+            fast = fast->next;
         }
 
-        remove.next = slow.next;
+        slow->next = slow->next->next;
 
-        return sentinel.next;
+        return sentinel->next;
     }
-}
-```
-
-复杂度分析：
-
-1. 时间复杂度：快指针移动n次，慢指针移动n - k次，待删除指针移动n - k - 1次，故总时间复杂度为**O(n)**；
-2. 空间复杂度：仅用到常数个额外空间，故空间复杂度为**O(1)**。
-
-### 2.2 两个指针
-
-上述方法需要一个比慢指针还晚一点出发的指针，可优化为：初始时，慢指针指向哨兵结点，而快指针指向head，这样子当快指针为null时，慢指针就指向了倒数第k个结点的前驱结点。
-
-```
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
- */
-class Solution {
-    public ListNode removeNthFromEnd(ListNode head, int n) {
-        if (head == null) {
-            return null;
-        }
-
-        ListNode sentinel = new ListNode(-1, head);
-
-        ListNode slow = sentinel;
-        ListNode fast = head;
-
-        while (n > 0) {
-            fast = fast.next;
-            n--;
-        }
-
-        while (fast != null) {
-            fast = fast.next;
-            slow = slow.next;
-        }
-
-        slow.next = slow.next.next;
-
-        return sentinel.next;
-    }
-}
+};
 ```
 
 复杂度分析：
