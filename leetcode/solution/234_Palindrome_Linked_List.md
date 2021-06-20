@@ -112,12 +112,12 @@ private:
 class Solution {
 public:
     bool isPalindrome(ListNode* head) {
-        start = head;
+        _start = head;
         return check(head);
     }
 
 private:
-    ListNode* start;
+    ListNode* _start = nullptr;
 
     bool check(ListNode* head) {
         if (head == nullptr) {
@@ -127,8 +127,8 @@ private:
         bool res = check(head->next);
 
         if (head != nullptr) {
-            res = res && (head->val == start->val);
-            start = start->next;
+            res = res && (head->val == _start->val);
+            _start = _start->next;
         }
 
         return res;
