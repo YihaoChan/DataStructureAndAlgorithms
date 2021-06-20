@@ -37,56 +37,45 @@
 
 上下指针分别搜索两个链表。当l1链表的结点值较小时，不必在res链表的后继结点处new一个结点，而是直接将res的指针指向此时的l1结点及其后续链表即可，能够节省一些new的操作。到最后其中一个链表遍历完以后，不必再逐个遍历另一个链表的其余结点，而是直接将指针指向另一个链表即可。
 
-```
+```c++
 /**
  * Definition for singly-linked list.
- * public class ListNode {
+ * struct ListNode {
  *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { 
- *	       this.val = val; 
- *	       this.next = next; 
- * 	   }
- * }
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
  */
 class Solution {
-    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
-        if (l1 == null) {
+public:
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        if (l1 == nullptr) {
             return l2;
-        } else if (l2 == null) {
+        } else if (l2 == nullptr) {
             return l1;
         }
 
-        ListNode sentinel = new ListNode(-101, null);
-        ListNode res = sentinel;
+        ListNode* dummy = new ListNode(-1);
+        ListNode* newList = dummy;
 
-        while (l1 != null && l2 != null) {
-            if (l1.val < l2.val) {
-                res.next = l1;
-                l1 = l1.next;
+        while (l1 != nullptr && l2 != nullptr) {
+            if (l1->val <= l2->val) {
+                newList->next = l1;
+                l1 = l1->next;
             } else {
-                res.next = l2;
-                l2 = l2.next;
+                newList->next = l2;
+                l2 = l2->next;
             }
-
-            res = res.next;
+            newList = newList->next;
         }
 
-        // l1比较长
-        if (l1 != null) {
-            res.next = l1;
-        }
-
-        // l2比较长
-        if (l2 != null) {
-            res.next = l2;
-        }
-
-        return sentinel.next;
+        newList->next = (l1 == nullptr) ? l2 : l1;
+        
+        return dummy->next;
     }
-}
+};
 ```
 
 复杂度分析：
@@ -116,37 +105,35 @@ class Solution {
 
 8. ![21-图解8](images/21-图解8.png)
 
-```
+```c++
 /**
  * Definition for singly-linked list.
- * public class ListNode {
+ * struct ListNode {
  *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { 
- *	       this.val = val; 
- *	       this.next = next; 
- * 	   }
- * }
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
  */
 class Solution {
-    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
-        if (l1 == null) {
+public:
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        if (l1 == nullptr) {
             return l2;
-        } else if (l2 == null) {
+        } else if (l2 == nullptr) {
             return l1;
         }
 
-        if (l1.val < l2.val) {
-            l1.next = mergeTwoLists(l1.next, l2);
+        if (l1->val <= l2->val) {
+            l1->next = mergeTwoLists(l1->next, l2);
             return l1;
         } else {
-            l2.next = mergeTwoLists(l1, l2.next);
+            l2->next = mergeTwoLists(l1, l2->next);
             return l2;
         }
     }
-}
+};
 ```
 
 复杂度分析：
