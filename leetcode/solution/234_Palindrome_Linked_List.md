@@ -24,63 +24,69 @@
 
 找到中点的前一个结点，将中点后面进行反转，然后分别从整个链表的前半部分和后半部分开始遍历，比较结点的值是否相同。
 
-```
+```c++
 /**
  * Definition for singly-linked list.
- * public class ListNode {
+ * struct ListNode {
  *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
  */
 class Solution {
-    public boolean isPalindrome(ListNode head) {
-        if (head == null) {
-            return false;
+public:
+    bool isPalindrome(ListNode* head) {
+        if (head == nullptr) {
+            return true;
         }
 
-        ListNode slow = head;
-        ListNode fast = head;
+        ListNode* slow = head;
+        ListNode* fast = head;
 
-        while (fast.next != null && fast.next.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
+        while (fast->next != nullptr && fast->next->next != nullptr) {
+            slow = slow->next;
+            fast = fast->next->next;
         }
 
-        slow.next = reverseList(slow.next);
+        slow->next = reverseList(slow->next);
 
-        ListNode former = head;
-        ListNode latter = slow.next;
+        ListNode* formerStart = head;
+        ListNode* latterStart = slow->next;
 
-        while (latter != null) {
-            if (former.val != latter.val) {
+        while (latterStart != nullptr) {
+            if (formerStart->val != latterStart->val) {
                 return false;
             }
-
-            former = former.next;
-            latter = latter.next;
+            formerStart = formerStart->next;
+            latterStart = latterStart->next;
         }
 
-        slow.next = reverseList(slow.next);
+        slow->next = reverseList(slow->next);
+
         return true;
     }
 
-    private ListNode reverseList(ListNode head) {
-        ListNode prev = null;
-        ListNode curr = head;
+private:
+    ListNode* reverseList(ListNode* head) {
+        if (head == nullptr) {
+            return nullptr;
+        }
 
-        while (curr != null) {
-            ListNode nextNode = curr.next;
-            curr.next = prev;
+        ListNode* prev = nullptr;
+        ListNode* curr = head;
+
+        while (curr != nullptr) {
+            ListNode* succ = curr->next;
+            curr->next = prev;
             prev = curr;
-            curr = nextNode;
+            curr = succ;
         }
 
         return prev;
     }
-}
+};
 ```
 
 复杂度分析：
@@ -92,39 +98,42 @@ class Solution {
 
 当递归返回时，让一个新结点从头出发，和当前回溯到的结点的值相比较，判断是否相等。同时，还要将之前的结果记录下来，确保每一对匹配都是相等的。
 
-```
+```c++
 /**
  * Definition for singly-linked list.
- * public class ListNode {
+ * struct ListNode {
  *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
  */
 class Solution {
-    private ListNode former;
-
-    public boolean isPalindrome(ListNode head) {
-        former = head;
+public:
+    bool isPalindrome(ListNode* head) {
+        start = head;
         return check(head);
     }
 
-    private boolean check(ListNode head) {
-        if (head == null) {
+private:
+    ListNode* start;
+
+    bool check(ListNode* head) {
+        if (head == nullptr) {
             return true;
         }
 
-        boolean res = check(head.next);
+        bool res = check(head->next);
 
-        res = res && former.val == head.val;
+        if (head != nullptr) {
+            res = res && (head->val == start->val);
+            start = start->next;
+        }
 
-        former = former.next;
-        
         return res;
     }
-}
+};
 ```
 
 复杂度分析：
