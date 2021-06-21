@@ -38,48 +38,52 @@ struct Node {
 
 ### 2.1 递归
 
-```
+```c++
 /*
 // Definition for a Node.
 class Node {
-    public int val;
-    public Node left;
-    public Node right;
-    public Node next;
+public:
+    int val;
+    Node* left;
+    Node* right;
+    Node* next;
 
-    public Node() {}
-    
-    public Node(int _val) {
-        val = _val;
-    }
+    Node() : val(0), left(NULL), right(NULL), next(NULL) {}
 
-    public Node(int _val, Node _left, Node _right, Node _next) {
-        val = _val;
-        left = _left;
-        right = _right;
-        next = _next;
-    }
+    Node(int _val) : val(_val), left(NULL), right(NULL), next(NULL) {}
+
+    Node(int _val, Node* _left, Node* _right, Node* _next)
+        : val(_val), left(_left), right(_right), next(_next) {}
 };
 */
 
 class Solution {
-    public Node connect(Node root) {
-        if (root == null || (root.left == null && root.right == null))
-        {
-            return root;
-        }
-
-        root.left.next = root.right;
-        if (root.next != null) {
-            root.right.next = root.next.left;
-        }
-
-        connect(root.left);
-        connect(root.right);
-
+public:
+    Node* connect(Node* root) {
+        link(root);
         return root;
     }
-}
+
+private:
+    void link(Node* &root) {
+        if (
+            root == nullptr || 
+            (root->left == nullptr && root->right == nullptr)
+        ) {
+            return;
+        }
+
+        root->left->next = root->right;
+        if (root->next != nullptr) {
+            root->right->next = root->next->left;
+        }
+
+        link(root->left);
+        link(root->right);
+
+        return;
+    }    
+};
 ```
 
 复杂度分析：
@@ -89,58 +93,52 @@ class Solution {
 
 ### 2.2 迭代
 
-```
+```c++
 /*
 // Definition for a Node.
 class Node {
-    public int val;
-    public Node left;
-    public Node right;
-    public Node next;
+public:
+    int val;
+    Node* left;
+    Node* right;
+    Node* next;
 
-    public Node() {}
-    
-    public Node(int _val) {
-        val = _val;
-    }
+    Node() : val(0), left(NULL), right(NULL), next(NULL) {}
 
-    public Node(int _val, Node _left, Node _right, Node _next) {
-        val = _val;
-        left = _left;
-        right = _right;
-        next = _next;
-    }
+    Node(int _val) : val(_val), left(NULL), right(NULL), next(NULL) {}
+
+    Node(int _val, Node* _left, Node* _right, Node* _next)
+        : val(_val), left(_left), right(_right), next(_next) {}
 };
 */
 
 class Solution {
-    public Node connect(Node root) {
-        if (root == null) {
-            return null;
+public:
+    Node* connect(Node* root) {
+        if (
+            root == nullptr ||
+            (root->left == nullptr && root->right == nullptr)
+        ) {
+            return root;
         }
-        
-        Node node = root;
 
-        while (node.left != null) {
-            // 当前层的下一层的结点之间进行连接和遍历
-            Node levelNode = node;
+        Node* node = root;
 
-            while (levelNode != null) {
-                levelNode.left.next = levelNode.right;
-
-                if (levelNode.next != null) {
-                    levelNode.right.next = levelNode.next.left;
+        while (node->left != nullptr) {
+            Node* levelNode = node;
+            while (levelNode != nullptr) {
+                levelNode->left->next = levelNode->right;
+                if (levelNode->next != nullptr) {
+                    levelNode->right->next = levelNode->next->left;
                 }
-                
-                levelNode = levelNode.next;
+                levelNode = levelNode->next;
             }
-
-            node = node.left;
+            node = node->left;
         }
 
         return root;
     }
-}
+};
 ```
 
 复杂度分析：
