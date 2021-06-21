@@ -29,47 +29,41 @@
 
 先拷贝左子树和右子树，然后断开左子树连接，将右子树赋为已拷贝的左子树。之后向右一直遍历，将已拷贝的右子树接到最右结点的右子树。
 
-```
+```c++
 /**
  * Definition for a binary tree node.
- * public class TreeNode {
+ * struct TreeNode {
  *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
  */
 class Solution {
-    public void flatten(TreeNode root) {
-        if (root == null) {
+public:
+    void flatten(TreeNode* root) {
+        if (root == nullptr) {
             return;
         }
 
-        flatten(root.left);
-        flatten(root.right);
+        flatten(root->left);
+        flatten(root->right);
 
-        TreeNode node = root;
-        TreeNode leftNode = node.left;
-        TreeNode rightNode = node.right;
-
-        node.left = null;
-        node.right = leftNode;
-
-        while (node.right != null) {
-            node = node.right;
+        TreeNode* tempRightNode = root->right;
+        root->right = root->left;
+        root->left = nullptr;
+        
+        TreeNode* node = root;
+        while (node->right != nullptr) {
+            node = node->right;
         }
-
-        node.right = rightNode;
+        node->right = tempRightNode;
 
         return;
     }
-}
+};
 ```
 
 复杂度分析：
@@ -81,51 +75,42 @@ class Solution {
 
 核心思想：在当前结点和右子树之间**插入**左子树，插入方法和链表插入结点相同。先拷贝当前结点的右子树，然后将右子树赋为左子树，之后一直向右找到最右的结点，将之前已拷贝的树接到右边。之后，当前结点一直往右走即可。
 
-```
+```c++
 /**
  * Definition for a binary tree node.
- * public class TreeNode {
+ * struct TreeNode {
  *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
  */
 class Solution {
-    public void flatten(TreeNode root) {
-        if (root == null) {
+public:
+    void flatten(TreeNode* root) {
+        if (root == nullptr) {
             return;
         }
 
-        TreeNode node = root;
+        while (root != nullptr) {
+            TreeNode* tempRightNode = root->right;
+            root->right = root->left;
+            root->left = nullptr;
 
-        while (node != null) {
-            if (node.left != null) {
-                TreeNode temp = node.right;
-                node.right = node.left;
-                node.left = null;
-
-                TreeNode findRightCorner = node;
-
-                while (findRightCorner.right != null) {
-                    findRightCorner = findRightCorner.right;
-                }
-
-                findRightCorner.right = temp;
+            TreeNode* node = root;
+            while (node->right != nullptr) {
+                node = node->right;
             }
+            node->right = tempRightNode;
 
-            node = node.right;
+            root = root->right;
         }
 
         return;
     }
-}
+};
 ```
 
 复杂度分析：
