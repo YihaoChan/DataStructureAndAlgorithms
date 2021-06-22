@@ -31,35 +31,39 @@ base case：如果左右子树都为null，则直接返回true；
 
 最后，把两部分的结果合并。
 
-```
+```c++
 /**
  * Definition for a binary tree node.
- * public class TreeNode {
+ * struct TreeNode {
  *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
  */
 class Solution {
-    public boolean isUnivalTree(TreeNode root) {
-        if (root.left == null && root.right == null) {
+public:
+    bool isUnivalTree(TreeNode* root) {
+        if (root == nullptr) {
+            return false;
+        }
+
+        return isUnivalTree(root, root->val);
+    }
+
+private:
+    bool isUnivalTree(TreeNode* root, int &memo) {
+        if (root == nullptr) {
             return true;
         }
 
-        boolean leftRes = (root.left == null) ? 
-                isUnivalTree(root.right) : 
-                (root.val == root.left.val) && 
-                isUnivalTree(root.left); 
+        bool res = root->val == memo;
 
-        boolean rightRes = (root.right == null) ?
-                isUnivalTree(root.left) : 
-                (root.val == root.right.val && 
-                isUnivalTree(root.right));
-
-        return leftRes && rightRes;            
+        return res && 
+               isUnivalTree(root->left, memo) && 
+               isUnivalTree(root->right, memo);
     }
-}
+};
 ```
 
 复杂度分析：
