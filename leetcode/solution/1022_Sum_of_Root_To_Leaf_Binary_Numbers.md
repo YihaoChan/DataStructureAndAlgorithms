@@ -38,6 +38,8 @@
 3. 2 * 2 + 0 = 4；
 4. 4 * 2 + 0 = 8.
 
+如果当前结点是叶子结点，就将计算结果返回。最终结果为左子树的计算结果+右子树的计算结果。
+
 ```c++
 /**
  * Definition for a binary tree node.
@@ -53,30 +55,23 @@
 class Solution {
 public:
     int sumRootToLeaf(TreeNode* root) {
-        int sum = 0;
-
-        getSum(root, sum, 0);
-
-        return sum;
+        return getSum(root, 0);
     }
 
 private:
-    void getSum(TreeNode* root, int &sum, int level) {
+    int getSum(TreeNode* root, int sum) {
         if (root == nullptr) {
-            return;
+            return 0;
         }
 
-        int curr = level * 2 + root->val;
+        sum = sum * 2 + root->val;
 
         if (root->left == nullptr && root->right == nullptr) {
-            sum += curr;
+            return sum;
         }
 
-        getSum(root->left, sum, curr);
-        getSum(root->right, sum, curr);
-
-        return;
-    }    
+        return getSum(root->left, sum) + getSum(root->right, sum);
+    }
 };
 ```
 
