@@ -17,50 +17,38 @@
 
 ### 2.1 递归
 
-不能把sum当做参数传递进getSum，因为基本类型的传递本质上是传值的拷贝，而无论怎么修改这个拷贝，原值都不会改变。
+如果左叶子是叶子结点，sum就为左叶子结点的值，否则为0。将当前得到的值和左子结点、右子结点的计算结果相加并返回即可。
 
-```
+```c++
 /**
  * Definition for a binary tree node.
- * public class TreeNode {
+ * struct TreeNode {
  *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
  */
 class Solution {
-    int sum = 0;
-
-    public int sumOfLeftLeaves(TreeNode root) {
-        getSum(root);
-
-        return sum;
-    }
-
-    private void getSum(TreeNode root) {
-        if (root == null) {
-            return;
+public:
+    int sumOfLeftLeaves(TreeNode* root) {
+        if (root == nullptr) {
+            return 0;
         }
 
-        if (root.left != null) {
-            if (root.left.left == null && root.left.right == null) {
-                sum += root.left.val;
+        int sum = 0;
+
+        if (root->left != nullptr) {
+            if (root->left->left == nullptr && root->left->right == nullptr) {
+                sum = root->left->val; 
             }
         }
 
-        getSum(root.left);
-        getSum(root.right);
-
-        return;
+        return sum + sumOfLeftLeaves(root->left) + sumOfLeftLeaves(root->right);
     }
-}
+};
 ```
 
 复杂度分析：
