@@ -45,54 +45,48 @@
 
 快慢指针。
 
-```
+```c++
 /**
  * Definition for singly-linked list.
- * public class ListNode {
+ * struct ListNode {
  *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
  */
 class Solution {
-    public ListNode swapNodes(ListNode head, int k) {
-        if (head == null) {
-            return null;
+public:
+    ListNode* swapNodes(ListNode* head, int k) {
+        if (head == nullptr || head->next == nullptr) {
+            return head;
         }
 
-        ListNode sentinel = new ListNode(-1, head);
-
-        ListNode slow = sentinel;
-        ListNode fast = sentinel;
-        ListNode memo = sentinel;
-
-        int step = k;
-        int count = 0;
+        ListNode* slow = head;
+        ListNode* fast = head;
+        ListNode* front = head;
 
         while (k > 0) {
-            fast = fast.next;
-            k--;
+            fast = fast->next;
+            if (k > 1) {
+                front = front->next;
+            }
+            --k;
         }
 
-        while (fast != null) {
-            fast = fast.next;
-            slow = slow.next;
+        while (fast != nullptr) {
+            slow = slow->next;
+            fast = fast->next;
         }
 
-        while (count < step) {
-            memo = memo.next;
-            count++;
-        }
+        int temp = slow->val;
+        slow->val = front->val;
+        front->val = temp;
 
-        int temp = slow.val;
-        slow.val = memo.val;
-        memo.val = temp;
-
-        return sentinel.next;
+        return head;
     }
-}
+};
 ```
 
 复杂度分析：
