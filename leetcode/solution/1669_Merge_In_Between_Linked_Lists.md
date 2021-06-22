@@ -38,56 +38,47 @@
 
 分别找到两个链表的拼接首尾处。
 
-```
+```c++
 /**
  * Definition for singly-linked list.
- * public class ListNode {
+ * struct ListNode {
  *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { 
- *         this.val = val; 
- *         this.next = next; 
- *     }
- * }
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
  */
 class Solution {
-    public ListNode mergeInBetween(
-        ListNode list1, int a, int b, ListNode list2
-    ) {
-        ListNode sentinel = new ListNode(-1, list1);
-
-        // 第a - 1个结点
-        ListNode mergeStart = list1;
-
-        for (int i = 0; i < a - 1; i++) {
-            mergeStart = mergeStart.next;
+public:
+    ListNode* mergeInBetween(ListNode* list1, int a, int b, ListNode* list2) {
+        if (list1 == nullptr) {
+            return list2;
         }
 
-        // 第b个结点
-        ListNode mergeEndPred = mergeStart;
-
-        for (int j = a; j <= b; j++) {
-            mergeEndPred = mergeEndPred.next;
+        if (list2 == nullptr) {
+            return list1;
         }
 
-        ListNode mergeEnd = mergeEndPred.next; // 第b + 1个结点
-        mergeEndPred.next = null; // 断开第b个结点与后继结点的连接
-        
-        ListNode list2Start = list2; 
-        ListNode list2End = list2;
-
-        while (list2End.next != null) {
-            list2End = list2End.next;
+        ListNode* node = list1;
+        ListNode* prevA = nullptr;
+        for (int i = 0; i < b; ++i, --a) {
+            if (a == 1) {
+                prevA = node;
+            }
+            node = node->next;
         }
+        ListNode* succB = node->next;
 
-        mergeStart.next = list2Start;
-        list2End.next = mergeEnd;
+        prevA->next = list2;
+        while (list2->next != nullptr) {
+            list2 = list2->next;
+        }
+        list2->next = succB;
 
-        return sentinel.next;
+        return list1;
     }
-}
+};
 ```
 
 复杂度分析：
