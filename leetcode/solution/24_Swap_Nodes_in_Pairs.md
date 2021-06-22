@@ -31,54 +31,40 @@
 
 ### 2.1 迭代
 
-```
+```c++
 /**
  * Definition for singly-linked list.
- * public class ListNode {
+ * struct ListNode {
  *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { 
- *         this.val = val; 
- *		   this.next = next; 
- *	   }
- * }
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
  */
 class Solution {
-    public ListNode swapPairs(ListNode head) {
-        if (head == null || head.next == null) {
-            return head;
-        }
+public:
+    ListNode* swapPairs(ListNode* head) {
+        ListNode* sentinel = new ListNode(-1, head);
+        ListNode* prev = sentinel;
+        ListNode* curr = head;
 
-        ListNode sentinel = new ListNode(-1, head);
-
-        ListNode prev = sentinel;
-        ListNode curr = head;
-
-        while (curr != null) {
-            ListNode nextNode = curr.next;
-
-            if (nextNode == null) {
-                break;
-            }
-            
-            ListNode succ = nextNode.next;
-
-            nextNode.next = curr;
-            curr.next = succ;
-            prev.next = nextNode;
-
+        while (curr != nullptr && curr->next != nullptr) {
+            ListNode* nextNode = curr->next;
+            ListNode* succ = nextNode->next;
+            nextNode->next = curr;
+            curr->next = succ;
+            prev->next = nextNode;
             prev = curr;
             curr = succ;
         }
 
-        return sentinel.next;
+        return sentinel->next;
     }
-}
+};
 ```
 
-典型用例：[1, 2, 3]，考虑步进后curr == 3，nextNode == null的情况，此时直接跳出。
+典型用例：[1, 2, 3]，考虑步进后curr == 3、nextNode == nullptr的情况，此时直接跳出。
 
 复杂度分析：
 
@@ -87,36 +73,37 @@ class Solution {
 
 ### 2.2 递归
 
-```
+```c++
 /**
  * Definition for singly-linked list.
- * public class ListNode {
+ * struct ListNode {
  *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { 
- *         this.val = val; 
- *		   this.next = next; 
- *	   }
- * }
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
  */
 class Solution {
-    public ListNode swapPairs(ListNode head) {
-        if (head == null || head.next == null) {
+public:
+    ListNode* swapPairs(ListNode* head) {
+        if (head == nullptr) {
             return head;
         }
 
-        ListNode prev = head;
-        ListNode curr = prev.next;
-        ListNode succ = curr.next;
+        ListNode* curr = head;
+        ListNode* nextNode = curr->next;
+        if (nextNode == nullptr) {
+            return curr;
+        }
+        ListNode* succ = nextNode->next;
 
-        curr.next = prev;
-        prev.next = swapPairs(succ);
+        nextNode->next = curr;
+        curr->next = swapPairs(succ);
 
-        return curr;
+        return nextNode;
     }
-}
+};
 ```
 
 复杂度分析：
