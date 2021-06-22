@@ -52,7 +52,7 @@ public:
     }
 
 private:
-    bool isUnivalTree(TreeNode* root, int &memo) {
+    bool isUnivalTree(TreeNode* root, int memo) {
         if (root == nullptr) {
             return true;
         }
