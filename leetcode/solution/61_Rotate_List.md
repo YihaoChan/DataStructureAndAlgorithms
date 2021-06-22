@@ -22,57 +22,53 @@
 
 先求出链表长度，再计算出从哪个结点开始断开原链表结点之间的连接，并将尾结点与首结点相连。
 
-```
+```c++
 /**
  * Definition for singly-linked list.
- * public class ListNode {
+ * struct ListNode {
  *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
  */
 class Solution {
-    public ListNode rotateRight(ListNode head, int k) {
-        if (head == null || head.next == null) {
+public:
+    ListNode* rotateRight(ListNode* head, int k) {
+        if (head == nullptr) {
             return head;
         }
 
-        // 计算链表长度，同时找到用于连接链表尾结点和首结点的结点
-        ListNode connect = head;
+        ListNode* lastOne = head;
         int len = 1;
-
-        while (connect.next != null) {
-            connect = connect.next;
-            len++;
+        while (lastOne->next != nullptr) {
+            ++len;
+            lastOne = lastOne->next;
         }
 
-        // 从倒数第几个结点开始断开连接
-        int cutLen = len - (k % len);
-        int count = 1;
-        ListNode cutNode = head;
+        int lastK = k % len + 1;
+        int frontStep = len - lastK;
 
-        while (count < cutLen) {
-            cutNode = cutNode.next;
-            count++;
+        ListNode* prev = head;
+        while (frontStep > 0) {
+            prev = prev->next;
+            --frontStep;
         }
 
-        // 连接尾结点和首结点，并断开原有连接
-        connect.next = head;
-        head = cutNode.next;
-        cutNode.next = null;
+        lastOne->next = head;
+        ListNode* newHead = prev->next;
+        prev->next = nullptr;
 
-        return head;
+        return newHead;
     }
-}
+};
 ```
 
 复杂度分析：
 
 1. 时间复杂度：最坏情况下需要遍历两次链表，故时间复杂度为**O(n)**；
 2. 空间复杂度：仅花费常数个额外空间，故空间复杂度为**O(1)**。
-
 
 
 
