@@ -29,114 +29,53 @@
 
 ## 2 解法
 
-### 2.1 快慢指针+插入删除结点
+分别收集链表的两部分。
 
-如果当前结点的值小于x，就根据当前结点的值域创建一个新结点，插入到慢指针后面，同时删除当前结点。
+分别创建两个头结点，一个所在链表用于收集小于x的结点，另一个所在链表用于收集大于等于x的结点。最后，将用于收集小于x的结点的next指针指向用于收集大于等于x的结点的首结点，再将末尾置空即可。
 
-```
+```c++
 /**
  * Definition for singly-linked list.
- * public class ListNode {
+ * struct ListNode {
  *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { 
- *         this.val = val;
- *         this.next = next; 
- *     }
- * }
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
  */
 class Solution {
-    public ListNode partition(ListNode head, int x) {
-        if (head == null || head.next == null) {
-            return head;
+public:
+    ListNode* partition(ListNode* head, int x) {
+        if (head == nullptr) {
+            return nullptr;
         }
 
-        ListNode sentinel = new ListNode(-101, head);
+        ListNode* lessDummy = new ListNode(-101);
+        ListNode* largerDummy = new ListNode(-101);
+        ListNode* lessNode = lessDummy;
+        ListNode* largerNode = largerDummy;
 
-        ListNode slow = sentinel;
-        ListNode pred = sentinel;
-        ListNode fast = head;
-
-        while (fast != null) {
-            if (fast.val < x) {
-                ListNode insertNode = new ListNode(fast.val);
-                ListNode succ = slow.next;
-
-                slow.next = insertNode;
-                insertNode.next = succ;
-
-                fast = fast.next;
-                if (pred == slow) {
-                    pred = pred.next;
-                }
-                pred.next = fast;
-
-                slow = slow.next;
+        while (head != nullptr) {
+            if (head->val < x) {
+                lessNode->next = head;
+                lessNode = lessNode->next;
             } else {
-                fast = fast.next;
-                pred = pred.next;
+                largerNode->next = head;
+                largerNode = largerNode->next;
             }
+            head = head->next;
         }
 
-        return sentinel.next;
+        lessNode->next = largerDummy->next;
+        largerNode->next = nullptr;
+
+        delete largerDummy;
+        largerDummy = nullptr;
+        
+        return lessDummy->next;
     }
-}
-```
-
-复杂度分析：
-
-1. 时间复杂度：遍历n个结点，每次的插入、删除操作都花费O(1)，因此，总时间复杂度为**O(n)**；
-2. 空间复杂度：仅花费常数个额外空间，故空间复杂度为**O(1)**。
-
-### 2.2 分别收集链表的两部分
-
-分别创建两个头结点，一个所在链表用于收集小于x的结点，另一个所在链表用于收集大于等于x的结点。之后，将用于收集小于x的结点的next指针指向用于收集大于等于x的结点的首结点，再将末尾置空即可。
-
-```
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { 
- *         this.val = val; 
- *         this.next = next; 
- *     }
- * }
- */
-class Solution {
-    public ListNode partition(ListNode head, int x) {
-        if (head == null || head.next == null) {
-            return head;
-        }
-
-        ListNode lessHead = new ListNode(-101);
-        ListNode less = lessHead;
-        ListNode largerHead = new ListNode(-101);
-        ListNode larger = largerHead;
-
-        while (head != null) {
-            if (head.val < x) {
-                less.next = head;
-                less = less.next;
-            } else {
-                larger.next = head;
-                larger = larger.next;
-            }
-
-            head = head.next;
-        }
-
-        less.next = largerHead.next;
-        larger.next = null;
-
-        return lessHead.next;
-    }
-}
+};
 ```
 
 复杂度分析：
