@@ -32,104 +32,91 @@
 
 ## 2 解法
 
-```
+```c++
 /**
  * Definition for singly-linked list.
- * public class ListNode {
+ * struct ListNode {
  *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
  */
 class Solution {
-    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        if (l1 == null) {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        if (l1 == nullptr) {
             return l2;
-        } else if (l2 == null) {
+        } else if (l2 == nullptr) {
             return l1;
         }
 
-        // 遍历l1、l2
-        ListNode ptr1 = l1;
-        ListNode ptr2 = l2;
+        ListNode* sentinel = new ListNode(-1, nullptr);
+        ListNode* node = sentinel;
 
-        int spill = 0; // 溢出位
-
-        // 答案链表
-        ListNode res = new ListNode(-1, null);
-
-        // 遍历答案链表
-        ListNode node = res;
-
-        // 每位求和之和
         int sum = 0;
+        int split = 0;
 
-        while (ptr1 != null && ptr2 != null) {
-            sum = ptr1.val + ptr2.val + spill;
+        expandDoubleLists(l1, l2, node, sum, split);
 
-            if (sum >= 10) {
-                sum -= 10;
-                spill = 1;
-            } else {
-                spill = 0;
-            }
-
-            node.next = new ListNode(sum, null);
-            node = node.next;
-
-            ptr1 = ptr1.next;
-            ptr2 = ptr2.next;
+        if (l1 == nullptr) {
+            expandSingleList(l2, node, sum, split);
+        } else if (l2 == nullptr) {
+            expandSingleList(l1, node, sum, split);
         }
 
-        // l1位数比l2多
-        while (ptr1 != null && ptr2 == null) {
-            sum = ptr1.val + spill;
-
-            if (sum >= 10) {
-                sum -= 10;
-                spill = 1;
-            } else {
-                spill = 0;
-            }
-
-            node.next = new ListNode(sum, null);
-            node = node.next;
-
-            ptr1 = ptr1.next;
-        }
-
-        // l2位数比l1多
-        while (ptr2 != null && ptr1 == null) {
-            sum = ptr2.val + spill;
-
-            if (sum >= 10) {
-                sum -= 10;
-                spill = 1;
-            } else {
-                spill = 0;
-            }
-
-            node.next = new ListNode(sum, null);
-            node = node.next;
-
-            ptr2 = ptr2.next;
-        }
-
-        // 两边都遍历结束
-        if (ptr1 == null && ptr2 == null) {
-            if (spill == 1) {
-                node.next = new ListNode(spill, null);
-                node = node.next;
-            }
-        }
-
-        node.next = null;
-
-        return res.next; 
+        return sentinel->next;
     }
-}
+
+private:
+    void expandDoubleLists(
+        ListNode* &l1, ListNode* &l2, ListNode* &node, int &sum, int &split
+    ) {
+        while (l1 != nullptr && l2 != nullptr) {
+            sum = l1->val + l2->val + split;
+            if (sum >= 10) {
+                split = 1;
+                sum -= 10;
+            } else {
+                split = 0;
+            }
+            node->next = new ListNode(sum);
+            node = node->next;
+            l1 = l1->next;
+            l2 = l2->next;
+        }
+
+        return;
+    }
+    
+    void expandSingleList(
+        ListNode* &list, ListNode* &node, int &sum, int &split
+    ) {
+        while (list != nullptr) {
+            if (split == 0) {
+                node->next = list;
+                return;
+            }
+            sum = list->val + split;
+            if (sum >= 10) {
+                split = 1;
+                sum -= 10;
+            } else {
+                split = 0;
+            }
+            node->next = new ListNode(sum);
+            node = node->next;
+            list = list->next;
+        }
+
+        if (split == 1) {
+            node->next = new ListNode(1);
+        }
+        
+        return;
+    }
+};
 ```
 
 复杂度分析：
