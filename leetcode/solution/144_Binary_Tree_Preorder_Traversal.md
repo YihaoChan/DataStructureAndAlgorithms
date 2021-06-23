@@ -36,37 +36,38 @@
 
 ### 2.1 递归
 
-```
+```c++
 /**
  * Definition for a binary tree node.
- * public class TreeNode {
+ * struct TreeNode {
  *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
  */
 class Solution {
-    List<Integer> res = new ArrayList<>();
-
-    public List<Integer> preorderTraversal(TreeNode root) {
-        if (root == null) {
-            return res;
-        }
-
-        res.add(root.val);
-        preorderTraversal(root.left);
-        preorderTraversal(root.right);
-
+public:
+    vector<int> preorderTraversal(TreeNode* root) {
+        vector<int> res;
+        preorderTraversal(root, res);
         return res;
     }
-}
+private:
+    void preorderTraversal(TreeNode* root, vector<int> &res) {
+        if (root == nullptr) {
+            return;
+        }
+
+        res.push_back(root->val);
+        preorderTraversal(root->left, res);
+        preorderTraversal(root->right, res);
+
+        return;
+    }
+};
 ```
 
 复杂度分析：
