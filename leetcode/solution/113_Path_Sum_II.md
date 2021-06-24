@@ -28,65 +28,54 @@
 
 ### 2.1 递归
 
-注意：new ArrayList<>(list)的原因是，把list添加进res，如果后续对list进行修改，因为res里面的list和修改的那个list指向的是同一块内存区域，所以也会把res里的结果给修改掉。因此，需要重新开辟一块区域，防止对list进行修改时影响到结果集res里面的结果。list.remove(list.size() - 1)表示回溯时把多余的结点删掉。
-
-```
+```c++
 /**
  * Definition for a binary tree node.
- * public class TreeNode {
+ * struct TreeNode {
  *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
  */
 class Solution {
-    List<List<Integer>> res = new ArrayList<>();
-    List<Integer> path = new ArrayList<>();
-
-    public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
-        if (root == null) {
-            return res;
-        }
-
-        appendPath(root, targetSum);
-
+public:
+    vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
+        vector<vector<int>> res;
+        vector<int> temp;
+        addPath(root, targetSum, temp, res);
         return res;
     }
-
-    private void appendPath(TreeNode root, int targetSum) {
-        path.add(root.val);
-
-        if (root.left == null && root.right == null && 
-            root.val == targetSum) {
-            res.add(new ArrayList<>(path));
+private:
+    void addPath(
+        TreeNode* root, int targetSum, vector<int> temp, vector<vector<int>> &res
+    ) {
+        if (root == nullptr) {
+            return;
         }
 
-        if (root.left != null) {
-            appendPath(root.left, targetSum - root.val);
+        temp.push_back(root->val);
+
+        if (root->left == nullptr && root->right == nullptr) {
+            if (root->val == targetSum) {
+                res.push_back(temp);
+            }
         }
 
-        if (root.right != null) {
-            appendPath(root.right, targetSum - root.val);
-        }
-
-        path.remove(path.size() - 1);
+        addPath(root->left, targetSum - root->val, temp, res);
+        addPath(root->right, targetSum - root->val, temp, res);
 
         return;
-    }
-}
+    }  
+};
 ```
 
 复杂度分析：
 
-1. 时间复杂度：每个结点都被访问一遍，最坏情况下每条路径都符合条件，需要为每条路径都重新创建一次list，每次都需要把全部元素完整copy一遍，故时间复杂度为**O(n<sup>2</sup>)**；
-2. 空间复杂度：递归栈空间为树的深度O(logn)，最坏情况下每条路径都符合条件，需要为每条路径都重新创建一次list，花费O(n)，故空间复杂度为O(logn) + O(n) = **O(n)**。
+1. 时间复杂度：每个结点都被访问一遍，故时间复杂度为**O(n<sup>2<)**；
+2. 空间复杂度：递归栈空间为树的深度O(logn)，故空间复杂度为**O(logn)**，最坏情况下树退化为链表，空间复杂度为O(n)。
 
 ### 2.2 迭代-三队列
 
