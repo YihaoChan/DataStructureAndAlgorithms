@@ -137,60 +137,61 @@ class Solution {
 
 #### 2.3.1 递归
 
-```
+```c++
 /**
  * Definition for a binary tree node.
- * public class TreeNode {
+ * struct TreeNode {
  *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
  */
 class Solution {
-    private List<Integer> list;
+public:
+    bool findTarget(TreeNode* root, int k) {
+        vector<int> list;
+        sortTree(root, list);
+        return isTwoSum(k, list);
+    }
+private:
+    void sortTree(TreeNode* root, vector<int> &list) {
+        if (root == nullptr) {
+            return;
+        }
 
-    public boolean findTarget(TreeNode root, int k) {
-        list = new ArrayList<>();
+        sortTree(root->left, list);
+        list.push_back(root->val);
+        sortTree(root->right, list);
 
-        inOrderTraverse(root);
+        return;
+    }
+
+    bool isTwoSum(int k, vector<int> list) {
+        int size = list.size();
+        if (size == 0) {
+            return false;
+        }
 
         int left = 0;
-        int right = list.size() - 1;
+        int right = size - 1;
 
         while (left < right) {
-            int sum = list.get(left) + list.get(right);
-
-            if (sum > k) {
-                right--;
-            } else if (sum < k) {
-                left++;
-            } else if (sum == k) {
-                return true;
-            }
+           int sum = list[left] + list[right];
+           if (sum > k) {
+               --right;
+           } else if (sum < k) {
+               ++left;
+           } else if (sum == k) {
+               return true;
+           }
         }
 
         return false;
     }
-
-    private void inOrderTraverse(TreeNode root) {
-        if (root == null) {
-            return;
-        }
-
-        inOrderTraverse(root.left);
-        list.add(root.val);
-        inOrderTraverse(root.right);
-
-        return;
-    }
-}
+};
 ```
 
 复杂度分析：
