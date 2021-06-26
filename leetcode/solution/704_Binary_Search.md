@@ -24,29 +24,27 @@
 
 最先想到的最简单的方法肯定是顺序查找，花费线性时间。但是顺序查找会浪费题目的**有序**这个条件，所以要用二分查找。
 
-```
+```c++
 class Solution {
-    public int search(int[] nums, int target) {
+public:
+    int search(vector<int>& nums, int target) {
         int left = 0;
-        int right = nums.length - 1;
+        int right = nums.size() - 1;
 
         while (left <= right) {
             int mid = left + (right - left) / 2;
-
-            int item = nums[mid];
-
-            if (target < item) {
-                right = mid - 1;
-            } else if (target > item) {
+            if (nums[mid] < target) {
                 left = mid + 1;
-            } else {
+            } else if (nums[mid] > target) {
+                right = mid - 1;
+            } else if (nums[mid] == target) {
                 return mid;
             }
         }
 
         return -1;
     }
-}
+};
 ```
 
 复杂度分析：
