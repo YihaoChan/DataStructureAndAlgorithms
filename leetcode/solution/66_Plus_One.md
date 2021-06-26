@@ -35,42 +35,32 @@
 
 如果原数全为9，加1之后必为100...000。所以new一个数组，第一位为1，后面默认0即可，不用再for循环添加。如果最末位加1之后没有产生进位，则直接返回即可。
 
-```
+```c++
 class Solution {
-    public int[] plusOne(int[] digits) {
-        int len = digits.length;
-        int spilt = 0;
-        int sum = 0;
+public:
+    vector<int> plusOne(vector<int>& digits) {
+        int len = digits.size();
+        int ptr = len - 1;
 
-        for (int i = len - 1; i >= 0; i--) {
-            if (i == len - 1) {
-                sum = digits[i] + 1 + spilt;
-            } else {
-                sum = digits[i] + spilt;
-            }
-
-            if (sum == 10) {
-                digits[i] = 0;
-                spilt = 1;
-            } else if (sum != 10){
-                digits[i] = sum;
-                spilt = 0;
-                if (i == len - 1) {
-                    return digits;
-                }
+        while (ptr >= 0) {
+            digits[ptr] += 1;
+            if (digits[ptr] < 10) {
+                return digits;
+            } else if (digits[ptr] == 10) {
+                digits[ptr] = 0;
+                --ptr;
             }
         }
 
-        if (spilt == 1) {
-            int[] newArr = new int[digits.length + 1];
-            newArr[0] = 1;
-            return newArr;
-        }
-
-        return digits;
+        vector<int> res(len + 1);
+        res[0] = 1;
+        return res;
     }
-}
+};
 ```
 
+复杂度分析：
 
+1. 时间复杂度：最坏情况下，数组每个元素都需要被访问，故时间复杂度为**O(n)**；
+2. 空间复杂度：最坏情况下，需要新创建一个数组，故空间复杂度为**O(n)**。
 
