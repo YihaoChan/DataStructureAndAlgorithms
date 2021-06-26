@@ -28,27 +28,26 @@
 
 快慢指针，判断快指针指向的元素是否等于目标值，如果不等，则把它搬到慢指针处，并更新慢指针。
 
-```
+```c++
 class Solution {
-    public int removeElement(int[] nums, int val) {
+public:
+    int removeElement(vector<int>& nums, int val) {
         int slow = 0;
         int fast = 0;
-
-        int len = nums.length;
+        int len = nums.size();
 
         while (fast < len) {
             if (nums[fast] != val) {
                 nums[slow] = nums[fast];
-
-                slow++;
+                ++slow;
             }
 
-            fast++;
+            ++fast;
         }
 
         return slow;
     }
-}
+};
 ```
 
 复杂度分析：
