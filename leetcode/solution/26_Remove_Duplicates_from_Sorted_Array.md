@@ -26,28 +26,30 @@
 
 快慢指针，判断后面一个元素是否等于当前元素，如果不等，则把它搬到前面，并更新慢指针。
 
-```
+```c++
 class Solution {
-    public int removeDuplicates(int[] nums) {
+public:
+    int removeDuplicates(vector<int>& nums) {
         int slow = 0;
-
         int fast = 0;
+        int len = nums.size();
 
-        int len = nums.length;
-
+        if (len == 0) {
+            return 0;
+        }
+        
         while (fast < len) {
             if (nums[fast] != nums[slow]) {
-                slow++;
-                
+                ++slow;
                 nums[slow] = nums[fast];
             }
 
-            fast++;
+            ++fast;
         }
 
-        return (slow + 1);
+        return slow + 1;
     }
-}
+};
 ```
 
 复杂度分析：
