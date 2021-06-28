@@ -2,7 +2,7 @@
 
 ## 1 题目
 
-给你一个二叉树，请你返回其按 层序遍历 得到的节点值。 （即逐层地，从左到右访问所有节点）。
+给你一个二叉树，请你返回其按层序遍历得到的节点值。（即逐层地，从左到右访问所有节点）。
 
 示例：
 二叉树：[3,9,20,null,null,15,7],
@@ -24,60 +24,55 @@
 
 ## 2 解法
 
-
-
-```
+```c++
 /**
  * Definition for a binary tree node.
- * public class TreeNode {
+ * struct TreeNode {
  *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
  */
 class Solution {
-    public List<List<Integer>> levelOrder(TreeNode root) {
-        if (root == null) {
-            return new ArrayList<>();
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        vector<vector<int>> res;
+
+        if (root == nullptr) {
+            return res;
         }
 
-        List<List<Integer>> res = new ArrayList<>();
+        queue<TreeNode*> q;
+        q.push(root);
 
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.offer(root);
-
-        while (!queue.isEmpty()) {
-            int count = queue.size();
-
-            List<Integer> level = new ArrayList<>();
-
+        while (!q.empty()) {
+            int count = q.size();
+            vector<int> level;
+            
             while (count > 0) {
-                TreeNode dequeueNode = queue.poll();
-
-                if (dequeueNode != null) {
-                    queue.offer(dequeueNode.left);
-                    queue.offer(dequeueNode.right);
-                    level.add(dequeueNode.val);
+                TreeNode* node = q.front();
+                level.push_back(node->val);
+                q.pop();
+                if (node->left != nullptr) {
+                    q.push(node->left);
                 }
-
-                count--;
+                if (node->right != nullptr) {
+                    q.push(node->right);
+                }
+                --count;
             }
 
-            if (level.size() > 0) {
-                res.add(level);
+            if (level.size() != 0) {
+                res.push_back(level);
             }
         }
 
         return res;
     }
-}
+};
 ```
 
 复杂度分析：
