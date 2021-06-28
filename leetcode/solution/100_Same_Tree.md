@@ -71,61 +71,60 @@ public:
 
 层序遍历。
 
-```
+```c++
 /**
  * Definition for a binary tree node.
- * public class TreeNode {
+ * struct TreeNode {
  *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
  */
 class Solution {
-    public boolean isSameTree(TreeNode p, TreeNode q) {
-        if (p == null && q == null) {
+public:
+    bool isSameTree(TreeNode* p, TreeNode* q) {
+        if (p == nullptr && q == nullptr) {
             return true;
-        } else if (p == null ^ q == null) {
+        } else if (p == nullptr) {
+            return false;
+        } else if (q == nullptr) {
             return false;
         }
 
-        Queue<TreeNode> pQueue = new LinkedList<>();
-        Queue<TreeNode> qQueue = new LinkedList<>();
+        queue<TreeNode*> pQueue;
+        queue<TreeNode*> qQueue;
+        pQueue.push(p);
+        qQueue.push(q);
+        
+        while (!pQueue.empty() && !qQueue.empty()) {
+            TreeNode* pNode = pQueue.front();
+            TreeNode* qNode = qQueue.front();
 
-        pQueue.offer(p);
-        qQueue.offer(q);
+            pQueue.pop();
+            qQueue.pop();
 
-        while ((!pQueue.isEmpty()) && (!qQueue.isEmpty())) {
-            TreeNode pDequeueNode = pQueue.poll();
-            TreeNode qDequeueNode = qQueue.poll();
-
-            if (pDequeueNode == null ^ qDequeueNode == null) {
-                return false;
-            }
-
-            if (pDequeueNode == null && qDequeueNode == null) {
+            if (pNode == nullptr && qNode == nullptr) {
                 continue;
             }
-
-            if (pDequeueNode.val != qDequeueNode.val) {
+            if (pNode == nullptr ^ qNode == nullptr) {
+                return false;
+            }
+            if (pNode->val != qNode->val) {
                 return false;
             }
 
-            pQueue.offer(pDequeueNode.left);
-            pQueue.offer(pDequeueNode.right);
-            qQueue.offer(qDequeueNode.left);
-            qQueue.offer(qDequeueNode.right);
+            pQueue.push(pNode->left);
+            pQueue.push(pNode->right);
+            qQueue.push(qNode->left);
+            qQueue.push(qNode->right);
         }
 
         return true;
     }
-}
+};
 ```
 
 复杂度分析：
