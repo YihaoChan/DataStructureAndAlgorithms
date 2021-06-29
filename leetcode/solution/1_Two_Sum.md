@@ -28,50 +28,37 @@
 
 ## 2 解法
 
-### 2.1 二重循环遍历
-
-对于当前扫描到的元素i，以它为起点进行二重扫描数组中元素j。如果发现i + j的值等于target，则返回i、j。
-
-复杂度分析：
-
-1. 时间复杂度：进行两重扫描，时间复杂度为**O(n<sup>2</sup>)**；
-
-2. 空间复杂度：只有常数个额外空间，空间复杂度为**O(1)**。
-
-由于时间复杂度过高，因此需要优化。
-
-### 2.2 一次哈希
-
 思路：利用哈希表，存储之前扫描过的元素和其在数组中的下标。
 
 每次扫描到当前元素，首先判断target和该元素**之差**有没有被存入哈希表中。如果有，说明之前存入的数 + 当前元素 == target，返回这两个数的下标即可。否则，将当前元素和它在数组中的下标存入哈希表中，继续往后扫描。
 
-```
+```c++
 class Solution {
-    public int[] twoSum(int[] nums, int target) {
-        int len = nums.length;
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        vector<int> res;
 
-        Map<Integer, Integer> visited = new HashMap<>();
-
-        int i;
-
-        Integer prevIndex = null;
-
-        for (i = 0; i < len; i++) {
-            int item = nums[i];
-
-            prevIndex = visited.get(target - item);
-
-            if (prevIndex == null) {
-                visited.put(item, i);
-            } else {
-                break;
-            }
+        int size = nums.size();
+        if (size == 0) {
+            return res;
         }
 
-        return new int[] {i, prevIndex};
+        unordered_map<int, int> m;
+
+        for (int i = 0; i < size; ++i) {
+            int item = nums[i];
+            int diff = target - item;
+            if (m.find(diff) != m.end()) {
+                res.push_back(m[diff]);
+                res.push_back(i);
+                break;
+            }
+            m[item] = i;
+        }
+
+        return res;
     }
-}
+};
 ```
 
 复杂度分析：
