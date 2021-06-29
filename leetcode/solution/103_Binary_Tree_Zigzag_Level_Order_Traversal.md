@@ -27,67 +27,64 @@
 
 层序遍历时，每一层结点采取链表结构：当奇数行时采用尾插法，当偶数行时采用头插法。
 
-```
+```c++
 /**
  * Definition for a binary tree node.
- * public class TreeNode {
+ * struct TreeNode {
  *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
  */
 class Solution {
-    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
-        List<List<Integer>> res = new ArrayList<>();
-
-        if (root == null) {
+public:
+    vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+        vector<vector<int>> res;
+        if (root == nullptr) {
             return res;
         }
 
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.offer(root);
+        queue<TreeNode*> q;
+        q.push(root);
+        int levelCount = 1;
 
-        boolean oddFlag = true;
-
-        while (!queue.isEmpty()) {
-            int count = queue.size();
-
-            LinkedList<Integer> level = new LinkedList<>();
+        while (!q.empty()) {
+            int count = q.size();
+            deque<int> level;
 
             while (count > 0) {
-                TreeNode dequeueNode = queue.poll();
+                TreeNode* node = q.front();
+                q.pop();
 
-                if (dequeueNode != null) {
-                    queue.offer(dequeueNode.left);
-                    queue.offer(dequeueNode.right);
-
-                    if (oddFlag) {
-                        level.addLast(dequeueNode.val);
-                    } else {
-                        level.addFirst(dequeueNode.val);
-                    }
+                if (levelCount % 2 != 0) {
+                    level.push_back(node->val);
+                } else {
+                    level.push_front(node->val);
                 }
 
-                count--;
+                if (node->left != nullptr) {
+                    q.push(node->left);
+                }
+                if (node->right != nullptr) {
+                    q.push(node->right);
+                }
+
+                --count;
             }
 
-            if (level.size() > 0) {
-                res.add(level);
+            if (level.size() != 0) {
+                res.push_back(vector<int> {level.begin(), level.end()});
             }
 
-            oddFlag = !oddFlag;
+            ++levelCount;
         }
 
         return res;
     }
-}
+};
 ```
 
 复杂度分析：
