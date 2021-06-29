@@ -29,29 +29,30 @@
 
 ## 2 解法
 
-哈希集合HashSet，add一个元素，如果元素在集合中已经存在，则add方法返回false，即该元素在数组中至少出现两次，直接返回true即可。
-
-```
+```c++
 class Solution {
-    public boolean containsDuplicate(int[] nums) {
-        Set<Integer> set = new HashSet<>();
+public:
+    bool containsDuplicate(vector<int>& nums) {
+        int size = nums.size();
+        if (size == 0) {
+            return false;
+        }
 
-        int len = nums.length;
+        unordered_set<int> s;
 
-        for (int i = 0; i < len; i++) {
-            int item = nums[i];
-
-            if (!set.add(item)) {
+        for (int item : nums) {
+            if (s.find(item) != s.end()) {
                 return true;
             }
+            s.emplace(item);
         }
 
         return false;
     }
-}
+};
 ```
 
 复杂度分析：
 
 1. 时间复杂度：顺序扫描数组花费**O(n)**；
-2. 空间复杂度：创建哈希集合作为辅助空间，空间复杂度为**O(n)**。
+2. 空间复杂度：创建set作为辅助空间，空间复杂度为**O(n)**。
