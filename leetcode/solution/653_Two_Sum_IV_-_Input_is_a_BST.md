@@ -38,39 +38,49 @@ Target = 28
 
 ### 2.1 递归
 
-```
+```c++
 /**
  * Definition for a binary tree node.
- * public class TreeNode {
+ * struct TreeNode {
  *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
  */
 class Solution {
-    private Set<Integer> set = new HashSet<>();
-
-    public boolean findTarget(TreeNode root, int k) {
-        if (root == null) {
+public:
+    bool findTarget(TreeNode* root, int k) {
+        if (root == nullptr) {
             return false;
         }
 
-        boolean isCurrExists = set.contains(k - root.val);
+        unordered_set<int> s;
 
-        set.add(root.val);
-
-        return isCurrExists || 
-               findTarget(root.left, k) || 
-               findTarget(root.right, k);
+        return isTwoSum(root, k, s, false);
     }
-}
+private:
+    bool isTwoSum(TreeNode* root, int k, unordered_set<int> &s, bool res) {
+        if (res) {
+            return true;
+        }
+
+        if (root == nullptr) {
+            return false;
+        }
+
+        int diff = k - root->val;
+        if (s.find(diff) != s.end()) {
+            res = true;
+        }
+        s.emplace(root->val);
+
+        return isTwoSum(root->left, k, s, res) ||
+               isTwoSum(root->right, k, s, res);
+    }    
+};
 ```
 
 复杂度分析：
@@ -80,50 +90,50 @@ class Solution {
 
 ### 2.2 迭代
 
-```
+```c++
 /**
  * Definition for a binary tree node.
- * public class TreeNode {
+ * struct TreeNode {
  *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
  */
 class Solution {
-    public boolean findTarget(TreeNode root, int k) {
-        if (root == null) {
+public:
+    bool findTarget(TreeNode* root, int k) {
+        if (root == nullptr) {
             return false;
         }
 
-        Set<Integer> set = new HashSet<>();
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.offer(root);
-        
-        while (!queue.isEmpty()) {
-            TreeNode dequeueNode = queue.poll();
+        queue<TreeNode*> q;
+        q.push(root);
+        unordered_set<int> s;
 
-            if (dequeueNode != null) {
-                if (set.contains(k - dequeueNode.val)) {
-                    return true;
-                } else {
-                    set.add(dequeueNode.val);
-                }
+        while (!q.empty()) {
+            TreeNode* node = q.front();
+            q.pop();
 
-                queue.offer(dequeueNode.left);
-                queue.offer(dequeueNode.right);
+            int diff = k - node->val;
+            if (s.find(diff) != s.end()) {
+                return true;
+            }
+            s.emplace(node->val);
+
+            if (node->left != nullptr) {
+                q.push(node->left);
+            }
+            if (node->right != nullptr) {
+                q.push(node->right);
             }
         }
 
         return false;
     }
-}
+};
 ```
 
 复杂度分析：
