@@ -24,60 +24,55 @@
 
 ### 2.1 迭代
 
-```
+```c++
 /**
  * Definition for a binary tree node.
- * public class TreeNode {
+ * struct TreeNode {
  *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
  */
 class Solution {
-    public List<Double> averageOfLevels(TreeNode root) {
-        List<Double> res = new ArrayList<>();
-
-        if (root == null) {
+public:
+    vector<double> averageOfLevels(TreeNode* root) {
+        vector<double> res;
+        if (root == nullptr) {
             return res;
         }
 
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.offer(root);
+        queue<TreeNode*> q;
+        q.push(root);
 
-        while (!queue.isEmpty()) {
-            int size = queue.size();
+        while (!q.empty()) {
+            int size = q.size();
             int count = size;
-            double levelSum = 0;
+            double sum = 0.0;
 
             while (count > 0) {
-                TreeNode dequeueNode = queue.poll();
+                TreeNode* node = q.front();
+                q.pop();
+                sum += node->val;
 
-                levelSum += dequeueNode.val;
-
-                if (dequeueNode.left != null) {
-                    queue.offer(dequeueNode.left);
+                if (node->left != nullptr) {
+                    q.push(node->left);
+                }
+                if (node->right != nullptr) {
+                    q.push(node->right);
                 }
 
-                if (dequeueNode.right != null) {
-                    queue.offer(dequeueNode.right);
-                }
-
-                count--;
+                --count;
             }
 
-            res.add(levelSum / size);
+            res.push_back(sum / size);
         }
 
         return res;
     }
-}
+};
 ```
 
 复杂度分析：
