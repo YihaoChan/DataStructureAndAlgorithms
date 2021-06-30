@@ -43,48 +43,47 @@
 
 ## 2 解法
 
-```
+### 2.1 递归
+
+```c++
 /**
  * Definition for a binary tree node.
- * public class TreeNode {
+ * struct TreeNode {
  *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
  */
 class Solution {
-    public boolean leafSimilar(TreeNode root1, TreeNode root2) {
-        List<Integer> list1 = new ArrayList<>();
-        List<Integer> list2 = new ArrayList<>();
+public:
+    bool leafSimilar(TreeNode* root1, TreeNode* root2) {
+        vector<int> list1;
+        vector<int> list2;
 
-        addLeavesValues(root1, list1);
-        addLeavesValues(root2, list2);
+        addLeaves(root1, list1);
+        addLeaves(root2, list2);
 
-        return list1.equals(list2);
+        return list1 == list2;
     }
-
-    private void addLeavesValues(TreeNode root, List<Integer> list) {
-        if (root == null) {
+private:
+    void addLeaves(TreeNode* root, vector<int>& list) {
+        if (root == nullptr) {
             return;
         }
 
-        if (root.left == null && root.right == null) {
-            list.add(root.val);
+        if (root->left == nullptr && root->right == nullptr) {
+            list.push_back(root->val);
         }
 
-        addLeavesValues(root.left, list);
-        addLeavesValues(root.right, list);
+        addLeaves(root->left, list);
+        addLeaves(root->right, list);
 
         return;
-    }
-}
+    }    
+};
 ```
 
 复杂度分析：
