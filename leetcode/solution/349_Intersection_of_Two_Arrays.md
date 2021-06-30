@@ -20,33 +20,37 @@
 
 ## 2 解法
 
-```
+```c++
 class Solution {
-    public int[] intersection(int[] nums1, int[] nums2) {
-        Set<Integer> set = new HashSet<>();
-        Set<Integer> answers = new HashSet<>();
-
-        for (int num1 : nums1) {
-            set.add(num1);
+public:
+    vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
+        vector<int> res;
+        int len1 = nums1.size();
+        int len2 = nums2.size();
+        if (len1 == 0 || len2 == 0) {
+            return res;
         }
 
-        for (int num2 : nums2) {
-            if (set.contains(num2)) {
-                answers.add(num2);
+        unordered_set<int> s1;
+        unordered_set<int> s2;
+
+        for (int i = 0; i < len1; ++i) {
+            s1.emplace(nums1[i]);
+        }
+
+        for (int j = 0; j < len2; ++j) {
+            if (s1.find(nums2[j]) != s1.end()) {
+                s2.emplace(nums2[j]);
             }
         }
 
-        int[] ans = new int[answers.size()];
-
-        int i = 0;
-
-        for (Integer answer : answers) {
-            ans[i++] = answer;
+        for (int item : s2) {
+            res.push_back(item);
         }
 
-        return ans;
+        return res;
     }
-}
+};
 ```
 
 复杂度分析：
