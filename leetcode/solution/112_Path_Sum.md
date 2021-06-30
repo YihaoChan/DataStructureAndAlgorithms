@@ -66,69 +66,62 @@ public:
 
 ### 2.2 迭代
 
-用两个队列，一个存放结点，一个存放差值。当出队的叶子结点的值等于差值时，说明存在符合题意的路径。
+用两个队列，一个存放结点，一个存放差值。当出队的叶子结点的对应的差值为0时，说明存在符合题意的路径。
 
-```
+```c++
 /**
  * Definition for a binary tree node.
- * public class TreeNode {
+ * struct TreeNode {
  *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
  */
 class Solution {
-    public boolean hasPathSum(TreeNode root, int targetSum) {
-        if (root == null) {
+public:
+    bool hasPathSum(TreeNode* root, int targetSum) {
+        if (root == nullptr) {
             return false;
         }
 
-        Queue<TreeNode> nodeQueue = new LinkedList<>();
-        nodeQueue.offer(root);
+        queue<TreeNode*> nodeQueue;
+        queue<int> sumQueue;
+        nodeQueue.push(root);
+        sumQueue.push(targetSum - root->val);
 
-        Queue<Integer> sumQueue = new LinkedList<>();
-        sumQueue.offer(targetSum);
-
-        while (!nodeQueue.isEmpty()) {
+        while (!nodeQueue.empty()) {
             int count = nodeQueue.size();
 
             while (count > 0) {
-                TreeNode dequeueNode = nodeQueue.poll();
-                Integer dequeueSum = sumQueue.poll();
+                TreeNode* node = nodeQueue.front();
+                nodeQueue.pop();
+                int sum = sumQueue.front();
+                sumQueue.pop();
 
-                if (dequeueNode.left == null && 
-                dequeueNode.right == null) {
-                    if (dequeueNode.val == dequeueSum) {
+                if (node->left == nullptr && node->right == nullptr) {
+                    if (sum == 0) {
                         return true;
                     }
                 }
-
-                Integer diff = dequeueSum - dequeueNode.val;
-
-                if (dequeueNode.left != null) {
-                    nodeQueue.offer(dequeueNode.left);
-                    sumQueue.offer(diff);
+                if (node->left != nullptr) {
+                    nodeQueue.push(node->left);
+                    sumQueue.push(sum - node->left->val);
+                }
+                if (node->right != nullptr) {
+                    nodeQueue.push(node->right);
+                    sumQueue.push(sum - node->right->val);
                 }
 
-                if (dequeueNode.right != null) {
-                    nodeQueue.offer(dequeueNode.right);
-                    sumQueue.offer(diff);
-                }
-
-                count--;
-            }   
+                --count;
+            }
         }
 
         return false;
     }
-}
+};
 ```
 
 复杂度分析：
