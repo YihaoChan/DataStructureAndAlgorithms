@@ -111,101 +111,68 @@ private:
 
 ### 2.2 迭代
 
-```
+```c++
 /**
  * Definition for a binary tree node.
- * public class TreeNode {
+ * struct TreeNode {
  *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
  */
 class Solution {
-    public boolean isCousins(TreeNode root, int x, int y) {
-        if (root == null) {
+public:
+    bool isCousins(TreeNode* root, int x, int y) {
+        if (root == nullptr) {
             return false;
         }
 
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.offer(root);
+        queue<TreeNode*> q;
+        q.push(root);
+        int xDepth, yDepth, depth = 0;
+        TreeNode* xParent= root;
+        TreeNode* yParent= root;
 
-        int depth = 0;
-
-        int xDepth = 0;
-        int yDepth = 0;
-        TreeNode xParent = null;
-        TreeNode yParent = null;
-
-        if (root.val == x) {
-            xDepth = 0;
-            xParent = null;
-        } else if (root.val == y) {
-            yDepth = 0;
-            yParent = null;
-        }
-
-        while (!queue.isEmpty()) {
-            int count = queue.size();
-
-            depth++;
-
+        while (!q.empty()) {
+            int count = q.size();
+            ++depth;
             while (count > 0) {
-                TreeNode dequeueNode = queue.poll();
-
-                if (dequeueNode.left != null) {
-                    queue.offer(dequeueNode.left);
-                    if (isParent(dequeueNode.left, x)) {
+                TreeNode* node = q.front();
+                q.pop();
+                if (node->left != nullptr) {
+                    q.push(node->left);
+                    if (node->left->val == x) {
+                        xParent = node;
                         xDepth = depth;
-                        xParent = dequeueNode;
-                    }
-                    if (isParent(dequeueNode.left, y)) {
+                    } else if (node->left->val == y) {
+                        yParent = node;
                         yDepth = depth;
-                        yParent = dequeueNode;
                     }
                 }
-
-                if (dequeueNode.right != null) {
-                    queue.offer(dequeueNode.right);
-                    if (isParent(dequeueNode.right, x)) {
+                if (node->right != nullptr) {
+                    q.push(node->right);
+                    if (node->right->val == x) {
+                        xParent = node;
                         xDepth = depth;
-                        xParent = dequeueNode;
-                    }
-                    if (isParent(dequeueNode.right, y)) {
+                    } else if (node->right->val == y) {
+                        yParent = node;
                         yDepth = depth;
-                        yParent = dequeueNode;
                     }
                 }
-
-                count--;
+                --count;
             }
         }
 
-        if (xDepth != yDepth) {
-            return false;
-        }
-
-        if (xParent == yParent) {
+        if (xDepth != yDepth || xParent == yParent) {
             return false;
         }
 
         return true;
     }
-
-    private boolean isParent(TreeNode root, int target) {
-        if (root.val == target) {
-            return true;
-        }
-
-        return false;
-    }
-}
+};
 ```
 
 复杂度分析：
