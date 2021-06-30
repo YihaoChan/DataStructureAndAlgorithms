@@ -79,83 +79,76 @@ private:
 
 ### 2.2 迭代-三队列
 
-用一个队列存放结点，另一个队列存放差值，最后一个队列存放路径。当出队列的叶子结点的值等于差值时，将出队的路径添加进结果集中。
+用一个队列存放结点，另一个队列存放差值，最后一个队列存放路径。当出队的叶子结点的对应的差值为0时，将出队的路径添加进结果集中。
 
-```
+```c++
 /**
  * Definition for a binary tree node.
- * public class TreeNode {
+ * struct TreeNode {
  *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
  */
 class Solution {
-    public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
-        List<List<Integer>> res = new ArrayList<>();
-
-        if (root == null) {
+public:
+    vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
+        vector<vector<int>> res;
+        if (root == nullptr) {
             return res;
         }
 
-        Queue<TreeNode> nodeQueue = new LinkedList<>();
-        nodeQueue.offer(root);
+        queue<TreeNode*> nodeQueue;
+        queue<int> sumQueue;
+        queue<vector<int>> pathQueue;
 
-        Queue<Integer> sumQueue = new LinkedList<>();
-        sumQueue.offer(targetSum);
+        nodeQueue.push(root);
+        sumQueue.push(targetSum - root->val);
+        vector<int> firstPath;
+        firstPath.push_back(root->val);
+        pathQueue.push(firstPath);
 
-        Queue<List<Integer>> pathQueue = new LinkedList<>();
-        List<Integer> path = new ArrayList<>();
-        path.add(root.val);
-        pathQueue.offer(path);
-
-        while (!nodeQueue.isEmpty()) {
+        while (!nodeQueue.empty()) {
             int count = nodeQueue.size();
 
             while (count > 0) {
-                TreeNode dequeueNode = nodeQueue.poll();
-                Integer dequeueSum = sumQueue.poll();
-                List<Integer> dequeuePath = pathQueue.poll();
+                TreeNode* node = nodeQueue.front();
+                nodeQueue.pop();
+                int sum = sumQueue.front();
+                sumQueue.pop();
+                vector<int> path = pathQueue.front();
+                pathQueue.pop();
 
-                Integer diff = dequeueSum - dequeueNode.val;
-
-                if (dequeueNode.left != null) {
-                    nodeQueue.offer(dequeueNode.left);
-                    sumQueue.offer(diff);
-                    path = new ArrayList<>(dequeuePath);
-                    path.add(dequeueNode.left.val);
-                    pathQueue.offer(path);
-                }
-
-                if (dequeueNode.right != null) {
-                    nodeQueue.offer(dequeueNode.right);
-                    sumQueue.offer(diff);
-                    path = new ArrayList<>(dequeuePath);
-                    path.add(dequeueNode.right.val);
-                    pathQueue.offer(path);
-                }
-
-                if (dequeueNode.left == null && 
-                    dequeueNode.right == null) {
-                    if (dequeueNode.val == dequeueSum) {
-                        res.add(dequeuePath);
+                if (node->left == nullptr && node->right == nullptr) {
+                    if (sum == 0) {
+                        res.push_back(path);
                     }
                 }
+                if (node->left != nullptr) {
+                    nodeQueue.push(node->left);
+                    sumQueue.push(sum - node->left->val);
+                    vector<int> leftPath(path);
+                    leftPath.push_back(node->left->val);
+                    pathQueue.push(leftPath);
+                }
+                if (node->right != nullptr) {
+                    nodeQueue.push(node->right);
+                    sumQueue.push(sum - node->right->val);
+                    vector<int> rightPath(path);
+                    rightPath.push_back(node->right->val);
+                    pathQueue.push(rightPath);
+                }
 
-                count--;
+                --count;
             }
         }
 
         return res;
     }
-}
+};
 ```
 
 复杂度分析：
