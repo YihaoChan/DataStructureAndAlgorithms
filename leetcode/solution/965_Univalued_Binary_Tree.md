@@ -75,47 +75,52 @@ private:
 
 层序遍历。
 
-```
+```c++
 /**
  * Definition for a binary tree node.
- * public class TreeNode {
+ * struct TreeNode {
  *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
  */
 class Solution {
-    public boolean isUnivalTree(TreeNode root) {
-        int ref = root.val;
+public:
+    bool isUnivalTree(TreeNode* root) {
+        if (root == nullptr) {
+            return false;
+        }
 
-        Queue<TreeNode> queue = new LinkedList<>();
+        int memo = root->val;
+        queue<TreeNode*> q;
+        q.push(root);
 
-        queue.offer(root);
+        while (!q.empty()) {
+            TreeNode* node = q.front();
+            q.pop();
 
-        while (!queue.isEmpty()) {
-            TreeNode dequeNode = queue.poll();
-
-            if (dequeNode.val != ref) {
+            if (node->val != memo) {
                 return false;
             }
 
-            if (dequeNode.left != null) {
-                queue.offer(dequeNode.left);
+            if (node->left != nullptr) {
+                q.push(node->left);
             }
-
-            if (dequeNode.right != null) {
-                queue.offer(dequeNode.right);
+            if (node->right != nullptr) {
+                q.push(node->right);
             }
         }
 
         return true;
     }
-}
+};
 ```
 
 复杂度分析：
 
 1. 时间复杂度：每个结点入队、出队一次，故时间复杂度为**O(n)**；
-2. 空间复杂度：
+2. 空间复杂度：队列中最多结点数为树的最深层结点数，故空间复杂度为**O(2<sup>h-1</sup>)**。
 
