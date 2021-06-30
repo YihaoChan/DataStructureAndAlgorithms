@@ -67,54 +67,54 @@ public:
 
 ### 2.2 迭代
 
-```
+```c++
 /**
  * Definition for a binary tree node.
- * public class TreeNode {
+ * struct TreeNode {
  *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
  */
 class Solution {
-    public int rangeSumBST(TreeNode root, int low, int high) {
-        if (root == null) {
+public:
+    int rangeSumBST(TreeNode* root, int low, int high) {
+        if (root == nullptr) {
             return 0;
         }
-
+        
+        queue<TreeNode*> q;
+        q.push(root);
         int sum = 0;
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.offer(root);
 
-        while (!queue.isEmpty()) {
-            TreeNode dequeueNode = queue.poll();
+        while (!q.empty()) {
+            TreeNode* node = q.front();
+            q.pop();
 
-            if (dequeueNode != null) {
-                if (dequeueNode.val < low) {
-                    queue.offer(dequeueNode.right);
-                } else if (dequeueNode.val > high) {
-                    queue.offer(dequeueNode.left);
-                } else {
-                    sum += dequeueNode.val;
-                    queue.offer(dequeueNode.left);
-                    queue.offer(dequeueNode.right);
-                }
+            if (node == nullptr) {
+                continue;
+            }
+
+            if (node->val < low) {
+                q.push(node->right);
+            } else if (node->val > high) {
+                q.push(node->left);
+            } else if (low <= node->val && node->val <= high) {
+                q.push(node->left);
+                q.push(node->right);
+                sum += node->val;
             }
         }
 
         return sum;
     }
-}
+};
 ```
 
 复杂度分析：
 
 1. 时间复杂度：最坏情况下，每个结点的值都在[low, high]范围内，因此每个结点都被访问一遍，故时间复杂度为**O(n)**；
-2. 空间复杂度：仅花费常数个额外空间，故空间复杂度为**O(1)**。
+2. 空间复杂度：队列中最多结点数为树的最深层结点数，故空间复杂度为**O(2<sup>h-1</sup>)**。
