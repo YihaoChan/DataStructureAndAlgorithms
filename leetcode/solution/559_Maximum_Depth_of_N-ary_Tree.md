@@ -25,20 +25,21 @@ N 叉树输入按层序遍历序列化表示，每组子节点由空值分隔（
 
 ### 2.1 递归
 
-```
+```c++
 /*
 // Definition for a Node.
 class Node {
-    public int val;
-    public List<Node> children;
+public:
+    int val;
+    vector<Node*> children;
 
-    public Node() {}
+    Node() {}
 
-    public Node(int _val) {
+    Node(int _val) {
         val = _val;
     }
 
-    public Node(int _val, List<Node> _children) {
+    Node(int _val, vector<Node*> _children) {
         val = _val;
         children = _children;
     }
@@ -46,22 +47,21 @@ class Node {
 */
 
 class Solution {
-    public int maxDepth(Node root) {
-        if (root == null) {
+public:
+    int maxDepth(Node* root) {
+        if (root == nullptr) {
             return 0;
         }
 
-        List<Node> childrenNodes = root.children;
-
         int depth = 1;
-
-        for (Node child : childrenNodes) {
-            depth = Math.max(depth, 1 + maxDepth(child));
+        vector<Node*> childrenNodes = root->children;
+        for (Node* child : childrenNodes) {
+            depth = max(depth, 1 + maxDepth(child));
         }
 
         return depth;
     }
-}
+};
 ```
 
 复杂度分析：
@@ -71,20 +71,21 @@ class Solution {
 
 ### 2.2 迭代
 
-```
+```c++
 /*
 // Definition for a Node.
 class Node {
-    public int val;
-    public List<Node> children;
+public:
+    int val;
+    vector<Node*> children;
 
-    public Node() {}
+    Node() {}
 
-    public Node(int _val) {
+    Node(int _val) {
         val = _val;
     }
 
-    public Node(int _val, List<Node> _children) {
+    Node(int _val, vector<Node*> _children) {
         val = _val;
         children = _children;
     }
@@ -92,37 +93,36 @@ class Node {
 */
 
 class Solution {
-    public int maxDepth(Node root) {
-        if (root == null) {
+public:
+    int maxDepth(Node* root) {
+        if (root == nullptr) {
             return 0;
         }
 
+        queue<Node*> q;
+        q.push(root);
         int depth = 0;
 
-        Queue<Node> queue = new LinkedList<>();
-        queue.offer(root);
-
-        while (!queue.isEmpty()) {
-            int count = queue.size();
-
-            depth++;
+        while (!q.empty()) {
+            int count = q.size();
+            ++depth;
 
             while (count > 0) {
-                Node dequeueNode = queue.poll();
+                Node* node = q.front();
+                q.pop();
 
-                List<Node> childrenNodes = dequeueNode.children;
-
-                for (Node child : childrenNodes) {
-                    queue.offer(child);
+                vector<Node*> childrenNodes = node->children;
+                for (Node* child : childrenNodes) {
+                    q.push(child);
                 }
 
-                count--;
+                --count;
             }
         }
 
         return depth;
     }
-}
+};
 ```
 
 复杂度分析：
