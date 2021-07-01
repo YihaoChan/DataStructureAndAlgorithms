@@ -21,20 +21,21 @@
 
 ## 2 解法
 
-```
+```c++
 /*
 // Definition for a Node.
 class Node {
-    public int val;
-    public List<Node> children;
+public:
+    int val;
+    vector<Node*> children;
 
-    public Node() {}
+    Node() {}
 
-    public Node(int _val) {
+    Node(int _val) {
         val = _val;
     }
 
-    public Node(int _val, List<Node> _children) {
+    Node(int _val, vector<Node*> _children) {
         val = _val;
         children = _children;
     }
@@ -42,44 +43,41 @@ class Node {
 */
 
 class Solution {
-    public List<List<Integer>> levelOrder(Node root) {
-        List<List<Integer>> res = new ArrayList<>();
-
-        if (root == null) {
+public:
+    vector<vector<int>> levelOrder(Node* root) {
+        vector<vector<int>> res;
+        if (root == nullptr) {
             return res;
         }
 
-        Queue<Node> queue = new LinkedList<>();
-        queue.offer(root);
+        queue<Node*> q;
+        q.push(root);
 
-        while (!queue.isEmpty()) {
-            int count = queue.size();
-
-            List<Integer> level = new ArrayList<>();
+        while (!q.empty()) {
+            int count = q.size();
+            vector<int> level;
 
             while (count > 0) {
-                Node dequeueNode = queue.poll();
+                Node* node = q.front();
+                q.pop();
+                level.push_back(node->val);
 
-                List<Node> childrenNodes = dequeueNode.children;
-
-                if (dequeueNode != null) {
-                    for (Node child : childrenNodes) {
-                        queue.offer(child);
-                    }
-                    level.add(dequeueNode.val);
+                vector<Node*> childrenNodes = node->children;
+                for (Node* child : childrenNodes) {
+                    q.push(child);
                 }
 
-                count--;
+                --count;
             }
 
-            if (level.size() > 0) {
-                res.add(level);
+            if (!level.empty()) {
+                res.push_back(level);
             }
         }
 
         return res;
     }
-}
+};
 ```
 
 复杂度分析：
