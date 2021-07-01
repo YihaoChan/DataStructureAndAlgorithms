@@ -6,8 +6,6 @@
 
 不要使用额外的数组空间，你必须在 原地 修改输入数组 并在使用 O(1) 额外空间的条件下完成。
 
- 
-
 说明：
 
 为什么返回数值是整数，但输出的答案是数组呢？
@@ -17,13 +15,16 @@
 你可以想象内部操作如下:
 
 // nums 是以“引用”方式传递的。也就是说，不对实参做任何拷贝
-int len = removeDuplicates(nums);
+```int len = removeDuplicates(nums);```
 
 // 在函数里修改输入数组对于调用者是可见的。
 // 根据你的函数返回的长度, 它会打印出数组中 该长度范围内 的所有元素。
+
+```
 for (int i = 0; i < len; i++) {
     print(nums[i]);
 }
+```
 
 示例 1：
 
@@ -43,37 +44,34 @@ for (int i = 0; i < len; i++) {
 
 ## 2 解法
 
-```
+```c++
 class Solution {
-    public int removeDuplicates(int[] nums) {
-        int len = nums.length;
-
+public:
+    int removeDuplicates(vector<int>& nums) {
+        int len = nums.size();
         int slow = 0;
         int fast = 0;
-
         int dupCount = 0;
         int memo = nums[0];
 
-        while (fast < len) {
+        for (fast = 0; fast < len; ++fast) {
             if (nums[fast] == memo) {
-                dupCount++;
+                ++dupCount;
             } else {
                 memo = nums[fast];
                 dupCount = 1;
             }
 
             nums[slow] = nums[fast];
-
+            
             if (dupCount <= 2) {
-                slow++;
+                ++slow;
             }
-
-            fast++;
         }
 
         return slow;
     }
-}
+};
 ```
 
 复杂度分析：
