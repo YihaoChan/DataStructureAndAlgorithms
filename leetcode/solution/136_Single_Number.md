@@ -22,44 +22,7 @@
 
 ## 2 解法
 
-## 2.1 哈希集合
-
-```
-class Solution {
-    public int singleNumber(int[] nums) {
-        if (nums == null) {
-            return -1;
-        }
-
-        int len = nums.length;
-
-        Set<Integer> set = new HashSet<>();
-
-        for (int i = 0; i < len; i++) {
-            int item = nums[i];
-
-            if (!set.add(item)) {
-                set.remove(item);
-            }
-        }
-
-        for (Integer res : set) {
-            return res;
-        }
-
-        return -1;
-    }
-}
-```
-
-复杂度分析：
-
-1. 时间复杂度：顺序扫描数组花费O(n)，将哈希集合里的唯一元素输出花费O(1)，故总时间复杂度为**O(n)**；
-2. 空间复杂度：需要用到哈希集合进行存储，空间复杂度为**O(n)**。
-
-## 2.2 位运算
-
-此方法能满足题目的进阶要求：常数空间复杂度。
+位运算。此方法能满足题目的进阶要求：常数空间复杂度。
 
 对于这道题，可使用异或运算⊕。异或运算有以下三个性质：
 
@@ -73,24 +36,20 @@ class Solution {
 
 即，最后异或得到的结果就是那个只出现了1次的数。
 
-```
+```c++
 class Solution {
-    public int singleNumber(int[] nums) {
-        if (nums == null) {
-            return -1;
+public:
+    int singleNumber(vector<int>& nums) {
+        int len = nums.size();
+        int res = 0;
+
+        for (int i = 0; i < len; ++i) {
+            res ^= nums[i];
         }
 
-        int len = nums.length;
-
-        int ele = 0;
-
-        for (int i = 0; i < len; i++) {
-            ele ^= nums[i];
-        }
-
-        return ele;
+        return res;
     }
-}
+};
 ```
 
 复杂度分析：
