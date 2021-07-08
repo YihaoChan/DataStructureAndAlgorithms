@@ -33,19 +33,24 @@
 
 准备两个函数，一个寻找左侧边界，一个寻找右侧边界。分别调用这两个函数，返回得到的左侧边界和右侧边界组成的数组即可。
 
-```
+```c++
 class Solution {
-    public int[] searchRange(int[] nums, int target) {
-        int leftBorder = findLeftBorder(nums, target);
-        int rightBorder = findRightBorder(nums, target);
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        vector<int> res;
+       
+        res.push_back(searchLeftBorder(nums, target));
+        res.push_back(searchRightBorder(nums, target));
 
-        return new int[] {leftBorder, rightBorder};
+        return res;
     }
+private:
+    int searchLeftBorder(vector<int>& nums, int target) {
+        int len = nums.size();
 
-    private int findLeftBorder(int[] nums, int target) {
-        int len = nums.length;
-
-        if (len == 0) return -1;
+        if (len == 0) {
+            return -1;
+        }
 
         int left = 0;
         int right = len;
@@ -53,27 +58,28 @@ class Solution {
         while (left < right) {
             int mid = left + (right - left) / 2;
 
-            int item = nums[mid];
-
-            if (target > item) {
+            if (nums[mid] < target) {
                 left = mid + 1;
-            } else if (target < item) {
+            } else if (nums[mid] > target) {
                 right = mid;
-            } else {
+            } else if (nums[mid] == target) {
                 right = mid;
             }
         }
 
-        // target比数组所有元素都大
-        if (left == len) return -1;
+        if (left == len) {
+            return -1;
+        }
 
-        return nums[left] == target ? left : -1; 
+        return nums[left] == target ? left : -1;
     }
 
-    private int findRightBorder(int[] nums, int target) {
-        int len = nums.length;
+    int searchRightBorder(vector<int>& nums, int target) {
+        int len = nums.size();
 
-        if (len == 0) return -1;
+        if (len == 0) {
+            return -1;
+        }
 
         int left = 0;
         int right = len;
@@ -81,23 +87,22 @@ class Solution {
         while (left < right) {
             int mid = left + (right - left) / 2;
 
-            int item = nums[mid];
-
-            if (target > item) {
+            if (nums[mid] < target) {
                 left = mid + 1;
-            } else if (target < item) {
+            } else if (nums[mid] > target) {
                 right = mid;
-            } else {
+            } else if (nums[mid] == target) {
                 left = mid + 1;
             }
         }
 
-        // target比数组所有元素都小
-        if (right == 0) return -1;
+        if (right == 0) {
+            return -1;
+        }
 
         return nums[right - 1] == target ? right - 1 : -1;
     }
-}
+};
 ```
 
 复杂度分析：
