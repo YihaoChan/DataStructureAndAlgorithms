@@ -39,10 +39,15 @@
 
 注意**升序**排列，所以想到**二分查找**。当搜索不到target时跳出，此时left即为待插入位置。
 
-```
+```c++
 class Solution {
-    public int searchInsert(int[] nums, int target) {
-        int len = nums.length;
+public:
+    int searchInsert(vector<int>& nums, int target) {
+        int len = nums.size();
+
+        if (len == 0) {
+            return 0;
+        }
 
         int left = 0;
         int right = len - 1;
@@ -50,20 +55,18 @@ class Solution {
         while (left <= right) {
             int mid = left + (right - left) / 2;
 
-            int item = nums[mid];
-
-            if (target == item) {
-                return mid;
-            } else if (target < item) {
-                right = mid - 1;
-            } else if (target > item) {
+            if (nums[mid] < target) {
                 left = mid + 1;
+            } else if (nums[mid] > target) {
+                right = mid - 1;
+            } else if (nums[mid] == target) {
+                return mid;
             }
         }
 
         return left;
     }
-}
+};
 ```
 
 复杂度分析：
