@@ -34,30 +34,38 @@
 
 数组有序，联想到左右指针。通过left和right两个指针，调整指向的两数之和的大小。如果和比较大，就收缩right让和小一点；如果和比较小，就扩张left让和大一点。
 
-```
+```c++
 class Solution {
-    public int[] twoSum(int[] numbers, int target) {
+public:
+    vector<int> twoSum(vector<int>& numbers, int target) {
+        vector<int> res;
+
+        int len = numbers.size();
+
+        if (len == 0) {
+            return res;
+        }
+
         int left = 0;
-        int right = numbers.length - 1;
+        int right = len - 1;
 
         while (left < right) {
-            int leftItem = numbers[left];
-            int rightItem = numbers[right];
-
-            int sum = leftItem + rightItem;
+            int sum = numbers[left] + numbers[right];
 
             if (sum > target) {
-                right--;
+                --right;
             } else if (sum < target) {
-                left++;
-            } else {
-                return new int[] {left + 1, right + 1};
+                ++left;
+            } else if (sum == target) {
+                res.push_back(left + 1);
+                res.push_back(right + 1);
+                break;
             }
         }
 
-        return new int[] {-1, -1};
+        return res;
     }
-}
+};
 ```
 
 复杂度分析：
