@@ -26,7 +26,7 @@
 
 中序遍历有序。对于[0, 1, 3, 4]，3 - 1肯定比3 - 0小，所以最小差肯定出现在有序序列的相邻两个元素之间。
 
-```
+```c++
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
