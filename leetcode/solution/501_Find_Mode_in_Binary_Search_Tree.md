@@ -31,7 +31,7 @@
 
 中序遍历有序。
 
-```
+```c++
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
