@@ -12,34 +12,38 @@
 
 重点：**下标栈**
 
-```
+```c++
 class Solution {
-    public int[] dailyTemperatures(int[] T) {
-        if (T == null) {
-            return null;
+public:
+    vector<int> dailyTemperatures(vector<int>& temperatures) {
+        int len = temperatures.size();
+        vector<int> res(len);
+        if (len == 0) {
+            return res;
         }
 
-        Stack<Integer> monotonicStack = new Stack<>();
+        stack<int> indexMonotonicStack;
 
-        int tLen = T.length;
-
-        int[] res = new int[tLen];
-
-        for (int i = tLen - 1; i >= 0; i--) {
-            while (!monotonicStack.isEmpty() && 
-            	   T[i] >= T[monotonicStack.peek()]) {
-                monotonicStack.pop();
+        for (int i = len - 1; i >= 0; --i) {
+            int num = temperatures[i];
+            while (!indexMonotonicStack.empty()) {
+                if (num >= temperatures[indexMonotonicStack.top()]) {
+                    indexMonotonicStack.pop();
+                } else {
+                    break;
+                }
             }
-
-            res[i] = monotonicStack.isEmpty() ? 0 :
-            		 (monotonicStack.peek() - i);
-
-            monotonicStack.push(i);
+            int waitDays = 0;
+            if (!indexMonotonicStack.empty()) {
+                waitDays = indexMonotonicStack.top() - i;
+            }
+            indexMonotonicStack.push(i);
+            res[i] = waitDays;
         }
 
         return res;
     }
-}
+};
 ```
 
 复杂度分析：
