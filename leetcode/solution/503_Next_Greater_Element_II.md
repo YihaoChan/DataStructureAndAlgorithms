@@ -20,36 +20,35 @@
 
 ![循环队列+单调栈](images/循环队列+单调栈.png)
 
-```
+```c++
 class Solution {
-    public int[] nextGreaterElements(int[] nums) {
-        if (nums == null) {
-            return null;
-        }
+public:
+    vector<int> nextGreaterElements(vector<int>& nums) {
+        int len = nums.size();
 
-        int len = nums.length;
+        stack<int> monotonicStack;
+        vector<int> res(len);
 
-        int[] res = new int[len];
-
-        Stack<Integer> monotonicStack = new Stack<>();
-
-        for (int i = len * 2 - 1; i >= 0; i--) {
-            int item = nums[i % len];
-
-            while (!monotonicStack.isEmpty() && 
-            	   item >= monotonicStack.peek()) {
-                monotonicStack.pop();
+        for (int i = len * 2 - 1; i >= 0; --i) {
+            int num = nums[i % len];
+            while (!monotonicStack.empty()) {
+                if (num >= monotonicStack.top()) {
+                    monotonicStack.pop();
+                } else {
+                    break;
+                }
             }
-
-            res[i % len] = monotonicStack.isEmpty() ? 
-            			   -1 : monotonicStack.peek();
-
-            monotonicStack.push(item);
+            int nextGreater = -1;
+            if (!monotonicStack.empty()) {
+                nextGreater = monotonicStack.top();
+            }
+            monotonicStack.push(num);
+            res[i % len] = nextGreater;
         }
 
         return res;
     }
-}
+};
 ```
 
 复杂度分析：
