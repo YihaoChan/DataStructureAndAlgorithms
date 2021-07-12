@@ -42,59 +42,59 @@ k 是一个正整数，它的值小于或等于链表的长度。
 
 ![25-递归](images/25-递归.jpg)
 
-```
+```c++
 /**
  * Definition for singly-linked list.
- * public class ListNode {
+ * struct ListNode {
  *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { 
- *	       this.val = val; 
- *	       this.next = next; 
- *     }
- * }
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
  */
 class Solution {
-    public ListNode reverseKGroup(ListNode head, int k) {
-        if (head == null) {
-            return null;
+public:
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        if (head == nullptr) {
+            return head;
         }
 
-        ListNode a = head;
-        ListNode b = head;
+        ListNode* dummy = new ListNode(-1, head);
+        ListNode* start = head;
+        ListNode* end = head;
 
-        for (int i = 0; i < k; i++) {
-            // 如果不到k个，就不用反转
-            if (b == null) {
-                return head;
+        for (int i = 0; i < k; ++i) {
+            if (end == nullptr) {
+                return start;
             }
-
-            b = b.next;
+            end = end->next;
         }
 
-        ListNode newHead = reverseA2B(a, b);
+        dummy->next = reverseTwoNodes(start, end);
+        start->next = reverseKGroup(end, k);
 
-        a.next = reverseKGroup(b, k);
-
-        return newHead;
+        return dummy->next;
     }
+private:
+    ListNode* reverseTwoNodes(ListNode* start, ListNode* end) {
+        if (start == nullptr) {
+            return start;
+        }
 
-    private ListNode reverseA2B(ListNode a, ListNode b) {
-        ListNode prev = null;
-        ListNode curr = a;
+        ListNode* prev = nullptr;
+        ListNode* curr = start;
 
-        while (curr != b) {
-            ListNode nextNode = curr.next;
-            curr.next = prev;
+        while (curr != end) {
+            ListNode* succ = curr->next;
+            curr->next = prev;
             prev = curr;
-            curr = nextNode;
+            curr = succ;
         }
 
         return prev;
     }
-}
+};
 ```
 
 复杂度分析：
@@ -106,67 +106,63 @@ class Solution {
 
 ![25-迭代](images/25-迭代.jpg)
 
-```
+```c++
 /**
  * Definition for singly-linked list.
- * public class ListNode {
+ * struct ListNode {
  *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { 
- *	       this.val = val; 
- *	       this.next = next; 
- *     }
- * }
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
  */
 class Solution {
-    public ListNode reverseKGroup(ListNode head, int k) {
-        ListNode sentinel = new ListNode(-1, head);
-
-        ListNode a = head;
-        ListNode b = head;
-
-        ListNode predecessor = sentinel;
-
-        while (b != null) {
-            for (int i = 0; i < k; i++) {
-                if (b == null) {
-                    return sentinel.next;
-                }
-
-                b = b.next;
-            }
-            
-            // 部分反转后的临时头结点
-            ListNode tempHead = reverseA2B(a, b); 
-
-            // 接上反转后的部分
-            a.next = b;
-            predecessor.next = tempHead; 
-
-            // 步进
-            predecessor = a;
-            a = b;
+public:
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        if (head == nullptr) {
+            return nullptr;
         }
 
-        return sentinel.next;
+        ListNode* dummy = new ListNode(-1, head);
+        ListNode* start = head;
+        ListNode* end = head;
+        ListNode* pred = dummy;
+
+        while (start != nullptr) {
+            for (int i = 0; i < k; ++i) {
+                if (end == nullptr) {
+                    return dummy->next;
+                }
+                end = end->next;
+            }
+            pred->next = reverseTwoNodes(start, end);
+            start->next = end;
+            pred = start;
+            start = end;
+        }
+
+        return dummy->next;
     }
+private:
+    ListNode* reverseTwoNodes(ListNode* start, ListNode* end) {
+        if (start == nullptr) {
+            return nullptr;
+        }
 
-    private ListNode reverseA2B(ListNode a, ListNode b) {
-        ListNode prev = null;
-        ListNode curr = a;
+        ListNode* prev = nullptr;
+        ListNode* curr = start;
 
-        while (curr != b) {
-            ListNode nextNode = curr.next;
-            curr.next = prev;
+        while (curr != end) {
+            ListNode* succ = curr->next;
+            curr->next = prev;
             prev = curr;
-            curr = nextNode;
+            curr = succ;
         }
 
         return prev;
     }
-}
+};
 ```
 
 复杂度分析：
