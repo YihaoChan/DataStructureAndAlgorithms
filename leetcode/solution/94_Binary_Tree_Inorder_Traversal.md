@@ -77,48 +77,42 @@ private:
 
 ### 2.2 迭代
 
-```
+```c++
 /**
  * Definition for a binary tree node.
- * public class TreeNode {
+ * struct TreeNode {
  *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
  */
 class Solution {
-    public List<Integer> inorderTraversal(TreeNode root) {
-        List<Integer> res = new ArrayList<>();
-
-        if (root == null) {
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int> res;
+        if (root == nullptr) {
             return res;
         }
 
-        Deque<TreeNode> stack = new LinkedList<>();
+        stack<TreeNode*> s;
 
-        TreeNode node = root;
-
-        while (node != null || !stack.isEmpty()) {
-            while (node != null) {
-                stack.push(node);
-                node = node.left;
+        while (root != nullptr || !s.empty()) {
+            while (root != nullptr) {
+                s.push(root);
+                root = root->left;
             }
-
-            node = stack.pop();
-            res.add(node.val);
-            node = node.right;
+            root = s.top();
+            s.pop();
+            res.push_back(root->val);
+            root = root->right;
         }
 
         return res;
     }
-}
+};
 ```
 
 复杂度分析：
