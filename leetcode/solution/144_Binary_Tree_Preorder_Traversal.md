@@ -77,46 +77,42 @@ private:
 
 ### 2.2 迭代
 
-```
+```c++
 /**
  * Definition for a binary tree node.
- * public class TreeNode {
+ * struct TreeNode {
  *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
  */
 class Solution {
-    public List<Integer> preorderTraversal(TreeNode root) {
-        List<Integer> res = new ArrayList<>();
-
-        if (root == null) {
+public:
+    vector<int> preorderTraversal(TreeNode* root) {
+        vector<int> res;
+        if (root == nullptr) {
             return res;
         }
 
-        Deque<TreeNode> stack = new LinkedList<>();
-        stack.push(root);
+        stack<TreeNode*> s;
+        s.push(root);
 
-        while (!stack.isEmpty()) {
-            TreeNode node = stack.pop();
-
-            if (node != null) {
-                res.add(node.val);
-                stack.push(node.right);
-                stack.push(node.left);
+        while (!s.empty()) {
+            TreeNode* node = s.top();
+            s.pop();
+            if (node != nullptr) {
+                res.push_back(node->val);
+                s.push(node->right);
+                s.push(node->left);
             }
         }
 
         return res;
     }
-}
+};
 ```
 
 复杂度分析：
