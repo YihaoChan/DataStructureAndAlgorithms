@@ -61,10 +61,10 @@ nums 中的所有整数 互不相同
 class Solution {
 public:
     TreeNode* constructMaximumBinaryTree(vector<int>& nums) {
-        return constructMaximumBinaryTree(nums, 0, nums.size() - 1);
+        return buildTree(nums, 0, nums.size() - 1);
     }
 private:
-    TreeNode* constructMaximumBinaryTree(vector<int>& nums, int low, int high) {
+    TreeNode* buildTree(vector<int>& nums, int low, int high) {
         if (low > high) {
             return nullptr;
         }
@@ -80,8 +80,8 @@ private:
         }
 
         TreeNode* root = new TreeNode(maxValue);
-        root->left = constructMaximumBinaryTree(nums, low, maxValueIndex - 1);
-        root->right = constructMaximumBinaryTree(nums, maxValueIndex + 1, high);
+        root->left = buildTree(nums, low, maxValueIndex - 1);
+        root->right = buildTree(nums, maxValueIndex + 1, high);
 
         return root;
     }
