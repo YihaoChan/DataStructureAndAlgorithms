@@ -52,18 +52,18 @@ nums 按 严格递增 顺序排列
 class Solution {
 public:
     TreeNode* sortedArrayToBST(vector<int>& nums) {
-        return sortedArrayToBST(nums, 0, nums.size() - 1);
+        return buildBST(nums, 0, nums.size() - 1);
     }
 private:
-    TreeNode* sortedArrayToBST(vector<int>& nums, int low, int high) {
+    TreeNode* buildBST(vector<int>& nums, int low, int high) {
         if (low > high) {
             return nullptr;
         }
 
         int mid = low + (high - low) / 2;
         TreeNode* root = new TreeNode(nums[mid]);
-        root->left = sortedArrayToBST(nums, low, mid - 1);
-        root->right = sortedArrayToBST(nums, mid + 1, high);
+        root->left = buildBST(nums, low, mid - 1);
+        root->right = buildBST(nums, mid + 1, high);
 
         return root;
     }
