@@ -93,18 +93,23 @@ d = 3
 class Solution {
 public:
     TreeNode* addOneRow(TreeNode* root, int val, int depth) {
-        return dfs(root, val, depth, 1);
-    }
-private:
-    TreeNode* dfs(TreeNode* root, const int val, const int depth, int currDepth) {
         if (root == nullptr) {
-            return root;
+            return nullptr;
         }
-
         if (depth == 1) {
             TreeNode* newRoot = new TreeNode(val);
             newRoot->left = root;
             return newRoot;
+        }
+        dfs(root, val, depth, 1);
+        return root;
+    }
+private:
+    void dfs(
+        TreeNode* root, const int val, const int depth, int currDepth
+    ) {
+        if (root == nullptr) {
+            return;
         }
 
         if (currDepth == depth - 1) {
@@ -116,14 +121,14 @@ private:
             root->right = newRightRoot;
             newLeftRoot->left = prevLeftRoot;
             newRightRoot->right = prevRightRoot;
-            return root;
+            return;
         }
 
         ++currDepth;
         dfs(root->left, val, depth, currDepth);
         dfs(root->right, val, depth, currDepth);
         
-        return root;
+        return;
     }
 };
 ```
