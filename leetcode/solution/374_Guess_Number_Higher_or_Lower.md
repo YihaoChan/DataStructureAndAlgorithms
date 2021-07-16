@@ -45,7 +45,7 @@
 
 1 ~ n有序，故想到二分查找。
 
-```
+```c++
 /** 
  * Forward declaration of guess API.
  * @param  num   your guess
@@ -55,28 +55,30 @@
  * int guess(int num);
  */
 
-public class Solution extends GuessGame {
-    public int guessNumber(int n) {
+class Solution {
+public:
+    int guessNumber(int n) {
+        if (n <= 0) {
+            return -1;
+        }
+
         int left = 1;
         int right = n;
-
         while (left <= right) {
             int mid = left + (right - left) / 2;
-
-            int cmp = guess(mid);
-
-            if (cmp > 0) {
+            int feedback = guess(mid);
+            if (feedback == 1) {
                 left = mid + 1;
-            } else if (cmp < 0) {
+            } else if (feedback == -1) {
                 right = mid - 1;
-            } else {
+            } else if (feedback == 0) {
                 return mid;
             }
         }
 
         return -1;
     }
-}
+};
 ```
 
 复杂度分析：
