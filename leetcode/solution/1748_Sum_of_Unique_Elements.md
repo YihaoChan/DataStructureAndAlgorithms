@@ -35,32 +35,37 @@
 
 ## 2 解法
 
-用一个额外数组保存元素出现的次数，比哈希表更快。根据原数组的最大值开辟空间。
-
-```
+```c++
 class Solution {
-    public int sumOfUnique(int[] nums) {
-        int len = nums.length;
+public:
+    int sumOfUnique(vector<int>& nums) {
+        int len = nums.size();
+        if (len == 0) {
+            return 0;
+        }
 
-        int[] info = new int[101];
-
-        for (int i = 0; i < len; i++) {
-            int item = nums[i];
-
-            info[item] += 1;
+        unordered_map<int, int> num2Count;
+        unordered_map<int, int>::iterator iter;
+        for (int i = 0; i < len; ++i) {
+            int num = nums[i];
+            iter = num2Count.find(num);
+            if (iter != num2Count.end()) {
+                num2Count[num] = iter->second + 1;
+            } else {
+                num2Count[num] = 1;
+            }
         }
 
         int sum = 0;
-
-        for (int j = 0; j < 101; j++) {
-            if (info[j] == 1) {
-                sum += j;
+        for (iter = num2Count.begin(); iter != num2Count.end(); ++iter) {
+            if (iter->second == 1) {
+                sum += iter->first;
             }
         }
 
         return sum;
     }
-}
+};
 ```
 
 复杂度分析：
