@@ -46,31 +46,35 @@ target = "k"
 
 字符列表有序，故用二分查找。
 
-```
+```c++
 class Solution {
-    public char nextGreatestLetter(char[] letters, char target) {
-        int len = letters.length;
+public:
+    char nextGreatestLetter(vector<char>& letters, char target) {
+        int len = letters.size();
+        if (len == 0) {
+            return NULL;
+        }
 
         int left = 0;
         int right = len - 1;
-
         while (left <= right) {
             int mid = left + (right - left) / 2;
-
-            char letter = letters[mid];
-
-            if (target < letter) {
-                right = mid - 1;
-            } else if (target > letter) {
+            int cmp = int(target - letters[mid]);
+            if (cmp > 0) {
                 left = mid + 1;
-            } else {
+            } else if (cmp < 0) {
+                right = mid - 1;
+            } else if (cmp == 0) {
                 left = mid + 1;
             }
         }
 
-        return letters[left % len]; // 求模形成下标循环
+        if (left == len) {
+            return letters[0];
+        }
+        return letters[left];
     }
-}
+};
 ```
 
 注意：当下标恰好等于数组长度时需返回0，此时可通过求模运算制造循环。
