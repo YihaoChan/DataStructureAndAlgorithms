@@ -36,47 +36,49 @@
 
 两次遍历链表。第一次将当前累加和及对应链表结点放入map中，如果相同的累加和出现多次，则覆盖新的结点。第二次遍历链表时，重新计算累加和，此时累加和对应的结点已经是最新的结点(因为出现多个相同值时会覆盖旧结点)，将next指针指向新结点的后续结点即可，相当于删除这个区间内所有的结点。仔细理解：**若当前结点处的累加在下一处出现，表明两结点之间所有结点和为0，则直接删除区间所有结点**。
 
-```
+```c++
 /**
  * Definition for singly-linked list.
- * public class ListNode {
+ * struct ListNode {
  *     int val;
- *     ListNode next;
- *     ListNode(int x) { val = x; }
- * }
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
  */
 class Solution {
-    public ListNode removeZeroSumSublists(ListNode head) {
-        ListNode sentinel = new ListNode(0);
-        sentinel.next = head;
+public:
+    ListNode* removeZeroSumSublists(ListNode* head) {
+        if (head == nullptr) {
+            return nullptr;
+        }
 
-        Map<Integer, ListNode> map = new HashMap<>();
-
+        ListNode* dummy = new ListNode(0, head);
+        ListNode* node = head;
+        unordered_map<int, ListNode*> sum2Node;
         int sum = 0;
-        ListNode curr = sentinel;
-
-        // 记录每个结点所对应的累加和，如果相同的累加和出现多次，则覆盖
-        while (curr != null) {
-            sum += curr.val;
-            map.put(sum, curr);
-            curr = curr.next;
+        while (node != nullptr) {
+            sum += node->val;
+            sum2Node[sum] = node;
+            node = node->next;
         }
 
+        node = dummy;
         sum = 0;
-        curr = sentinel;
-
-        // 第二次遍历，累加和处对应的结点已经是最新的结点
-        // 若当前结点处的累加在下一处出现，表明两结点之间所有结点和为0，
-        // 则直接删除区间所有结点
-        while (curr != null) {
-            sum += curr.val;
-            curr.next = map.get(sum).next;
-            curr = curr.next;
+        while (node != nullptr) {
+            unordered_map<int, ListNode*>::iterator iter;
+            sum += node->val;
+            iter = sum2Node.find(sum);
+            if (iter != sum2Node.end()) {
+                node->next = iter->second->next;
+            }
+            node = node->next;
         }
 
-        return sentinel.next;
+        return dummy->next;
     }
-}
+};
 ```
 
 复杂度分析：
