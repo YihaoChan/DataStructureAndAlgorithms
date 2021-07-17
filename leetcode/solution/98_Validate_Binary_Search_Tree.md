@@ -38,7 +38,7 @@
 
 ## 2 解法
 
-中序遍历有序。注意题意，二叉搜索树需满足**严格大于**，等于的情况应该判为false。同时注意极限用例[-2147483648]恰好为INT_MIN，因此需要用更小的值去判断，如LONG_MIN。此外，为了使上一个结点的值成为全局的lastVal，应该用引用的方式，否则会出错。
+中序遍历有序。注意题意，二叉搜索树需满足**严格大于**，等于的情况应该判为false。同时注意极限用例[-2147483648]恰好为INT_MIN，因此需要用更小的值去判断，如LLONG_MIN。此外，为了使上一个结点的值成为全局的lastVal，应该用引用的方式，否则会出错。
 
 ```c++
 /**
@@ -55,20 +55,20 @@
 class Solution {
 public:
     bool isValidBST(TreeNode* root) {
-        long lastVal = LONG_MIN;
+        long long lastVal = LLONG_MIN;
         bool res = true;
         inorder(root, lastVal, res);
         return res;
     }
 private:
-    void inorder(TreeNode* root, long& lastVal, bool& res) {
+    void inorder(TreeNode* root, long long& lastVal, bool& res) {
         if (root == nullptr) {
             return;
         }
         if (!res) {
             return;
         }
-        
+
         inorder(root->left, lastVal, res);
 
         res = res && (root->val > lastVal);
